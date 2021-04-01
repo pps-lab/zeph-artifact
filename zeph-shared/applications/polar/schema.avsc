@@ -1,0 +1,43 @@
+[
+{"namespace": "ch.ethz.infk.pps.shared.avro",
+    "type": "record",
+    "name": "Digest",
+    "fields": [
+      {"name": "heartrateHist", "type": {"type": "array", "items": "long"}},
+      {"name": "heartrateXaltitude", "type": {"type": "array", "items": "long"}},
+      {"name": "heartrateXspeed", "type": {"type": "array", "items": "long"}},
+      {"name": "heartrateXascent", "type": {"type": "array", "items": "long"}},
+      {"name": "heartrateXdescent", "type": {"type": "array", "items": "long"}}, 
+      {"name": "heartrateXtemperature", "type": {"type": "array", "items": "long"}}, 
+      {"name": "altitudeHist", "type": {"type": "array", "items": "long"}},
+      {"name": "speedHist", "type": {"type": "array", "items": "long"}}, 
+      {"name": "ascentHist", "type": {"type": "array", "items": "long"}},
+      {"name": "descentHist", "type": {"type": "array", "items": "long"}}, 
+      {"name": "temperatureHist", "type": {"type": "array", "items": "long"}},
+
+      {"name": "heartrateBase", "type": {"type": "array", "items": "long"}}, 
+      {"name": "altitudeBase", "type": {"type": "array", "items": "long"}}, 
+      {"name": "speedBase", "type": {"type": "array", "items": "long"}},
+      {"name": "ascentBase", "type": {"type": "array", "items": "long"}},
+      {"name": "descentBase", "type": {"type": "array", "items": "long"}},
+      {"name": "temperatureBase", "type": {"type": "array", "items": "long"}},
+
+      {"name": "count", "type": {"type": "array", "items": "long"}},
+
+      {"name": "header", "type": ["null", "ch.ethz.infk.pps.shared.avro.HeacHeader"]}
+    ]
+  },
+  {"namespace": "ch.ethz.infk.pps.shared.avro",
+    "type": "record",
+    "name": "Input",
+    "fields": [
+      {"name": "heartrate", "type": "long"},
+      {"name": "altitude", "type": "long"},
+      {"name": "speed", "type": "long"},
+      {"name": "ascent", "type": "long"},
+      {"name": "descent", "type": "long"},
+      {"name": "temperature", "type": "long"},
+      {"name": "count", "type": ["null", "long"]}
+    ]
+  }
+]

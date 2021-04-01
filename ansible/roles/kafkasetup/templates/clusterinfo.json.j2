@@ -1,0 +1,34 @@
+{
+  "BrokerNodeGroupInfo": {
+    "BrokerAZDistribution": "DEFAULT",
+    "InstanceType": "{{ server_cluster.instance_type }}",
+    "ClientSubnets": [
+      "{{ server_region.vpc_subnet_id }}",
+      "{{ server_region.vpc_subnet2_id }}"
+    ],
+    "SecurityGroups": [
+      "{{ server_cluster.sg_id }}"
+    ]
+  },
+  "ClusterName": "{{ kafka_cluster_name }}",
+  "EncryptionInfo": {
+    "EncryptionInTransit": {
+      "InCluster": false,
+      "ClientBroker": "PLAINTEXT"
+    }
+  },
+  "EnhancedMonitoring": "DEFAULT",
+  "KafkaVersion": "{{ kafka_version }}",
+  "NumberOfBrokerNodes": {{ kafka_number_of_broker_nodes }},
+  "OpenMonitoring": {
+    "Prometheus": {
+      "JmxExporter": {
+        "EnabledInBroker": {{ kafka_use_monitoring }}
+      },
+      "NodeExporter": {
+        "EnabledInBroker": {{ kafka_use_monitoring }}
+      }
+    }
+  }
+}
+

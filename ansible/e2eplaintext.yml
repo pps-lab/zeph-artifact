@@ -1,0 +1,26 @@
+---
+# required
+# server_worker_hosts
+# client_hosts
+
+- name: Start Plaintext Worker
+  hosts: "{{ server_worker_hosts }}"
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+  - role: plaintextworker
+
+- name: Run End-to-End Benchmark and fetch results
+  hosts: "{{ client_hosts }}"
+  remote_user: ubuntu
+  gather_facts: True
+  vars:
+    client_type: plaintext
+  roles:
+  - role: e2eclient
+
+- name: Stop worker servers
+  hosts: "{{ server_worker_hosts }}"
+  remote_user: ubuntu
+  roles:
+  - role: servicestop

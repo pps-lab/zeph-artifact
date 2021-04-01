@@ -1,0 +1,326 @@
+---
+
+- name: Run Id
+  hosts: localhost
+  tasks:
+  - debug:
+      var: run_id
+
+- name: Start & Setup Client and Server Instances
+  import_playbook: awssetup.yml
+  vars:
+    application: polar
+
+    client_group1_instances_num: 2
+    client_group1_instances_max_num: 2
+    client_group2_instances_num: 2
+    client_group2_instances_max_num: 2
+    client_group3_instances_num: 2
+    client_group3_instances_max_num: 2
+
+    server_transformer_instances_num: 2
+    server_transformer_instances_max_num: 2
+
+    use_kafka: True
+    use_shared_keys: True
+    use_monitoring: False
+
+
+- name: Reset Kafka
+  hosts: "tag_Name_ZephClient[0]"
+  remote_user: ubuntu
+  roles:
+  - role: kafkaclear
+
+
+###############################
+# Polar Application: Plain 300
+###############################
+- name: Run plaintext 300 end-to-end benchmark - polar
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0]:aws_region_eu_west_3[0]:aws_region_eu_north_1[0]:&tag_Name_ZephClient
+    experiment_id: "e2e_plaintext_polar_300_{{ run_id }}"
+    universes: [30]
+    universe_size: 300
+    universe_min_size: 300
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: False
+
+###############################
+# Polar Application: Zeph 300
+###############################
+- name: Run zeph 300 end-to-end benchmark - polar
+  import_playbook: e2ezeph.yml
+  vars:
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:1]:aws_region_eu_west_3[0:1]:aws_region_eu_north_1[0:1]:&tag_Name_ZephClient
+    experiment_id: "e2e_zeph_polar_300_{{ run_id }}"
+    universes: [31]
+    universe_size: 300
+    universe_min_size: 300
+    producer_partition_size: 100
+    controller_partition_size: 100
+    use_monitoring: False
+
+####################################################################################################################################
+####################################################################################################################################
+####################################################################################################################################
+
+- name: Switch to Web Application
+  hosts: "{{ hostvars['localhost'].client_all.host_group }}:{{ hostvars['localhost'].server_transformer.host_group }}"
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+  - role: common
+  vars:
+    application: web
+    use_monitoring: False
+
+###############################
+# Web Application: Plain 300
+###############################
+- name: Run plaintext 300 end-to-end benchmark - web
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0]:aws_region_eu_west_3[0]:aws_region_eu_north_1[0]:&tag_Name_ZephClient
+    experiment_id: "e2e_plaintext_web_300_{{ run_id }}"
+    universes: [32]
+    universe_size: 300
+    universe_min_size: 300
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: False
+
+###############################
+# Web Application: Zeph 300
+###############################
+- name: Run zeph 300 end-to-end benchmark - web
+  import_playbook: e2ezeph.yml
+  vars:
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:1]:aws_region_eu_west_3[0:1]:aws_region_eu_north_1[0:1]:&tag_Name_ZephClient
+    experiment_id: "e2e_zeph_web_300_{{ run_id }}"
+    universes: [33]
+    universe_size: 300
+    universe_min_size: 300
+    producer_partition_size: 100
+    controller_partition_size: 100
+    use_monitoring: False
+
+####################################################################################################################################
+####################################################################################################################################
+####################################################################################################################################
+
+- name: Switch to Car Application
+  hosts: "{{ hostvars['localhost'].client_all.host_group }}:{{ hostvars['localhost'].server_transformer.host_group }}"
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+  - role: common
+  vars:
+    application: car
+    use_monitoring: False
+
+###############################
+# Car Application: Plain 300
+###############################
+- name: Run plaintext 300 end-to-end benchmark - car
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0]:aws_region_eu_west_3[0]:aws_region_eu_north_1[0]:&tag_Name_ZephClient
+    experiment_id: "e2e_plaintext_car_300_{{ run_id }}"
+    universes: [34]
+    universe_size: 300
+    universe_min_size: 300
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: False
+
+###############################
+# Car Application: Zeph 300
+###############################
+- name: Run zeph 300 end-to-end benchmark - car
+  import_playbook: e2ezeph.yml
+  vars:
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:1]:aws_region_eu_west_3[0:1]:aws_region_eu_north_1[0:1]:&tag_Name_ZephClient
+    experiment_id: "e2e_zeph_car_300_{{ run_id }}"
+    universes: [35]
+    universe_size: 300
+    universe_min_size: 300
+    producer_partition_size: 100
+    controller_partition_size: 100
+    use_monitoring: False
+
+####################################################################################################################################
+####################################################################################################################################
+####################################################################################################################################
+
+- name: Start & Setup Client and Server Instances
+  import_playbook: awssetup.yml
+  vars:
+    application: polar
+
+    client_group1_instances_num: 8
+    client_group1_instances_max_num: 8
+    client_group2_instances_num: 8
+    client_group2_instances_max_num: 8
+    client_group3_instances_num: 8
+    client_group3_instances_max_num: 8
+
+    server_transformer_instances_num: 2
+    server_transformer_instances_max_num: 2
+
+    use_kafka: True
+    use_shared_keys: True
+    use_monitoring: False
+
+
+- name: Reset Kafka
+  hosts: "tag_Name_ZephClient[0]"
+  remote_user: ubuntu
+  roles:
+  - role: kafkaclear
+
+
+###############################
+# Polar Application: Plain 1200
+###############################
+- name: Run plaintext 1200 end-to-end benchmark (requires four instances per region) - polar
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:3]:aws_region_eu_west_3[0:3]:aws_region_eu_north_1[0:3]:&tag_Name_ZephClient
+    experiment_id: "e2e_plaintext_polar_1200_{{ run_id }}"
+    universes: [120]
+    universe_size: 1200
+    universe_min_size: 1200
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: False
+
+###############################
+# Polar Application: Zeph 1200
+###############################
+- name: Run zeph 1200 end-to-end benchmark (requires eight instances per region) - polar
+  import_playbook: e2ezeph.yml
+  vars:
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:7]:aws_region_eu_west_3[0:7]:aws_region_eu_north_1[0:7]:&tag_Name_ZephClient
+    experiment_id: "e2e_zeph_polar_1200_{{ run_id }}"
+    universes: [121]
+    universe_size: 1200
+    universe_min_size: 1200
+    producer_partition_size: 100
+    controller_partition_size: 100
+    use_monitoring: False
+
+####################################################################################################################################
+####################################################################################################################################
+####################################################################################################################################
+
+- name: Switch to Web Application
+  hosts: "{{ hostvars['localhost'].client_all.host_group }}:{{ hostvars['localhost'].server_transformer.host_group }}"
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+  - role: common
+  vars:
+    application: web
+    use_monitoring: False
+
+###############################
+# Web Application: Plain 1200
+###############################
+- name: Run plaintext 1200 end-to-end benchmark (requires four instances per region) - web
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:3]:aws_region_eu_west_3[0:3]:aws_region_eu_north_1[0:3]:&tag_Name_ZephClient
+    experiment_id: "e2e_plaintext_web_1200_{{ run_id }}"
+    universes: [122]
+    universe_size: 1200
+    universe_min_size: 1200
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: False
+
+###############################
+# Web Application: Zeph 1200
+###############################
+- name: Run zeph 1200 end-to-end benchmark (requires eight instances per region) - web
+  import_playbook: e2ezeph.yml
+  vars:
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:7]:aws_region_eu_west_3[0:7]:aws_region_eu_north_1[0:7]:&tag_Name_ZephClient
+    experiment_id: "e2e_zeph_web_1200_{{ run_id }}"
+    universes: [123]
+    universe_size: 1200
+    universe_min_size: 1200
+    producer_partition_size: 100
+    controller_partition_size: 100
+    use_monitoring: False
+
+####################################################################################################################################
+####################################################################################################################################
+####################################################################################################################################
+
+- name: Switch to Car Application
+  hosts: "{{ hostvars['localhost'].client_all.host_group }}:{{ hostvars['localhost'].server_transformer.host_group }}"
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+  - role: common
+  vars:
+    application: car
+    use_monitoring: False
+
+###############################
+# Car Application: Plain 1200
+###############################
+- name: Run plaintext 1200 end-to-end benchmark (requires four instances per region) - car
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:3]:aws_region_eu_west_3[0:3]:aws_region_eu_north_1[0:3]:&tag_Name_ZephClient
+    experiment_id: "e2e_plaintext_car_1200_{{ run_id }}"
+    universes: [124]
+    universe_size: 1200
+    universe_min_size: 1200
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: False
+
+###############################
+# Car Application: Zeph 1200
+###############################
+- name: Run zeph 1200 end-to-end benchmark (requires eight instances per region) - car
+  import_playbook: e2ezeph.yml
+  vars:
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:7]:aws_region_eu_west_3[0:7]:aws_region_eu_north_1[0:7]:&tag_Name_ZephClient
+    experiment_id: "e2e_zeph_car_1200_{{ run_id }}"
+    universes: [125]
+    universe_size: 1200
+    universe_min_size: 1200
+    producer_partition_size: 100
+    controller_partition_size: 100
+    use_monitoring: False
+
+####################################################################################################################################
+####################################################################################################################################
+####################################################################################################################################
+
+- name: Cleanup AWS (terminate ec2 instances, delete vpc)
+  import_playbook: awscleanup.yml

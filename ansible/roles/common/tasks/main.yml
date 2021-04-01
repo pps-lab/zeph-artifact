@@ -1,0 +1,134 @@
+- name:
+  assert:
+    that:
+    - application is defined
+
+
+- name: Update repositories cache and install java, maven, build-essentials, cargo and zip
+  become: True
+  apt:
+    pkg: 
+    - openjdk-11-jdk
+    - maven
+    - build-essential
+    - cargo
+    - unzip
+    - python3-pip
+    update_cache: yes
+
+- name: Install pipenv
+  become: true
+  pip:
+    name: pipenv
+    executable: pip3
+
+- name: Git checkout from private repository
+  git:
+    repo={{repository}}
+    dest=/home/ubuntu/zeph
+    accept_hostkey=yes
+    force=yes
+    version={{ branch }}
+  register: git_result
+  changed_when: git_result.after != git_result.before
+   
+
+
+- name: Changing perm of compile-and-install.sh, adding "u+x"
+  file: 
+    dest=/home/ubuntu/zeph/zeph-crypto/native/compile-and-install.sh 
+    mode=u+x
+
+- name: Checking if jars exist and if active application matches the selected application
+  stat:
+        path: "{{ item }}"
+  loop:
+  - /home/ubuntu/zeph/zeph-benchmarks/zeph-macrobenchmarks/target/zeph-macrobenchmarks-1.0.jar
+  - /home/ubuntu/zeph/zeph-benchmarks/zeph-microbenchmarks/target/zeph-microbenchmarks-1.0.jar
+  - /home/ubuntu/zeph/zeph-server/zeph-server-worker/target/zeph-server-worker-1.0.jar
+  - /home/ubuntu/zeph/zeph-server/zeph-server-master/target/zeph-server-master-1.0.jar
+  - /home/ubuntu/zeph/ACTIVE_APP_{{ application }}
+  register: check_files
+  no_log: True
+
+
+- name: Build Query to check if jars exist
+  set_fact:
+    build_incomplete: "{{ check_files | json_query(query) | length > 0 }}"
+  vars:
+    query: results[?!(stat.exists)]
+
+
+- name: Find active application marker files to delete
+  find:
+    paths: /home/ubuntu/zeph
+    patterns: "^ACTIVE_APP_.*"
+    use_regex: true
+  register: files_to_delete
+
+- name: Delete active application marker files
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ files_to_delete.files }}"
+  no_log: True
+
+- name: Building Zeph with maven
+  shell: 
+    cmd: "mvn clean install -P {{ application }}-application"
+    chdir: zeph/
+  when: git_result.changed or build_incomplete
+
+- debug:
+    msg="Use Zeph with Application {{ application }}"
+
+- name: Mark application as active
+  copy:
+    content: ""
+    dest: /home/ubuntu/zeph/ACTIVE_APP_{{ application }}
+    force: no
+
+- set_fact:
+    folders:
+    - '{{ log_dir }}'
+    - '{{ data_dir }}'
+    - '{{ result_dir }}'
+    - '{{ state_dir }}'
+    - '{{ monitoring_dir }}'
+    log_dir: '{{ log_dir }}'
+    data_dir: '{{ data_dir }}'
+    result_dir: '{{ result_dir }}'
+    state_dir: '{{ state_dir }}'
+    monitoring_dir: '{{ monitoring_dir }}'
+  
+
+- name: Check directories
+  stat:
+    path: '{{ item }}'
+  loop: "{{ folders }}"
+  register: folder_stats
+
+- name: Create missing directories
+  file:
+    path: '{{ item.0 }}'
+    state: directory
+    mode:  0755
+    group: ubuntu
+    owner: ubuntu
+  when: item.1.stat.exists == false
+  loop: "{{ folders|zip(folder_stats.results)|list }}"
+  no_log: True
+
+# setup monitoring files 
+- name: Create monitoring configuration file
+  template:
+    src=jmx_config.yml.j2
+    dest="{{ monitoring_dir }}/jmx_config.yml"
+    mode=preserve
+  when: use_monitoring
+
+- name: Download prometheus jmx exporter
+  get_url: 
+    url: https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.14.0/jmx_prometheus_javaagent-0.14.0.jar
+    dest: "{{ monitoring_dir }}/jmx_prometheus_javaagent.jar"
+  when: use_monitoring

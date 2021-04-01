@@ -1,0 +1,3401 @@
+[
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "sum"
+        },
+        "primaryMetric" : {
+            "score" : 1.0864642875621843E8,
+            "scoreError" : 3535898.560775174,
+            "scoreConfidence" : [
+                1.0511053019544326E8,
+                1.1218232731699361E8
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1.0754504038155922E8,
+                "50.0" : 1.0834572527515486E8,
+                "90.0" : 1.0966712075467983E8,
+                "95.0" : 1.0966712075467983E8,
+                "99.0" : 1.0966712075467983E8,
+                "99.9" : 1.0966712075467983E8,
+                "99.99" : 1.0966712075467983E8,
+                "99.999" : 1.0966712075467983E8,
+                "99.9999" : 1.0966712075467983E8,
+                "100.0" : 1.0966712075467983E8
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1.0834572527515486E8,
+                    1.0952806777390142E8,
+                    1.0754504038155922E8,
+                    1.0966712075467983E8,
+                    1.0814618959579685E8
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "count"
+        },
+        "primaryMetric" : {
+            "score" : 1.6430025475709215E8,
+            "scoreError" : 7730276.422738485,
+            "scoreConfidence" : [
+                1.5656997833435366E8,
+                1.7203053117983064E8
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1.6225765450069115E8,
+                "50.0" : 1.6403544534075323E8,
+                "90.0" : 1.6643443668198192E8,
+                "95.0" : 1.6643443668198192E8,
+                "99.0" : 1.6643443668198192E8,
+                "99.9" : 1.6643443668198192E8,
+                "99.99" : 1.6643443668198192E8,
+                "99.999" : 1.6643443668198192E8,
+                "99.9999" : 1.6643443668198192E8,
+                "100.0" : 1.6643443668198192E8
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1.6643443668198192E8,
+                    1.6403544534075323E8,
+                    1.6629849127464652E8,
+                    1.6225765450069115E8,
+                    1.6247524598738793E8
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "avg"
+        },
+        "primaryMetric" : {
+            "score" : 7.423513063281313E7,
+            "scoreError" : 1904640.9589490881,
+            "scoreConfidence" : [
+                7.233048967386404E7,
+                7.613977159176221E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 7.363023082774745E7,
+                "50.0" : 7.403789838864124E7,
+                "90.0" : 7.478197248835531E7,
+                "95.0" : 7.478197248835531E7,
+                "99.0" : 7.478197248835531E7,
+                "99.9" : 7.478197248835531E7,
+                "99.99" : 7.478197248835531E7,
+                "99.999" : 7.478197248835531E7,
+                "99.9999" : 7.478197248835531E7,
+                "100.0" : 7.478197248835531E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    7.363023082774745E7,
+                    7.471077380953377E7,
+                    7.403789838864124E7,
+                    7.401477764978787E7,
+                    7.478197248835531E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "var"
+        },
+        "primaryMetric" : {
+            "score" : 5.597955561435725E7,
+            "scoreError" : 1541694.6647191944,
+            "scoreConfidence" : [
+                5.4437860949638054E7,
+                5.752125027907644E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5.558335446374238E7,
+                "50.0" : 5.586554502575728E7,
+                "90.0" : 5.658683778019179E7,
+                "95.0" : 5.658683778019179E7,
+                "99.0" : 5.658683778019179E7,
+                "99.9" : 5.658683778019179E7,
+                "99.99" : 5.658683778019179E7,
+                "99.999" : 5.658683778019179E7,
+                "99.9999" : 5.658683778019179E7,
+                "100.0" : 5.658683778019179E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    5.586554502575728E7,
+                    5.6152061229500726E7,
+                    5.558335446374238E7,
+                    5.658683778019179E7,
+                    5.570997957259404E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "stddev"
+        },
+        "primaryMetric" : {
+            "score" : 5.5980613095051944E7,
+            "scoreError" : 1869461.447247258,
+            "scoreConfidence" : [
+                5.4111151647804685E7,
+                5.78500745422992E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5.529057239463816E7,
+                "50.0" : 5.596697444680294E7,
+                "90.0" : 5.6463161670168586E7,
+                "95.0" : 5.6463161670168586E7,
+                "99.0" : 5.6463161670168586E7,
+                "99.9" : 5.6463161670168586E7,
+                "99.99" : 5.6463161670168586E7,
+                "99.999" : 5.6463161670168586E7,
+                "99.9999" : 5.6463161670168586E7,
+                "100.0" : 5.6463161670168586E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    5.6463161670168586E7,
+                    5.576778253601468E7,
+                    5.596697444680294E7,
+                    5.641457442763534E7,
+                    5.529057239463816E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_10"
+        },
+        "primaryMetric" : {
+            "score" : 1.0823360645834114E7,
+            "scoreError" : 290715.75067785155,
+            "scoreConfidence" : [
+                1.0532644895156262E7,
+                1.1114076396511966E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1.0732782101669779E7,
+                "50.0" : 1.086864845590381E7,
+                "90.0" : 1.088543496189903E7,
+                "95.0" : 1.088543496189903E7,
+                "99.0" : 1.088543496189903E7,
+                "99.9" : 1.088543496189903E7,
+                "99.99" : 1.088543496189903E7,
+                "99.999" : 1.088543496189903E7,
+                "99.9999" : 1.088543496189903E7,
+                "100.0" : 1.088543496189903E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1.088543496189903E7,
+                    1.0732782101669779E7,
+                    1.086864845590381E7,
+                    1.0749584442481851E7,
+                    1.0880353267216101E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_100"
+        },
+        "primaryMetric" : {
+            "score" : 1151966.388230898,
+            "scoreError" : 19471.52375844323,
+            "scoreConfidence" : [
+                1132494.8644724546,
+                1171437.9119893413
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1146722.9867471296,
+                "50.0" : 1153006.973558436,
+                "90.0" : 1159189.3475893459,
+                "95.0" : 1159189.3475893459,
+                "99.0" : 1159189.3475893459,
+                "99.9" : 1159189.3475893459,
+                "99.99" : 1159189.3475893459,
+                "99.999" : 1159189.3475893459,
+                "99.9999" : 1159189.3475893459,
+                "100.0" : 1159189.3475893459
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1147543.1808246588,
+                    1153006.973558436,
+                    1153369.4524349186,
+                    1146722.9867471296,
+                    1159189.3475893459
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_1000"
+        },
+        "primaryMetric" : {
+            "score" : 122082.32318186827,
+            "scoreError" : 2654.3982371110533,
+            "scoreConfidence" : [
+                119427.92494475722,
+                124736.72141897932
+            ],
+            "scorePercentiles" : {
+                "0.0" : 121406.6892448922,
+                "50.0" : 121934.09887115432,
+                "90.0" : 122854.40809125715,
+                "95.0" : 122854.40809125715,
+                "99.0" : 122854.40809125715,
+                "99.9" : 122854.40809125715,
+                "99.99" : 122854.40809125715,
+                "99.999" : 122854.40809125715,
+                "99.9999" : 122854.40809125715,
+                "100.0" : 122854.40809125715
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    121466.00860715847,
+                    122854.40809125715,
+                    121406.6892448922,
+                    122750.4110948792,
+                    121934.09887115432
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "min_10"
+        },
+        "primaryMetric" : {
+            "score" : 1.0874230542886639E7,
+            "scoreError" : 13399.15682332813,
+            "scoreConfidence" : [
+                1.0860831386063311E7,
+                1.0887629699709967E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1.0869252219969809E7,
+                "50.0" : 1.0874309771636387E7,
+                "90.0" : 1.0877928856065283E7,
+                "95.0" : 1.0877928856065283E7,
+                "99.0" : 1.0877928856065283E7,
+                "99.9" : 1.0877928856065283E7,
+                "99.99" : 1.0877928856065283E7,
+                "99.999" : 1.0877928856065283E7,
+                "99.9999" : 1.0877928856065283E7,
+                "100.0" : 1.0877928856065283E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1.0874309771636387E7,
+                    1.0876980971587054E7,
+                    1.0869252219969809E7,
+                    1.087268089517466E7,
+                    1.0877928856065283E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "max_10"
+        },
+        "primaryMetric" : {
+            "score" : 1.1104433993899226E7,
+            "scoreError" : 55870.83920092462,
+            "scoreConfidence" : [
+                1.1048563154698301E7,
+                1.1160304833100151E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1.1086942622380415E7,
+                "50.0" : 1.1104903473631822E7,
+                "90.0" : 1.1125979357374435E7,
+                "95.0" : 1.1125979357374435E7,
+                "99.0" : 1.1125979357374435E7,
+                "99.9" : 1.1125979357374435E7,
+                "99.99" : 1.1125979357374435E7,
+                "99.999" : 1.1125979357374435E7,
+                "99.9999" : 1.1125979357374435E7,
+                "100.0" : 1.1125979357374435E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1.110771743203848E7,
+                    1.1125979357374435E7,
+                    1.1104903473631822E7,
+                    1.109662708407098E7,
+                    1.1086942622380415E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "reg"
+        },
+        "primaryMetric" : {
+            "score" : 3.919200177915344E7,
+            "scoreError" : 210649.52725448293,
+            "scoreConfidence" : [
+                3.898135225189895E7,
+                3.940265130640792E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 3.9104261162276864E7,
+                "50.0" : 3.9199547776746504E7,
+                "90.0" : 3.925203465930263E7,
+                "95.0" : 3.925203465930263E7,
+                "99.0" : 3.925203465930263E7,
+                "99.9" : 3.925203465930263E7,
+                "99.99" : 3.925203465930263E7,
+                "99.999" : 3.925203465930263E7,
+                "99.9999" : 3.925203465930263E7,
+                "100.0" : 3.925203465930263E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    3.921636553046066E7,
+                    3.918779976698052E7,
+                    3.9104261162276864E7,
+                    3.9199547776746504E7,
+                    3.925203465930263E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "sum"
+        },
+        "primaryMetric" : {
+            "score" : 5230389.448576182,
+            "scoreError" : 91300.98681106279,
+            "scoreConfidence" : [
+                5139088.46176512,
+                5321690.435387244
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5188374.179982539,
+                "50.0" : 5239775.582588926,
+                "90.0" : 5246182.807157956,
+                "95.0" : 5246182.807157956,
+                "99.0" : 5246182.807157956,
+                "99.9" : 5246182.807157956,
+                "99.99" : 5246182.807157956,
+                "99.999" : 5246182.807157956,
+                "99.9999" : 5246182.807157956,
+                "100.0" : 5246182.807157956
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    5188374.179982539,
+                    5239775.582588926,
+                    5237352.76412572,
+                    5240261.90902577,
+                    5246182.807157956
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "count"
+        },
+        "primaryMetric" : {
+            "score" : 5334897.310777513,
+            "scoreError" : 13108.264706312444,
+            "scoreConfidence" : [
+                5321789.046071201,
+                5348005.575483826
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5330897.4504092345,
+                "50.0" : 5333608.85810574,
+                "90.0" : 5338992.825011151,
+                "95.0" : 5338992.825011151,
+                "99.0" : 5338992.825011151,
+                "99.9" : 5338992.825011151,
+                "99.99" : 5338992.825011151,
+                "99.999" : 5338992.825011151,
+                "99.9999" : 5338992.825011151,
+                "100.0" : 5338992.825011151
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    5338992.825011151,
+                    5337861.199085893,
+                    5330897.4504092345,
+                    5333608.85810574,
+                    5333126.221275554
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "avg"
+        },
+        "primaryMetric" : {
+            "score" : 2611013.9607685884,
+            "scoreError" : 8061.526270955712,
+            "scoreConfidence" : [
+                2602952.4344976326,
+                2619075.487039544
+            ],
+            "scorePercentiles" : {
+                "0.0" : 2607655.4094653334,
+                "50.0" : 2611396.305114351,
+                "90.0" : 2612795.887611795,
+                "95.0" : 2612795.887611795,
+                "99.0" : 2612795.887611795,
+                "99.9" : 2612795.887611795,
+                "99.99" : 2612795.887611795,
+                "99.999" : 2612795.887611795,
+                "99.9999" : 2612795.887611795,
+                "100.0" : 2612795.887611795
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    2612664.0450342717,
+                    2610558.15661719,
+                    2611396.305114351,
+                    2607655.4094653334,
+                    2612795.887611795
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "var"
+        },
+        "primaryMetric" : {
+            "score" : 1739354.2023711943,
+            "scoreError" : 3167.2529617038163,
+            "scoreConfidence" : [
+                1736186.9494094905,
+                1742521.455332898
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1738389.1011514862,
+                "50.0" : 1739157.005309905,
+                "90.0" : 1740603.4621535153,
+                "95.0" : 1740603.4621535153,
+                "99.0" : 1740603.4621535153,
+                "99.9" : 1740603.4621535153,
+                "99.99" : 1740603.4621535153,
+                "99.999" : 1740603.4621535153,
+                "99.9999" : 1740603.4621535153,
+                "100.0" : 1740603.4621535153
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1739017.929177086,
+                    1738389.1011514862,
+                    1739157.005309905,
+                    1740603.4621535153,
+                    1739603.5140639795
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "stddev"
+        },
+        "primaryMetric" : {
+            "score" : 1798111.622980915,
+            "scoreError" : 50918.43211876387,
+            "scoreConfidence" : [
+                1747193.190862151,
+                1849030.055099679
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1784442.4407914546,
+                "50.0" : 1790843.8672286205,
+                "90.0" : 1813092.452410876,
+                "95.0" : 1813092.452410876,
+                "99.0" : 1813092.452410876,
+                "99.9" : 1813092.452410876,
+                "99.99" : 1813092.452410876,
+                "99.999" : 1813092.452410876,
+                "99.9999" : 1813092.452410876,
+                "100.0" : 1813092.452410876
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1784442.4407914546,
+                    1811520.3723886881,
+                    1790843.8672286205,
+                    1790658.9820849348,
+                    1813092.452410876
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_10"
+        },
+        "primaryMetric" : {
+            "score" : 536550.5582605636,
+            "scoreError" : 19809.289677753495,
+            "scoreConfidence" : [
+                516741.2685828101,
+                556359.8479383171
+            ],
+            "scorePercentiles" : {
+                "0.0" : 529527.4036091785,
+                "50.0" : 535072.1713939821,
+                "90.0" : 542125.1816232477,
+                "95.0" : 542125.1816232477,
+                "99.0" : 542125.1816232477,
+                "99.9" : 542125.1816232477,
+                "99.99" : 542125.1816232477,
+                "99.999" : 542125.1816232477,
+                "99.9999" : 542125.1816232477,
+                "100.0" : 542125.1816232477
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    529527.4036091785,
+                    542125.1816232477,
+                    535072.1713939821,
+                    541095.3824480593,
+                    534932.6522283509
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_100"
+        },
+        "primaryMetric" : {
+            "score" : 57986.35306572025,
+            "scoreError" : 1618.4780814245846,
+            "scoreConfidence" : [
+                56367.87498429567,
+                59604.83114714483
+            ],
+            "scorePercentiles" : {
+                "0.0" : 57543.33106117498,
+                "50.0" : 57857.23455902559,
+                "90.0" : 58461.56518203427,
+                "95.0" : 58461.56518203427,
+                "99.0" : 58461.56518203427,
+                "99.9" : 58461.56518203427,
+                "99.99" : 58461.56518203427,
+                "99.999" : 58461.56518203427,
+                "99.9999" : 58461.56518203427,
+                "100.0" : 58461.56518203427
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    58461.56518203427,
+                    57543.33106117498,
+                    57857.23455902559,
+                    58397.57748180068,
+                    57672.05704456571
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_1000"
+        },
+        "primaryMetric" : {
+            "score" : 5273.647423962777,
+            "scoreError" : 117.9219326400417,
+            "scoreConfidence" : [
+                5155.725491322735,
+                5391.5693566028185
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5239.600233819868,
+                "50.0" : 5292.539935068474,
+                "90.0" : 5298.861025182234,
+                "95.0" : 5298.861025182234,
+                "99.0" : 5298.861025182234,
+                "99.9" : 5298.861025182234,
+                "99.99" : 5298.861025182234,
+                "99.999" : 5298.861025182234,
+                "99.9999" : 5298.861025182234,
+                "100.0" : 5298.861025182234
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    5292.539935068474,
+                    5240.789462840887,
+                    5296.4464629024205,
+                    5239.600233819868,
+                    5298.861025182234
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "min_10"
+        },
+        "primaryMetric" : {
+            "score" : 524339.2501677732,
+            "scoreError" : 14605.45594004794,
+            "scoreConfidence" : [
+                509733.7942277253,
+                538944.7061078212
+            ],
+            "scorePercentiles" : {
+                "0.0" : 521255.0058800011,
+                "50.0" : 522008.4554622534,
+                "90.0" : 529046.8022001595,
+                "95.0" : 529046.8022001595,
+                "99.0" : 529046.8022001595,
+                "99.9" : 529046.8022001595,
+                "99.99" : 529046.8022001595,
+                "99.999" : 529046.8022001595,
+                "99.9999" : 529046.8022001595,
+                "100.0" : 529046.8022001595
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    522008.4554622534,
+                    529046.8022001595,
+                    521255.0058800011,
+                    527870.305932087,
+                    521515.68136436475
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "max_10"
+        },
+        "primaryMetric" : {
+            "score" : 535391.8905305567,
+            "scoreError" : 13106.203388166847,
+            "scoreConfidence" : [
+                522285.6871423898,
+                548498.0939187235
+            ],
+            "scorePercentiles" : {
+                "0.0" : 531792.0423492753,
+                "50.0" : 534272.5705223624,
+                "90.0" : 539227.2495013857,
+                "95.0" : 539227.2495013857,
+                "99.0" : 539227.2495013857,
+                "99.9" : 539227.2495013857,
+                "99.99" : 539227.2495013857,
+                "99.999" : 539227.2495013857,
+                "99.9999" : 539227.2495013857,
+                "100.0" : 539227.2495013857
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    538751.5616343303,
+                    534272.5705223624,
+                    531792.0423492753,
+                    539227.2495013857,
+                    532916.0286454291
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.7",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.7+10-post-Ubuntu-2ubuntu218.04",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "reg"
+        },
+        "primaryMetric" : {
+            "score" : 1078373.1311461637,
+            "scoreError" : 42452.2945034615,
+            "scoreConfidence" : [
+                1035920.8366427022,
+                1120825.4256496252
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1062557.2695827822,
+                "50.0" : 1077578.053025611,
+                "90.0" : 1089888.535043081,
+                "95.0" : 1089888.535043081,
+                "99.0" : 1089888.535043081,
+                "99.9" : 1089888.535043081,
+                "99.99" : 1089888.535043081,
+                "99.999" : 1089888.535043081,
+                "99.9999" : 1089888.535043081,
+                "100.0" : 1089888.535043081
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1087622.3147122606,
+                    1074219.4833670843,
+                    1089888.535043081,
+                    1077578.053025611,
+                    1062557.2695827822
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+	
+	 {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "sum"
+        },
+        "primaryMetric" : {
+            "score" : 5084095.579020491,
+            "scoreError" : 2241122.5509290025,
+            "scoreConfidence" : [
+                2842973.0280914884,
+                7325218.129949493
+            ],
+            "scorePercentiles" : {
+                "0.0" : 4200291.74015139,
+                "50.0" : 5099899.152860717,
+                "90.0" : 5824034.730179188,
+                "95.0" : 5824034.730179188,
+                "99.0" : 5824034.730179188,
+                "99.9" : 5824034.730179188,
+                "99.99" : 5824034.730179188,
+                "99.999" : 5824034.730179188,
+                "99.9999" : 5824034.730179188,
+                "100.0" : 5824034.730179188
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    5242691.004642303,
+                    5824034.730179188,
+                    4200291.74015139,
+                    5053561.267268861,
+                    5099899.152860717
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "count"
+        },
+        "primaryMetric" : {
+            "score" : 7029703.744652599,
+            "scoreError" : 603728.7778868575,
+            "scoreConfidence" : [
+                6425974.966765742,
+                7633432.522539456
+            ],
+            "scorePercentiles" : {
+                "0.0" : 6817443.957425133,
+                "50.0" : 7004669.210025265,
+                "90.0" : 7254322.438408578,
+                "95.0" : 7254322.438408578,
+                "99.0" : 7254322.438408578,
+                "99.9" : 7254322.438408578,
+                "99.99" : 7254322.438408578,
+                "99.999" : 7254322.438408578,
+                "99.9999" : 7254322.438408578,
+                "100.0" : 7254322.438408578
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    7254322.438408578,
+                    7003536.785702566,
+                    7068546.331701454,
+                    7004669.210025265,
+                    6817443.957425133
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "avg"
+        },
+        "primaryMetric" : {
+            "score" : 3967656.552400249,
+            "scoreError" : 2016137.1285410842,
+            "scoreConfidence" : [
+                1951519.4238591648,
+                5983793.680941333
+            ],
+            "scorePercentiles" : {
+                "0.0" : 3297874.282863514,
+                "50.0" : 4199567.244356791,
+                "90.0" : 4544890.584093839,
+                "95.0" : 4544890.584093839,
+                "99.0" : 4544890.584093839,
+                "99.9" : 4544890.584093839,
+                "99.99" : 4544890.584093839,
+                "99.999" : 4544890.584093839,
+                "99.9999" : 4544890.584093839,
+                "100.0" : 4544890.584093839
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    3543530.9680673555,
+                    4544890.584093839,
+                    4199567.244356791,
+                    4252419.682619749,
+                    3297874.282863514
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "var"
+        },
+        "primaryMetric" : {
+            "score" : 2541426.3978279657,
+            "scoreError" : 860481.5895508933,
+            "scoreConfidence" : [
+                1680944.8082770724,
+                3401907.987378859
+            ],
+            "scorePercentiles" : {
+                "0.0" : 2272096.227960745,
+                "50.0" : 2675250.25094765,
+                "90.0" : 2729654.5200742255,
+                "95.0" : 2729654.5200742255,
+                "99.0" : 2729654.5200742255,
+                "99.9" : 2729654.5200742255,
+                "99.99" : 2729654.5200742255,
+                "99.999" : 2729654.5200742255,
+                "99.9999" : 2729654.5200742255,
+                "100.0" : 2729654.5200742255
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    2675250.25094765,
+                    2705431.0037854575,
+                    2729654.5200742255,
+                    2272096.227960745,
+                    2324699.98637175
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "stddev"
+        },
+        "primaryMetric" : {
+            "score" : 2111966.0787308677,
+            "scoreError" : 1447178.6337718733,
+            "scoreConfidence" : [
+                664787.4449589944,
+                3559144.7125027413
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1939858.5818127103,
+                "50.0" : 1940371.7225160107,
+                "90.0" : 2784167.77789496,
+                "95.0" : 2784167.77789496,
+                "99.0" : 2784167.77789496,
+                "99.9" : 2784167.77789496,
+                "99.99" : 2784167.77789496,
+                "99.999" : 2784167.77789496,
+                "99.9999" : 2784167.77789496,
+                "100.0" : 2784167.77789496
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    2784167.77789496,
+                    1955099.05461276,
+                    1940371.7225160107,
+                    1940333.2568178992,
+                    1939858.5818127103
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_10"
+        },
+        "primaryMetric" : {
+            "score" : 923019.526328095,
+            "scoreError" : 479464.52229873574,
+            "scoreConfidence" : [
+                443555.00402935926,
+                1402484.0486268308
+            ],
+            "scorePercentiles" : {
+                "0.0" : 786487.2163351452,
+                "50.0" : 1010917.8065553372,
+                "90.0" : 1015504.3301191278,
+                "95.0" : 1015504.3301191278,
+                "99.0" : 1015504.3301191278,
+                "99.9" : 1015504.3301191278,
+                "99.99" : 1015504.3301191278,
+                "99.999" : 1015504.3301191278,
+                "99.9999" : 1015504.3301191278,
+                "100.0" : 1015504.3301191278
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1015504.3301191278,
+                    1015405.7521739892,
+                    786782.5264568764,
+                    786487.2163351452,
+                    1010917.8065553372
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_100"
+        },
+        "primaryMetric" : {
+            "score" : 120912.10477145373,
+            "scoreError" : 48455.04961797853,
+            "scoreConfidence" : [
+                72457.0551534752,
+                169367.15438943225
+            ],
+            "scorePercentiles" : {
+                "0.0" : 98401.84997301483,
+                "50.0" : 126533.56135058618,
+                "90.0" : 126561.7609768061,
+                "95.0" : 126561.7609768061,
+                "99.0" : 126561.7609768061,
+                "99.9" : 126561.7609768061,
+                "99.99" : 126561.7609768061,
+                "99.999" : 126561.7609768061,
+                "99.9999" : 126561.7609768061,
+                "100.0" : 126561.7609768061
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    98401.84997301483,
+                    126524.43319546651,
+                    126538.91836139503,
+                    126533.56135058618,
+                    126561.7609768061
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_1000"
+        },
+        "primaryMetric" : {
+            "score" : 10855.6992575206,
+            "scoreError" : 4834.690314090845,
+            "scoreConfidence" : [
+                6021.008943429755,
+                15690.389571611446
+            ],
+            "scorePercentiles" : {
+                "0.0" : 8834.953457125832,
+                "50.0" : 11310.462342391498,
+                "90.0" : 12134.624902450474,
+                "95.0" : 12134.624902450474,
+                "99.0" : 12134.624902450474,
+                "99.9" : 12134.624902450474,
+                "99.99" : 12134.624902450474,
+                "99.999" : 12134.624902450474,
+                "99.9999" : 12134.624902450474,
+                "100.0" : 12134.624902450474
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    11310.462342391498,
+                    8834.953457125832,
+                    12134.624902450474,
+                    10587.775578408497,
+                    11410.68000722671
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "min_10"
+        },
+        "primaryMetric" : {
+            "score" : 759302.5458284144,
+            "scoreError" : 526867.2389377295,
+            "scoreConfidence" : [
+                232435.30689068488,
+                1286169.784766144
+            ],
+            "scorePercentiles" : {
+                "0.0" : 639614.0656706399,
+                "50.0" : 698978.1294597877,
+                "90.0" : 972881.437899339,
+                "95.0" : 972881.437899339,
+                "99.0" : 972881.437899339,
+                "99.9" : 972881.437899339,
+                "99.99" : 972881.437899339,
+                "99.999" : 972881.437899339,
+                "99.9999" : 972881.437899339,
+                "100.0" : 972881.437899339
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    815804.9268643685,
+                    639614.0656706399,
+                    972881.437899339,
+                    669234.1692479375,
+                    698978.1294597877
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "max_10"
+        },
+        "primaryMetric" : {
+            "score" : 708479.2433226706,
+            "scoreError" : 250985.98046461862,
+            "scoreConfidence" : [
+                457493.2628580519,
+                959465.2237872892
+            ],
+            "scorePercentiles" : {
+                "0.0" : 626755.6137652689,
+                "50.0" : 689631.6555238897,
+                "90.0" : 775442.889390624,
+                "95.0" : 775442.889390624,
+                "99.0" : 775442.889390624,
+                "99.9" : 775442.889390624,
+                "99.99" : 775442.889390624,
+                "99.999" : 775442.889390624,
+                "99.9999" : 775442.889390624,
+                "100.0" : 775442.889390624
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    689631.6555238897,
+                    675729.9324432424,
+                    775442.889390624,
+                    774836.1254903271,
+                    626755.6137652689
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncode",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "reg"
+        },
+        "primaryMetric" : {
+            "score" : 1755836.8325781443,
+            "scoreError" : 802215.5284763266,
+            "scoreConfidence" : [
+                953621.3041018177,
+                2558052.3610544708
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1561356.0359993074,
+                "50.0" : 1769318.439976722,
+                "90.0" : 2060407.1295000806,
+                "95.0" : 2060407.1295000806,
+                "99.0" : 2060407.1295000806,
+                "99.9" : 2060407.1295000806,
+                "99.99" : 2060407.1295000806,
+                "99.999" : 2060407.1295000806,
+                "99.9999" : 2060407.1295000806,
+                "100.0" : 2060407.1295000806
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1561371.673742758,
+                    2060407.1295000806,
+                    1561356.0359993074,
+                    1769318.439976722,
+                    1826730.883671852
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "sum"
+        },
+        "primaryMetric" : {
+            "score" : 64098.15910481791,
+            "scoreError" : 7380.985281798093,
+            "scoreConfidence" : [
+                56717.17382301982,
+                71479.144386616
+            ],
+            "scorePercentiles" : {
+                "0.0" : 61884.068328755995,
+                "50.0" : 64021.23519174126,
+                "90.0" : 66726.81983503448,
+                "95.0" : 66726.81983503448,
+                "99.0" : 66726.81983503448,
+                "99.9" : 66726.81983503448,
+                "99.99" : 66726.81983503448,
+                "99.999" : 66726.81983503448,
+                "99.9999" : 66726.81983503448,
+                "100.0" : 66726.81983503448
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    64021.23519174126,
+                    61884.068328755995,
+                    62741.52364319498,
+                    66726.81983503448,
+                    65117.14852536282
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "count"
+        },
+        "primaryMetric" : {
+            "score" : 76594.90709070586,
+            "scoreError" : 27208.63477082591,
+            "scoreConfidence" : [
+                49386.27231987995,
+                103803.54186153178
+            ],
+            "scorePercentiles" : {
+                "0.0" : 68062.47514761568,
+                "50.0" : 74231.72042719722,
+                "90.0" : 86951.06593281368,
+                "95.0" : 86951.06593281368,
+                "99.0" : 86951.06593281368,
+                "99.9" : 86951.06593281368,
+                "99.99" : 86951.06593281368,
+                "99.999" : 86951.06593281368,
+                "99.9999" : 86951.06593281368,
+                "100.0" : 86951.06593281368
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    79503.82434739124,
+                    68062.47514761568,
+                    86951.06593281368,
+                    74231.72042719722,
+                    74225.44959851154
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "avg"
+        },
+        "primaryMetric" : {
+            "score" : 46298.92356857601,
+            "scoreError" : 26405.044306059688,
+            "scoreConfidence" : [
+                19893.87926251632,
+                72703.9678746357
+            ],
+            "scorePercentiles" : {
+                "0.0" : 39374.329534164084,
+                "50.0" : 44773.15004839957,
+                "90.0" : 57833.826924280635,
+                "95.0" : 57833.826924280635,
+                "99.0" : 57833.826924280635,
+                "99.9" : 57833.826924280635,
+                "99.99" : 57833.826924280635,
+                "99.999" : 57833.826924280635,
+                "99.9999" : 57833.826924280635,
+                "100.0" : 57833.826924280635
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    39374.329534164084,
+                    44773.15004839957,
+                    44783.37058773076,
+                    44729.940748305,
+                    57833.826924280635
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "var"
+        },
+        "primaryMetric" : {
+            "score" : 33598.46672286875,
+            "scoreError" : 15306.885556639261,
+            "scoreConfidence" : [
+                18291.581166229487,
+                48905.352279508006
+            ],
+            "scorePercentiles" : {
+                "0.0" : 28839.14346783615,
+                "50.0" : 33719.20725511969,
+                "90.0" : 38954.71460738663,
+                "95.0" : 38954.71460738663,
+                "99.0" : 38954.71460738663,
+                "99.9" : 38954.71460738663,
+                "99.99" : 38954.71460738663,
+                "99.999" : 38954.71460738663,
+                "99.9999" : 38954.71460738663,
+                "100.0" : 38954.71460738663
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    38954.71460738663,
+                    30831.875095746575,
+                    33719.20725511969,
+                    35647.393188254675,
+                    28839.14346783615
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "stddev"
+        },
+        "primaryMetric" : {
+            "score" : 25651.567807562118,
+            "scoreError" : 12687.554015265696,
+            "scoreConfidence" : [
+                12964.013792296422,
+                38339.121822827816
+            ],
+            "scorePercentiles" : {
+                "0.0" : 21470.316432490286,
+                "50.0" : 25476.27774869759,
+                "90.0" : 30700.068449362418,
+                "95.0" : 30700.068449362418,
+                "99.0" : 30700.068449362418,
+                "99.9" : 30700.068449362418,
+                "99.99" : 30700.068449362418,
+                "99.999" : 30700.068449362418,
+                "99.9999" : 30700.068449362418,
+                "100.0" : 30700.068449362418
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    30700.068449362418,
+                    25610.196811275568,
+                    21470.316432490286,
+                    25476.27774869759,
+                    25000.97959598473
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_10"
+        },
+        "primaryMetric" : {
+            "score" : 10518.711350304218,
+            "scoreError" : 5835.578996363142,
+            "scoreConfidence" : [
+                4683.132353941076,
+                16354.29034666736
+            ],
+            "scorePercentiles" : {
+                "0.0" : 9253.447010607575,
+                "50.0" : 9579.98733533954,
+                "90.0" : 12174.231304622363,
+                "95.0" : 12174.231304622363,
+                "99.0" : 12174.231304622363,
+                "99.9" : 12174.231304622363,
+                "99.99" : 12174.231304622363,
+                "99.999" : 12174.231304622363,
+                "99.9999" : 12174.231304622363,
+                "100.0" : 12174.231304622363
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    9253.447010607575,
+                    9579.98733533954,
+                    12173.793650941725,
+                    9412.09745000989,
+                    12174.231304622363
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_100"
+        },
+        "primaryMetric" : {
+            "score" : 916.7054626479783,
+            "scoreError" : 0.5363147389137817,
+            "scoreConfidence" : [
+                916.1691479090645,
+                917.2417773868921
+            ],
+            "scorePercentiles" : {
+                "0.0" : 916.5446059687589,
+                "50.0" : 916.7156295270071,
+                "90.0" : 916.9175030067278,
+                "95.0" : 916.9175030067278,
+                "99.0" : 916.9175030067278,
+                "99.9" : 916.9175030067278,
+                "99.99" : 916.9175030067278,
+                "99.999" : 916.9175030067278,
+                "99.9999" : 916.9175030067278,
+                "100.0" : 916.9175030067278
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    916.7156295270071,
+                    916.5446059687589,
+                    916.7236418709398,
+                    916.9175030067278,
+                    916.625932866458
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "hist_1000"
+        },
+        "primaryMetric" : {
+            "score" : 84.63743774404801,
+            "scoreError" : 38.653566053141994,
+            "scoreConfidence" : [
+                45.98387169090602,
+                123.29100379719
+            ],
+            "scorePercentiles" : {
+                "0.0" : 71.9626119688768,
+                "50.0" : 85.46152172754202,
+                "90.0" : 97.32386523366296,
+                "95.0" : 97.32386523366296,
+                "99.0" : 97.32386523366296,
+                "99.9" : 97.32386523366296,
+                "99.99" : 97.32386523366296,
+                "99.999" : 97.32386523366296,
+                "99.9999" : 97.32386523366296,
+                "100.0" : 97.32386523366296
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    71.9626119688768,
+                    85.46152172754202,
+                    90.56142259992018,
+                    77.87776719023812,
+                    97.32386523366296
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "min_10"
+        },
+        "primaryMetric" : {
+            "score" : 7711.76413410547,
+            "scoreError" : 1871.1199083643637,
+            "scoreConfidence" : [
+                5840.644225741105,
+                9582.884042469834
+            ],
+            "scorePercentiles" : {
+                "0.0" : 7132.285096295695,
+                "50.0" : 7536.279868223534,
+                "90.0" : 8257.379161845278,
+                "95.0" : 8257.379161845278,
+                "99.0" : 8257.379161845278,
+                "99.9" : 8257.379161845278,
+                "99.99" : 8257.379161845278,
+                "99.999" : 8257.379161845278,
+                "99.9999" : 8257.379161845278,
+                "100.0" : 8257.379161845278
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    8175.804622580122,
+                    7132.285096295695,
+                    8257.379161845278,
+                    7536.279868223534,
+                    7457.071921582722
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "max_10"
+        },
+        "primaryMetric" : {
+            "score" : 8619.289957950303,
+            "scoreError" : 2742.533836834641,
+            "scoreConfidence" : [
+                5876.756121115662,
+                11361.823794784945
+            ],
+            "scorePercentiles" : {
+                "0.0" : 7648.377741091093,
+                "50.0" : 9070.572898234763,
+                "90.0" : 9156.26721329214,
+                "95.0" : 9156.26721329214,
+                "99.0" : 9156.26721329214,
+                "99.9" : 9156.26721329214,
+                "99.99" : 9156.26721329214,
+                "99.999" : 9156.26721329214,
+                "99.9999" : 9156.26721329214,
+                "100.0" : 9156.26721329214
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    9156.26721329214,
+                    9070.572898234763,
+                    9155.707334211847,
+                    7648.377741091093,
+                    8065.524602921672
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.EncoderBenchmark.testEncodeEncrypt",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "encoderConfig" : "reg"
+        },
+        "primaryMetric" : {
+            "score" : 15593.714656998567,
+            "scoreError" : 3243.5164991487845,
+            "scoreConfidence" : [
+                12350.198157849783,
+                18837.23115614735
+            ],
+            "scorePercentiles" : {
+                "0.0" : 14490.761139747063,
+                "50.0" : 15326.305423333393,
+                "90.0" : 16671.08648349064,
+                "95.0" : 16671.08648349064,
+                "99.0" : 16671.08648349064,
+                "99.9" : 16671.08648349064,
+                "99.99" : 16671.08648349064,
+                "99.999" : 16671.08648349064,
+                "99.9999" : 16671.08648349064,
+                "100.0" : 16671.08648349064
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    14490.761139747063,
+                    16156.394910294794,
+                    15326.305423333393,
+                    15324.025328126949,
+                    16671.08648349064
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.6+10-post-Ubuntu-1ubuntu118.04.1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "10"
+        },
+        "primaryMetric" : {
+            "score" : 2066.4171809992567,
+            "scoreError" : 61.95550256798379,
+            "scoreConfidence" : [
+                2004.461678431273,
+                2128.3726835672405
+            ],
+            "scorePercentiles" : {
+                "0.0" : 2049.778178175868,
+                "50.0" : 2060.7325814225665,
+                "90.0" : 2084.3402058078186,
+                "95.0" : 2084.3402058078186,
+                "99.0" : 2084.3402058078186,
+                "99.9" : 2084.3402058078186,
+                "99.99" : 2084.3402058078186,
+                "99.999" : 2084.3402058078186,
+                "99.9999" : 2084.3402058078186,
+                "100.0" : 2084.3402058078186
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    2060.7325814225665,
+                    2084.3402058078186,
+                    2049.778178175868,
+                    2082.678382812537,
+                    2054.556556777494
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 417416.2705618498,
+                "scoreError" : 12515.011518732868,
+                "scoreConfidence" : [
+                    404901.25904311694,
+                    429931.2820805827
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 414055.19199152535,
+                    "50.0" : 416267.9814473584,
+                    "90.0" : 421036.7215731794,
+                    "95.0" : 421036.7215731794,
+                    "99.0" : 421036.7215731794,
+                    "99.9" : 421036.7215731794,
+                    "99.99" : 421036.7215731794,
+                    "99.999" : 421036.7215731794,
+                    "99.9999" : 421036.7215731794,
+                    "100.0" : 421036.7215731794
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        416267.9814473584,
+                        421036.7215731794,
+                        414055.19199152535,
+                        420701.03332813253,
+                        415020.4244690537
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.6+10-post-Ubuntu-1ubuntu118.04.1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "100"
+        },
+        "primaryMetric" : {
+            "score" : 2238.965181403622,
+            "scoreError" : 67.47873569853307,
+            "scoreConfidence" : [
+                2171.486445705089,
+                2306.443917102155
+            ],
+            "scorePercentiles" : {
+                "0.0" : 2215.9320363289444,
+                "50.0" : 2236.0875997713893,
+                "90.0" : 2257.0074919268654,
+                "95.0" : 2257.0074919268654,
+                "99.0" : 2257.0074919268654,
+                "99.9" : 2257.0074919268654,
+                "99.99" : 2257.0074919268654,
+                "99.999" : 2257.0074919268654,
+                "99.9999" : 2257.0074919268654,
+                "100.0" : 2257.0074919268654
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    2236.0875997713893,
+                    2257.0074919268654,
+                    2229.9944103193716,
+                    2215.9320363289444,
+                    2255.8043686715387
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 452270.96664353163,
+                "scoreError" : 13630.704611103612,
+                "scoreConfidence" : [
+                    438640.262032428,
+                    465901.67125463526
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 447618.2713384468,
+                    "50.0" : 451689.6951538206,
+                    "90.0" : 455915.5133692268,
+                    "95.0" : 455915.5133692268,
+                    "99.0" : 455915.5133692268,
+                    "99.9" : 455915.5133692268,
+                    "99.99" : 455915.5133692268,
+                    "99.999" : 455915.5133692268,
+                    "99.9999" : 455915.5133692268,
+                    "100.0" : 455915.5133692268
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        451689.6951538206,
+                        455915.5133692268,
+                        450458.8708845131,
+                        447618.2713384468,
+                        455672.4824716508
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.6+10-post-Ubuntu-1ubuntu118.04.1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "1000"
+        },
+        "primaryMetric" : {
+            "score" : 5121.800759968946,
+            "scoreError" : 91.59095957035812,
+            "scoreConfidence" : [
+                5030.209800398588,
+                5213.391719539304
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5095.82862951837,
+                "50.0" : 5119.56684166571,
+                "90.0" : 5151.970982192036,
+                "95.0" : 5151.970982192036,
+                "99.0" : 5151.970982192036,
+                "99.9" : 5151.970982192036,
+                "99.99" : 5151.970982192036,
+                "99.999" : 5151.970982192036,
+                "99.9999" : 5151.970982192036,
+                "100.0" : 5151.970982192036
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    5119.56684166571,
+                    5139.140236429355,
+                    5102.497110039259,
+                    5151.970982192036,
+                    5095.82862951837
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 1034603.753513727,
+                "scoreError" : 18501.373833212427,
+                "scoreConfidence" : [
+                    1016102.3796805146,
+                    1053105.1273469394
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 1029357.3831627106,
+                    "50.0" : 1034152.5020164734,
+                    "90.0" : 1040698.1384027912,
+                    "95.0" : 1040698.1384027912,
+                    "99.0" : 1040698.1384027912,
+                    "99.9" : 1040698.1384027912,
+                    "99.99" : 1040698.1384027912,
+                    "99.999" : 1040698.1384027912,
+                    "99.9999" : 1040698.1384027912,
+                    "100.0" : 1040698.1384027912
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        1034152.5020164734,
+                        1038106.3277587298,
+                        1030704.4162279302,
+                        1040698.1384027912,
+                        1029357.3831627106
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.6+10-post-Ubuntu-1ubuntu118.04.1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "10000"
+        },
+        "primaryMetric" : {
+            "score" : 11877.022358587623,
+            "scoreError" : 259.3642728360683,
+            "scoreConfidence" : [
+                11617.658085751555,
+                12136.386631423691
+            ],
+            "scorePercentiles" : {
+                "0.0" : 11806.092856370458,
+                "50.0" : 11840.8819686507,
+                "90.0" : 11953.170027615231,
+                "95.0" : 11953.170027615231,
+                "99.0" : 11953.170027615231,
+                "99.9" : 11953.170027615231,
+                "99.99" : 11953.170027615231,
+                "99.999" : 11953.170027615231,
+                "99.9999" : 11953.170027615231,
+                "100.0" : 11953.170027615231
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    11953.170027615231,
+                    11840.8819686507,
+                    11945.084247091707,
+                    11806.092856370458,
+                    11839.882693210022
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 2399158.5164347,
+                "scoreError" : 52391.58311288593,
+                "scoreConfidence" : [
+                    2346766.9333218145,
+                    2451550.099547586
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 2384830.7569868327,
+                    "50.0" : 2391858.1576674413,
+                    "90.0" : 2414540.345578277,
+                    "95.0" : 2414540.345578277,
+                    "99.0" : 2414540.345578277,
+                    "99.9" : 2414540.345578277,
+                    "99.99" : 2414540.345578277,
+                    "99.999" : 2414540.345578277,
+                    "99.9999" : 2414540.345578277,
+                    "100.0" : 2414540.345578277
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        2414540.345578277,
+                        2391858.1576674413,
+                        2412907.0179125248,
+                        2384830.7569868327,
+                        2391656.3040284244
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.6+10-post-Ubuntu-1ubuntu118.04.1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "30000"
+        },
+        "primaryMetric" : {
+            "score" : 14042.628942287625,
+            "scoreError" : 350.50378507409624,
+            "scoreConfidence" : [
+                13692.12515721353,
+                14393.13272736172
+            ],
+            "scorePercentiles" : {
+                "0.0" : 13929.783411161368,
+                "50.0" : 14008.170527196262,
+                "90.0" : 14139.508716180619,
+                "95.0" : 14139.508716180619,
+                "99.0" : 14139.508716180619,
+                "99.9" : 14139.508716180619,
+                "99.99" : 14139.508716180619,
+                "99.999" : 14139.508716180619,
+                "99.9999" : 14139.508716180619,
+                "100.0" : 14139.508716180619
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    14002.40589603983,
+                    13929.783411161368,
+                    14139.508716180619,
+                    14008.170527196262,
+                    14133.276160860056
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 2836611.0463421005,
+                "scoreError" : 70801.76458496758,
+                "scoreConfidence" : [
+                    2765809.281757133,
+                    2907412.810927068
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 2813816.2490545963,
+                    "50.0" : 2829650.4464936447,
+                    "90.0" : 2856180.760668485,
+                    "95.0" : 2856180.760668485,
+                    "99.0" : 2856180.760668485,
+                    "99.9" : 2856180.760668485,
+                    "99.99" : 2856180.760668485,
+                    "99.999" : 2856180.760668485,
+                    "99.9999" : 2856180.760668485,
+                    "100.0" : 2856180.760668485
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        2828485.991000046,
+                        2813816.2490545963,
+                        2856180.760668485,
+                        2829650.4464936447,
+                        2854921.7844937313
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.6+10-post-Ubuntu-1ubuntu118.04.1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "60000"
+        },
+        "primaryMetric" : {
+            "score" : 14168.1103140611,
+            "scoreError" : 337.17563738389174,
+            "scoreConfidence" : [
+                13830.934676677207,
+                14505.285951444992
+            ],
+            "scorePercentiles" : {
+                "0.0" : 14089.043267121317,
+                "50.0" : 14121.583649997272,
+                "90.0" : 14269.005474053258,
+                "95.0" : 14269.005474053258,
+                "99.0" : 14269.005474053258,
+                "99.9" : 14269.005474053258,
+                "99.99" : 14269.005474053258,
+                "99.999" : 14269.005474053258,
+                "99.9999" : 14269.005474053258,
+                "100.0" : 14269.005474053258
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    14089.043267121317,
+                    14257.167655619762,
+                    14121.583649997272,
+                    14103.751523513894,
+                    14269.005474053258
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 2861958.2834403426,
+                "scoreError" : 68109.47875154659,
+                "scoreConfidence" : [
+                    2793848.804688796,
+                    2930067.7621918893
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 2845986.739958506,
+                    "50.0" : 2852559.897299449,
+                    "90.0" : 2882339.1057587583,
+                    "95.0" : 2882339.1057587583,
+                    "99.0" : 2882339.1057587583,
+                    "99.9" : 2882339.1057587583,
+                    "99.99" : 2882339.1057587583,
+                    "99.999" : 2882339.1057587583,
+                    "99.9999" : 2882339.1057587583,
+                    "100.0" : 2882339.1057587583
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        2845986.739958506,
+                        2879947.866435192,
+                        2852559.897299449,
+                        2848957.8077498064,
+                        2882339.1057587583
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "10"
+        },
+        "primaryMetric" : {
+            "score" : 124.77841413881026,
+            "scoreError" : 1.26077196802105,
+            "scoreConfidence" : [
+                123.51764217078922,
+                126.03918610683131
+            ],
+            "scorePercentiles" : {
+                "0.0" : 124.20678275656726,
+                "50.0" : 124.93856176409987,
+                "90.0" : 124.98216291855421,
+                "95.0" : 124.98216291855421,
+                "99.0" : 124.98216291855421,
+                "99.9" : 124.98216291855421,
+                "99.99" : 124.98216291855421,
+                "99.999" : 124.98216291855421,
+                "99.9999" : 124.98216291855421,
+                "100.0" : 124.98216291855421
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    124.98216291855421,
+                    124.93856176409987,
+                    124.96386367177693,
+                    124.20678275656726,
+                    124.80069958305307
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 25205.239656039674,
+                "scoreError" : 254.67593754025006,
+                "scoreConfidence" : [
+                    24950.563718499423,
+                    25459.915593579924
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 25089.77011682659,
+                    "50.0" : 25237.589476348174,
+                    "90.0" : 25246.39690954795,
+                    "95.0" : 25246.39690954795,
+                    "99.0" : 25246.39690954795,
+                    "99.9" : 25246.39690954795,
+                    "99.99" : 25246.39690954795,
+                    "99.999" : 25246.39690954795,
+                    "99.9999" : 25246.39690954795,
+                    "100.0" : 25246.39690954795
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        25246.39690954795,
+                        25237.589476348174,
+                        25242.70046169894,
+                        25089.77011682659,
+                        25209.74131577672
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "100"
+        },
+        "primaryMetric" : {
+            "score" : 136.49421750213907,
+            "scoreError" : 1.1812556048101568,
+            "scoreConfidence" : [
+                135.3129618973289,
+                137.67547310694923
+            ],
+            "scorePercentiles" : {
+                "0.0" : 136.0862153827762,
+                "50.0" : 136.6536460709217,
+                "90.0" : 136.81141375386002,
+                "95.0" : 136.81141375386002,
+                "99.0" : 136.81141375386002,
+                "99.9" : 136.81141375386002,
+                "99.99" : 136.81141375386002,
+                "99.999" : 136.81141375386002,
+                "99.9999" : 136.81141375386002,
+                "100.0" : 136.81141375386002
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    136.66186658570416,
+                    136.25794571743322,
+                    136.81141375386002,
+                    136.6536460709217,
+                    136.0862153827762
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 27571.83193543209,
+                "scoreError" : 238.61363217165572,
+                "scoreConfidence" : [
+                    27333.218303260433,
+                    27810.445567603743
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 27489.41550732079,
+                    "50.0" : 27604.03650632618,
+                    "90.0" : 27635.905578279726,
+                    "95.0" : 27635.905578279726,
+                    "99.0" : 27635.905578279726,
+                    "99.9" : 27635.905578279726,
+                    "99.99" : 27635.905578279726,
+                    "99.999" : 27635.905578279726,
+                    "99.9999" : 27635.905578279726,
+                    "100.0" : 27635.905578279726
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        27605.69705031224,
+                        27524.105034921507,
+                        27635.905578279726,
+                        27604.03650632618,
+                        27489.41550732079
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "1000"
+        },
+        "primaryMetric" : {
+            "score" : 290.9192327580174,
+            "scoreError" : 3.10475319263613,
+            "scoreConfidence" : [
+                287.8144795653813,
+                294.0239859506535
+            ],
+            "scorePercentiles" : {
+                "0.0" : 289.74027157856574,
+                "50.0" : 290.7820526931069,
+                "90.0" : 291.724770623717,
+                "95.0" : 291.724770623717,
+                "99.0" : 291.724770623717,
+                "99.9" : 291.724770623717,
+                "99.99" : 291.724770623717,
+                "99.999" : 291.724770623717,
+                "99.9999" : 291.724770623717,
+                "100.0" : 291.724770623717
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    289.74027157856574,
+                    291.6286415818818,
+                    290.72042731281556,
+                    290.7820526931069,
+                    291.724770623717
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 58765.685017119526,
+                "scoreError" : 627.1601449125071,
+                "scoreConfidence" : [
+                    58138.52487220702,
+                    59392.845162032034
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 58527.53485887028,
+                    "50.0" : 58737.97464400759,
+                    "90.0" : 58928.40366599084,
+                    "95.0" : 58928.40366599084,
+                    "99.0" : 58928.40366599084,
+                    "99.9" : 58928.40366599084,
+                    "99.99" : 58928.40366599084,
+                    "99.999" : 58928.40366599084,
+                    "99.9999" : 58928.40366599084,
+                    "100.0" : 58928.40366599084
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        58527.53485887028,
+                        58908.98559954013,
+                        58725.52631718874,
+                        58737.97464400759,
+                        58928.40366599084
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "10000"
+        },
+        "primaryMetric" : {
+            "score" : 449.68782722927665,
+            "scoreError" : 1.1493375746400367,
+            "scoreConfidence" : [
+                448.53848965463663,
+                450.83716480391666
+            ],
+            "scorePercentiles" : {
+                "0.0" : 449.37015765400776,
+                "50.0" : 449.55831299447965,
+                "90.0" : 450.0837384126613,
+                "95.0" : 450.0837384126613,
+                "99.0" : 450.0837384126613,
+                "99.9" : 450.0837384126613,
+                "99.99" : 450.0837384126613,
+                "99.999" : 450.0837384126613,
+                "99.9999" : 450.0837384126613,
+                "100.0" : 450.0837384126613
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    449.37015765400776,
+                    449.9142266012057,
+                    449.55831299447965,
+                    450.0837384126613,
+                    449.5127004840288
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 90836.94110031388,
+                "scoreError" : 232.16619007728994,
+                "scoreConfidence" : [
+                    90604.77491023659,
+                    91069.10729039117
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 90772.77184610956,
+                    "50.0" : 90810.77922488489,
+                    "90.0" : 90916.91515935758,
+                    "95.0" : 90916.91515935758,
+                    "99.0" : 90916.91515935758,
+                    "99.9" : 90916.91515935758,
+                    "99.99" : 90916.91515935758,
+                    "99.999" : 90916.91515935758,
+                    "99.9999" : 90916.91515935758,
+                    "100.0" : 90916.91515935758
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        90772.77184610956,
+                        90882.67377344356,
+                        90810.77922488489,
+                        90916.91515935758,
+                        90801.56549777382
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "30000"
+        },
+        "primaryMetric" : {
+            "score" : 464.2213878092125,
+            "scoreError" : 5.653450969102612,
+            "scoreConfidence" : [
+                458.5679368401099,
+                469.8748387783151
+            ],
+            "scorePercentiles" : {
+                "0.0" : 462.66082098725246,
+                "50.0" : 464.15772385162836,
+                "90.0" : 466.4853761880725,
+                "95.0" : 466.4853761880725,
+                "99.0" : 466.4853761880725,
+                "99.9" : 466.4853761880725,
+                "99.99" : 466.4853761880725,
+                "99.999" : 466.4853761880725,
+                "99.9999" : 466.4853761880725,
+                "100.0" : 466.4853761880725
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    462.66082098725246,
+                    463.2486161387317,
+                    464.15772385162836,
+                    464.5544018803773,
+                    466.4853761880725
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 93772.72033746092,
+                "scoreError" : 1141.9970957587336,
+                "scoreConfidence" : [
+                    92630.72324170219,
+                    94914.71743321966
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 93457.485839425,
+                    "50.0" : 93759.86021802892,
+                    "90.0" : 94230.04598999066,
+                    "95.0" : 94230.04598999066,
+                    "99.0" : 94230.04598999066,
+                    "99.9" : 94230.04598999066,
+                    "99.99" : 94230.04598999066,
+                    "99.999" : 94230.04598999066,
+                    "99.9999" : 94230.04598999066,
+                    "100.0" : 94230.04598999066
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        93457.485839425,
+                        93576.2204600238,
+                        93759.86021802892,
+                        93839.98917983622,
+                        94230.04598999066
+                    ]
+                ]
+            }
+        }
+    },
+    {
+        "jmhVersion" : "1.23",
+        "benchmark" : "ch.ethz.infk.dsg.policycrypt.benchmark.LocalTransformationBenchmark.testLocalTransformation",
+        "mode" : "thrpt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-armhf/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.6",
+        "vmName" : "OpenJDK Server VM",
+        "vmVersion" : "11.0.6+10-post-Raspbian-1deb10u1",
+        "warmupIterations" : 5,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 5,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "bench_time_ms" : "59000",
+            "window_size_ms" : "60000"
+        },
+        "primaryMetric" : {
+            "score" : 477.95956378601534,
+            "scoreError" : 2.39311087682403,
+            "scoreConfidence" : [
+                475.5664529091913,
+                480.3526746628394
+            ],
+            "scorePercentiles" : {
+                "0.0" : 476.9275151860754,
+                "50.0" : 478.2584702711156,
+                "90.0" : 478.40257779814476,
+                "95.0" : 478.40257779814476,
+                "99.0" : 478.40257779814476,
+                "99.9" : 478.40257779814476,
+                "99.99" : 478.40257779814476,
+                "99.999" : 478.40257779814476,
+                "99.9999" : 478.40257779814476,
+                "100.0" : 478.40257779814476
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    477.8288127074763,
+                    478.2584702711156,
+                    476.9275151860754,
+                    478.40257779814476,
+                    478.3804429672647
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+            "count" : {
+                "score" : 96547.8318847751,
+                "scoreError" : 483.4083971184602,
+                "scoreConfidence" : [
+                    96064.42348765665,
+                    97031.24028189357
+                ],
+                "scorePercentiles" : {
+                    "0.0" : 96339.35806758724,
+                    "50.0" : 96608.21099476535,
+                    "90.0" : 96637.32071522524,
+                    "95.0" : 96637.32071522524,
+                    "99.0" : 96637.32071522524,
+                    "99.9" : 96637.32071522524,
+                    "99.99" : 96637.32071522524,
+                    "99.999" : 96637.32071522524,
+                    "99.9999" : 96637.32071522524,
+                    "100.0" : 96637.32071522524
+                },
+                "scoreUnit" : "ops/s",
+                "rawData" : [
+                    [
+                        96521.4201669102,
+                        96608.21099476535,
+                        96339.35806758724,
+                        96637.32071522524,
+                        96632.84947938747
+                    ]
+                ]
+            }
+        }
+    }
+]
+
+

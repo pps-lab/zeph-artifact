@@ -1,0 +1,24 @@
+{
+
+    "kafkapath": "/opt/kafka_2.13-2.6.0",
+    "kafkalogspath": "/var/lib/kafka-logs",
+
+    "zeph.kafkaBootstrapServers": "127.0.0.1:9092", // <Host:Port>
+    "zeph.dataDir": "data",
+    "zeph.stateDir": "logs",
+    "zeph.e2e.testTime": "60", // secs
+    "zeph.e2e.windowSize": "10000", // millis
+    "zeph.e2e.expoDelayMean": "0.1",
+    "zeph.minUniverseSize": "3",
+
+    "awsPrivateKeyPath": "~/.ssh/kunicola.pem",
+
+
+
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    }
+}

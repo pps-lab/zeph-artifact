@@ -1,0 +1,35 @@
+
+- name: Create runId
+  set_fact:
+    run_id: '({{ ansible_date_time.epoch }}|int / 10000)|int'
+  when: run_id is not defined
+
+- debug:
+    msg="run id = {{ run_id }}"
+
+# replaced with download shared keys from s3
+#- name: Copy shared keys file
+#  copy:
+#    src={{ local_data_dir }}/shared-keys1.avro
+#    dest={{ data_dir }}/shared-keys1.avro
+#    mode='preserve'
+#    force=no
+
+- name: Stop microbenchmark
+  become: yes
+  service: name=microbenchmark.service state=stopped enabled=no
+  register: command_result
+  failed_when:  "command_result is failed and ('find' not in command_result.msg and 'found' not in command_result.msg)"
+
+- name: Create Unit File
+  become: yes
+  template:
+    src=microbenchmark.service.j2
+    dest=/lib/systemd/system/microbenchmark.service
+    mode=644
+  notify:
+  - reload systemctl
+
+- name: Start microbenchmark
+  become: yes
+  service: name=microbenchmark.service state=started enabled=yes

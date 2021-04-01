@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>ch.ethz.infk.pps.zeph</groupId>
+	<artifactId>zeph-parent</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+
+	<name>zeph-parent</name>
+	<url>http://maven.apache.org</url>
+
+	<modules>
+		<module>zeph-shared</module>
+		<module>zeph-crypto</module>
+		<module>zeph-client</module>
+		<module>zeph-server</module>
+		<module>zeph-benchmarks</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>11</jdk.version>
+		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+		<junit.version>4.13.1</junit.version>
+		<log4j.version>2.13.2</log4j.version>
+		<slf4j.version>1.7.25</slf4j.version>
+		<jackson.version>2.12.1</jackson.version>
+		<jmh.version>1.23</jmh.version>
+		<nll.version>2.3.4</nll.version>
+		<guava.version>30.0-jre</guava.version>
+		<kafka.version>2.4.0</kafka.version>
+		<avro.version>1.9.1</avro.version>
+		<failsafe.version>2.3.1</failsafe.version>
+		<org-json.version>20190722</org-json.version>
+		<bouncycastle.version>1.64</bouncycastle.version>
+		<commons-cli.version>1.4</commons-cli.version>
+		<commons-lang3.version>3.9</commons-lang3.version>
+		<commons-math3.version>3.6.1</commons-math3.version>
+		<javax-rs.version>2.1</javax-rs.version>
+	</properties>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<excludes>
+						<exclude>**/.ipynb_checkpoints/*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

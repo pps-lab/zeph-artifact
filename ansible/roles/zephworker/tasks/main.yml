@@ -1,0 +1,47 @@
+- name: Set index variables
+  set_fact:
+    idx: "{{ ansible_play_hosts.index(inventory_hostname) }}"
+    idxlist: "{{ range(0, workers_per_universe * universes|length)|list }}"
+    num_worker_hosts: "{{ ansible_play_hosts | length }}"
+
+- debug:
+    msg="exp id = {{ experiment_id }}  idx = {{ idx }} idxlist = {{ idxlist }}"
+
+- name: Create log4j2 configuration file
+  template:
+    src=log4j2.yaml.j2
+    dest={{ log_dir }}/zephworker{{ item }}_log4j2.yaml
+    mode='preserve'
+  when: item|int % num_worker_hosts|int == idx|int
+  loop: '{{ idxlist }}'
+
+- name: set java agent for prometheus (for nuse_monitoring)
+  set_fact:
+    javaagent_jmx_exporter_prometheus: '-javaagent:"{{monitoring_dir}}/jmx_prometheus_javaagent.jar=11001:{{ monitoring_dir }}/jmx_config.yml"'
+  when: use_monitoring
+
+- name: set java agent for prometheus (for not use_monitoring)
+  set_fact:
+    javaagent_jmx_exporter_prometheus: ""
+  when: not use_monitoring
+
+- name: Create Unit File
+  become: yes
+  template:
+    src=zephworker.service.j2
+    dest=/lib/systemd/system/zephworker{{ item }}.service
+    mode=644
+  notify:
+  - reload systemctl
+  when: item|int % num_worker_hosts|int == idx|int
+  loop: '{{ idxlist }}'
+
+- name: info message
+  debug:
+    msg="{{ workers_per_universe }} workers each with {{ stream_threads }} threads running on {{ num_worker_hosts }} hosts, for universe with {{  partitions }} partitions   (universe-size {{ universe_size }}, expo mean {{ expo_delay_mean }})"
+
+- name: Start Zeph Worker
+  become: yes
+  service: name=zephworker{{ item }}.service state=started enabled=yes
+  when: item|int % num_worker_hosts|int == idx|int
+  loop: '{{ idxlist }}'

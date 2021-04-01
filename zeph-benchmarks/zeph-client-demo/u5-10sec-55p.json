@@ -1,0 +1,75 @@
+{
+  "profileId" : "u5-10sec-55p",
+
+  "clientDemo" : {
+    "baseFolder": "C:/Development/mthesis-kuechler/data",
+    "keystorePassword": "password",
+    "driverTimeoutSec": 1000,
+    "phases": ["CREATE_PRODUCER_IDENTITY", "GENERATE_SHARED_KEYS",  "RUN_SYSTEM"]
+  },
+  "universes" : [
+    {
+      "universeId": 5,
+      "windowSizeMillis": 10000,
+      "memberThreshold": 50,
+      "members": [[1, 55]],
+      "alpha": 1,
+      "delta": 0.00001
+    }
+  ],
+  "privacyControllers": [
+    {
+      "controllerId": 1,
+      "pollTimeoutMillis": 3000,
+      "members": [[1, 55]]
+    }
+
+  ],
+
+  "producers" : [
+    {
+      "producerIdRange" : [1, 55],
+      "testTimeSec": 500,
+      "randomDataRange" : [1, 100],
+      "randomDataExponentialDelayLambda": 2,
+      "silentProb": 0.00001,
+      "silentTimeSec": 40
+    }
+  ],
+
+  "dashboard": {
+    "hostInfo" : {
+      "host": "policycrypt-dashboard.herokuapp.com",
+      "port": 80
+    },
+    "authToken":  "YOUR_AUTH_TOKEN",
+    "universeId": 5,
+    "membershipHistoryLimit" : 10,
+    "resultHistoryLimit" : 10,
+    "statusHistoryLimit" : 23
+  },
+
+  "kafka" : {
+    "kafkaBootstrapServers": [
+      {
+        "host": "127.0.0.1",
+        "port": 9092
+      }
+    ],
+    "interactiveQueriesServers":[
+      {
+        "host": "127.0.0.1",
+        "port":9093
+      }
+    ],
+    "dataProducerConfig": {
+
+    },
+    "privacyControllerProducerConfig":{
+
+    },
+    "privacyControllerConsumerConfig":{
+
+    }
+  }
+}

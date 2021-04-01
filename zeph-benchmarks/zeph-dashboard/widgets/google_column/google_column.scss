@@ -1,0 +1,29 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+$background-color:  #fb9618;
+
+$title-color:       rgba(255, 255, 255, 0.7);
+// ----------------------------------------------------------------------------
+// Widget-GoogleGauge styles
+// ----------------------------------------------------------------------------
+.widget-google-column {
+
+  background-color: $background-color;
+  position: relative;
+
+  .title {
+    color: $title-color;
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    right: 0px;
+  }
+
+  .chart {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+  }
+
+}

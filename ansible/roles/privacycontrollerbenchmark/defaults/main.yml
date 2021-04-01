@@ -1,0 +1,22 @@
+
+
+macrobenchmark_jar: /home/ubuntu/zeph/zeph-benchmarks/zeph-macrobenchmarks/target/zeph-macrobenchmarks-1.0.jar
+
+
+pc_universes: 2
+pc_clients: 4
+pc_universe_size: 5000
+pc_universe_min_size: 4500
+
+
+result_file: pc_results_u{{ pc_universes }}_c{{ pc_clients }}_s{{ pc_universe_size }}
+
+pc_partitions: 3
+pc_test_time: 30
+pc_repetitions: 3
+pc_alpha: 0.5
+pc_delta: 1.0E-5
+pc_client_dropout_prob: 0.0001
+pc_client_comeback_prob: 0.5
+pc_max_tp: 30000
+

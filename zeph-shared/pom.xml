@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>ch.ethz.infk.pps.zeph</groupId>
+		<artifactId>zeph-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<artifactId>zeph-shared</artifactId>
+	<packaging>jar</packaging>
+	<name>zeph-shared</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>${bouncycastle.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk15on</artifactId>
+			<version>${bouncycastle.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro</artifactId>
+			<version>${avro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>${kafka.version}</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.apache.commons</groupId>
+    		<artifactId>commons-math3</artifactId>
+    		<version>${commons-math3.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<id>Select Application</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>pipenv</executable>
+							<workingDirectory>${parent.basedir}</workingDirectory>
+							<arguments>
+								<argument>run</argument>
+								<argument>python</argument>
+								<argument>${basedir}/applications/selectapp.py</argument>
+								<argument>${zeph.application}</argument>
+								<argument>${basedir}</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro-maven-plugin</artifactId>
+				<version>${avro.version}</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>schema</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
+							<outputDirectory>${project.basedir}/src/main/avro/</outputDirectory>
+							<stringType>String</stringType>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>standard-application</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<zeph.application>standard</zeph.application>
+			</properties>
+		</profile>
+		<profile>
+			<id>web-application</id>
+			<properties>
+				<zeph.application>web</zeph.application>
+			</properties>
+		</profile>
+		<profile>
+			<id>polar-application</id>
+			<properties>
+				<zeph.application>polar</zeph.application>
+			</properties>
+		</profile>
+		<profile>
+			<id>car-application</id>
+			<properties>
+				<zeph.application>car</zeph.application>
+			</properties>
+		</profile>
+	</profiles>
+
+
+
+</project>

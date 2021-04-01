@@ -1,0 +1,174 @@
+# requires: universe_size, producer_partition_size, controller_partition_size
+
+- name: set partition
+  set_fact:
+    producer_partition: 0 # default value, if client is producer this will be changed below
+    producer_partition_count: "{{ (universe_size|int / producer_partition_size|int)|int }}"
+    producer_partition_count_per_region: "{{ (universe_size|int / producer_partition_size|int / 3)|int }}" # divide by 3 client_groups
+    controller_partition: 0 # default value, if client is privacy controller, this will be changed below
+    controller_partition_count: 0
+    controller_partition_count_per_region: 0
+
+- name: set partition for controller
+  set_fact:
+    controller_partition_count: "{{ (universe_size|int / controller_partition_size|int)|int }}"
+    controller_partition_count_per_region: "{{ (universe_size|int / controller_partition_size|int / 3)|int | default(0)}}" # divide by 3 client_groups
+  when: client_type == "zeph"
+
+#- debug:
+#    msg="    producer_partition_count={{ producer_partition_count }} producer_partition_count_per_region={{ producer_partition_count_per_region }}"
+#
+#- debug:
+#    msg="    controller_partition_count={{ controller_partition_count }} controller_partition_count_per_region={{ controller_partition_count_per_region }}"
+#
+#- debug:
+#    msg="    universe_size={{ universe_size }}"
+
+
+- name: Check that partitioning works for 3 client regions
+  assert:
+    that:
+      - producer_partition_count_per_region|int * 3 == producer_partition_count|int
+      - producer_partition_size|int * producer_partition_count_per_region|int * 3 == universe_size|int
+    fail_msg: "division in producer partition does not work for 3 client regions"
+    success_msg: "division in producer partition works for 3 client regions"
+
+- name: Check that partitioning works for 3 client regions (controller)
+  assert:
+    that:
+      - controller_partition_count_per_region|int * 3 == controller_partition_count|int
+      - controller_partition_size|int * controller_partition_count_per_region|int * 3 == universe_size|int
+    fail_msg: "division in controller partition does not work for 3 client regions"
+    success_msg: "division in controller partition works for 3 client regions"
+  when: client_type == "zeph"
+
+- name: set host index and region index
+  set_fact:
+    idx: "{{ ansible_play_hosts.index(inventory_hostname) }}" # could sort the playhosts first but I don't think it's required
+    region_idx: "{{ ansible_play_hosts.index(inventory_hostname)|int % (producer_partition_count_per_region|int + controller_partition_count_per_region|int)|int }}" # could sort the playhosts first but I don't think required
+
+- name: Set the region offset [0,1,2] depending on the region of the inventory_hostname
+  set_fact:
+    region_offset: '{{ loop_idx }}' 
+  loop:
+  - '{{ client_group1 }}'
+  - '{{ client_group2 }}'
+  - '{{ client_group3 }}'
+  loop_control:
+    index_var: loop_idx
+  when: item.aws_region in inventory_hostname
+
+- name: Set variables for the case that the client is a Data Producer
+  set_fact:
+    e2e_client: e2e-producer
+    producer_partition: "{{ region_idx|int +  producer_partition_count_per_region|int * region_offset|int }}" 
+  when: region_idx|int < producer_partition_count_per_region|int and client_type == "zeph"
+
+- name: Set variables for the case that the client is a Privacy Controller
+  set_fact:
+    e2e_client: e2e-controller
+    controller_partition: "{{ region_idx|int - producer_partition_count_per_region|int + controller_partition_count_per_region|int * region_offset|int  }}"
+  when: region_idx|int >= producer_partition_count_per_region|int and client_type == "zeph"
+
+- debug:
+    msg="exp id = {{ experiment_id }} idx = {{ idx }} region_idx = {{ region_idx }} e2e_client= {{ e2e_client }} producer_partition={{ producer_partition }}/{{ producer_partition_count }} region_offset={{ region_offset }}"
+  when: client_type == "zeph" and e2e_client == "e2e-producer"
+
+- debug:
+    msg="exp id = {{ experiment_id }} idx = {{ idx }} region_idx = {{ region_idx }} e2e_client= {{ e2e_client }} controller_partition={{ controller_partition }}/{{ controller_partition_count }}  region_offset={{ region_offset }}"
+  when: client_type == "zeph" and e2e_client == "e2e-controller"
+
+- name: Setting results file
+  set_fact:
+    out_file: '{{ experiment_id }}.json'
+    out_file_path: '{{ result_dir }}/{{ experiment_id }}.json'
+
+- name: Create log4j2 configuration file
+  template:
+    src=log4j2.yaml.j2
+    dest={{ log_dir }}/e2eclient_log4j2.yaml
+    mode=preserve
+
+- name: set java agent for prometheus (for use_monitoring)
+  set_fact:
+    javaagent_jmx_exporter_prometheus: '-javaagent:"{{monitoring_dir}}/jmx_prometheus_javaagent.jar=11001:{{ monitoring_dir }}/jmx_config.yml"'
+  when: use_monitoring
+
+- name: set java agent for prometheus (for not use_monitoring)
+  set_fact:
+    javaagent_jmx_exporter_prometheus: ""
+  when: not use_monitoring
+
+
+- name: Run End-to-End Zeph Benchmark Client
+  shell: /usr/bin/java -Dlog4j.configurationFile={{ log_dir }}/e2eclient_log4j2.yaml  {{ javaagent_jmx_exporter_prometheus }} \
+                       -jar {{ macrobenchmark_jar }} \
+                            --end-to-end \
+                            --zeph \
+                            --{{ e2e_client }} \
+                            --experiment-id={{ experiment_id }} \ 
+                            --test-time={{ test_time }} \
+                            --out-file={{ out_file_path }} \
+                            --delete-topics \
+                            --kafka-bootstrap-server={{ kafka_bootstrap_servers }} \
+                            --universes={{ universes|join(',') }} \
+                            --universe-size={{ universe_size }} \
+                            --window-size={{ window_size }} \
+                            --producer-partition={{ producer_partition }}
+                            --producer-partition-size={{ producer_partition_size }}
+                            --producer-partition-count={{ producer_partition_count|int }}
+                            --expo-delay-mean={{ expo_delay_mean }} \
+                            --data-dir={{ data_dir }} \
+                            --controller-partition={{ controller_partition }} \
+                            --controller-partition-size={{ controller_partition_size }} \
+                            --controller-partition-count={{ controller_partition_count|int }} \
+                            --universe-min-size={{ universe_min_size }} \
+                            --alpha={{ alpha }} \
+                            --delta={{ delta }} \
+                            --producers-in-controller={{ producers_in_controller }} \
+                            --universes-in-controller={{ universes_in_controller }}
+  register: output
+  when: client_type == "zeph"
+
+#- debug:
+#    msg="zeph out={{ output }}"
+#  when: client_type == "zeph"
+
+- name: Set producer partition for plaintext producer
+  set_fact:
+    producer_partition: "{{ region_idx|int +  producer_partition_count_per_region|int * region_offset|int }}" 
+  when: region_idx|int < producer_partition_count_per_region|int and client_type == "plaintext"
+
+
+- name: Run End-to-End Plaintext Benchmark Client
+  shell: /usr/bin/java  -Dlog4j.configurationFile={{ log_dir }}/e2eclient_log4j2.yaml {{ javaagent_jmx_exporter_prometheus }} \
+                        -jar {{ macrobenchmark_jar }} \
+                            --end-to-end \
+                            --plaintext \
+                            --e2e-producer \
+                            --experiment-id={{ experiment_id }} \ 
+                            --test-time={{ test_time }} \
+                            --out-file={{ out_file_path }} \
+                            --delete-topics \
+                            --kafka-bootstrap-server={{ kafka_bootstrap_servers }} \
+                            --universes={{ universes|join(',') }} \
+                            --universe-size={{ universe_size }} \
+                            --window-size={{ window_size }} \
+                            --producer-partition={{ producer_partition }}
+                            --producer-partition-size={{ producer_partition_size }}
+                            --producer-partition-count={{ producer_partition_count }}
+                            --expo-delay-mean={{ expo_delay_mean }} \
+                            --data-dir={{ data_dir }} 
+  register: output
+  when: client_type == "plaintext" and region_idx|int < producer_partition_count_per_region|int
+
+#- debug:
+#    msg="plaintext out={{ output }}"
+#  when: client_type == "plaintext" and region_idx|int < producer_partition_count_per_region|int
+
+- name: Fetch result file from remote
+  fetch:
+    src={{ out_file_path }}
+    dest={{ local_result_dir }}/{{ out_file }}
+    flat=yes
+  when: idx|int == 0 # leader

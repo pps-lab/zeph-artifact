@@ -1,0 +1,214 @@
+--- 
+
+#- name: Setup AWS for E2E Benchmark
+#  import_playbook: awssetup.yml
+#  vars:
+#    client_group1_instances_num: 8
+#    client_group1_instances_max_num: 8
+#    client_group2_instances_num: 8
+#    client_group2_instances_max_num: 8
+#    client_group3_instances_num: 8
+#    client_group3_instances_max_num: 8
+#
+#    server_transformer_instances_num: 2
+#    server_transformer_instances_max_num: 2
+#
+#    use_kafka: True
+#    use_shared_keys: True
+#    use_monitoring: True
+#
+- name: Stop EC2 instances not required for first part of the E2E Benchmark
+  import_playbook: awssetup.yml
+  vars:
+    client_group1_instances_num: 4
+    client_group1_instances_max_num: 8
+    client_group2_instances_num: 4
+    client_group2_instances_max_num: 8
+    client_group3_instances_num: 4
+    client_group3_instances_max_num: 8
+
+    server_transformer_instances_num: 2
+    server_transformer_instances_max_num: 2
+
+    use_kafka: True
+    use_shared_keys: True
+    use_monitoring: True
+
+- name: Reset Kafka
+  hosts: "tag_Name_ZephClient[0]"
+  remote_user: ubuntu
+  roles:
+  - role: kafkaclear
+
+###############################
+# Plain 300
+###############################
+- name: Run plaintext 300 end-to-end benchmark
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0]:aws_region_eu_west_3[0]:aws_region_eu_north_1[0]:&tag_Name_ZephClient
+    experiment_id: "{{ exp_prefix }}_plaintext_300_0"
+    universes: [30]
+    universe_size: 300
+    universe_min_size: 300
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: True
+
+###############################
+# PCrypt 300
+###############################
+- name: Run zeph 300 end-to-end benchmark
+  import_playbook: e2ezeph.yml
+  vars:
+    use_monitoring: True
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:1]:aws_region_eu_west_3[0:1]:aws_region_eu_north_1[0:1]:&tag_Name_ZephClient
+    experiment_id: "{{ exp_prefix }}_zeph_300"
+    universes: [31]
+    universe_size: 300
+    universe_min_size: 300
+    producer_partition_size: 100
+    controller_partition_size: 100
+
+
+###############################
+# Plain 600
+###############################
+- name: Run plaintext 600 end-to-end benchmark (requires two instances per region)
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:1]:aws_region_eu_west_3[0:1]:aws_region_eu_north_1[0:1]:&tag_Name_ZephClient
+    experiment_id: "{{ exp_prefix }}_plaintext_600_0"
+    universes: [60]
+    universe_size: 600
+    universe_min_size: 600
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: True
+
+###############################
+# PCrypt 600
+###############################
+- name: Run zeph 600 end-to-end benchmark (requires four instances per region)
+  import_playbook: e2ezeph.yml
+  vars:
+    use_monitoring: True
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:3]:aws_region_eu_west_3[0:3]:aws_region_eu_north_1[0:3]:&tag_Name_ZephClient
+    experiment_id: "{{ exp_prefix }}_zeph_600"
+    universes: [61]
+    universe_size: 600
+    universe_min_size: 600
+    producer_partition_size: 100
+    controller_partition_size: 100
+
+
+###############################
+# Plain 900
+###############################
+- name: Run plaintext 900 end-to-end benchmark (requires three instances per region)
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:2]:aws_region_eu_west_3[0:2]:aws_region_eu_north_1[0:2]:&tag_Name_ZephClient
+    experiment_id: "{{ exp_prefix }}_plaintext_900_0"
+    universes: [90]
+    universe_size: 900
+    universe_min_size: 900
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: True
+
+###############################
+# Plain 1200
+###############################
+- name: Run plaintext 1200 end-to-end benchmark (requires four instances per region)
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:3]:aws_region_eu_west_3[0:3]:aws_region_eu_north_1[0:3]:&tag_Name_ZephClient
+    experiment_id: "{{ exp_prefix }}_plaintext_1200_0"
+    universes: [120]
+    universe_size: 1200
+    universe_min_size: 1200
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: True
+
+
+- name: Start the additional EC2 instances for the second part of the E2E Benchmark
+  import_playbook: awssetup.yml
+  vars:
+    client_group1_instances_num: 8
+    client_group1_instances_max_num: 8
+    client_group2_instances_num: 8
+    client_group2_instances_max_num: 8
+    client_group3_instances_num: 8
+    client_group3_instances_max_num: 8
+
+    server_transformer_instances_num: 2
+    server_transformer_instances_max_num: 2
+
+    use_kafka: True
+    use_shared_keys: True
+    use_monitoring: True
+
+
+###############################
+# PCrypt 900
+###############################
+- name: Run zeph 900 end-to-end benchmark (requires six instances per region)
+  import_playbook: e2ezeph.yml
+  vars:
+    use_monitoring: True
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:5]:aws_region_eu_west_3[0:5]:aws_region_eu_north_1[0:5]:&tag_Name_ZephClient
+    experiment_id: "{{ exp_prefix }}_zeph_900"
+    universes: [91]
+    universe_size: 900
+    universe_min_size: 900
+    producer_partition_size: 100
+    controller_partition_size: 100
+
+
+###############################
+# PCrypt 1200
+###############################
+- name: Run zeph 1200 end-to-end benchmark (requires eight instances per region)
+  import_playbook: e2ezeph.yml
+  vars:
+    use_monitoring: True
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:7]:aws_region_eu_west_3[0:7]:aws_region_eu_north_1[0:7]:&tag_Name_ZephClient
+    experiment_id: "{{ exp_prefix }}_zeph_1200"
+    universes: [121]
+    universe_size: 1200
+    universe_min_size: 1200
+    producer_partition_size: 100
+    controller_partition_size: 100
+
+
+- name: Stop the EC2 instances
+  import_playbook: awssetup.yml
+  vars:
+    client_group1_instances_num: 0
+    client_group1_instances_max_num: 8
+    client_group2_instances_num: 0
+    client_group2_instances_max_num: 8
+    client_group3_instances_num: 0
+    client_group3_instances_max_num: 8
+
+    server_transformer_instances_num: 0
+    server_transformer_instances_max_num: 2
+
+    use_kafka: True
+    use_shared_keys: True
+    use_monitoring: False
+

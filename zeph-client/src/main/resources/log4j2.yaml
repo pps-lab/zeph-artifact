@@ -1,0 +1,38 @@
+Configuration:
+   status: info
+   Appenders:
+           
+      Console:
+      - name: STDOUT_APPENDER
+        target: SYSTEM_OUT
+        Filters:
+          - LevelRangeFilter:
+              maxLevel: TRACE
+              minLevel: INFO
+              onMatch: ACCEPT
+              onMismatch: DENY
+        PatternLayout:
+           pattern: "%d{HH:mm:ss.SSS} %marker\t %-5level %logger{1} \t\t%enc{%m}{CRLF}%n"
+      - name: STDERR_APPENDER
+        target: SYSTEM_ERR
+        Filters:
+          - LevelRangeFilter:
+              maxLevel: WARN
+              minLevel: ERROR
+              onMatch: ACCEPT
+              onMismatch: DENY
+        PatternLayout:
+           pattern: "%d{HH:mm:ss.SSS} %marker\t %-5level %logger{1} \t\t%enc{%m}{CRLF}%n"
+               
+
+   Loggers:
+
+      Root:
+         level: trace
+         additivity: true
+         AppenderRef:
+         -  ref: STDERR_APPENDER
+            level: warn
+         -  ref: STDOUT_APPENDER
+            level: info
+            

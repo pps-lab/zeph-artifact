@@ -1,0 +1,20 @@
+[Unit]
+Description=jmh zeph microbenchmark
+
+[Service]
+ExecStart=/usr/bin/java -jar {{microbenchmark_jar}} {{ benchmarks | list | product(["$"]) | map('join') | list |join(' ') }} \
+                            -rf json -rff {{ result_dir }}/{{ result_file }}_{{ run_id }}.json \
+                            -p dataDir={{ data_dir }} \
+                            -p size_win={{ size_wins|join(',') }} \
+                            -p bench_time_ms={{ bench_time_ms }} \
+                            -p window_size_ms={{ window_size_ms|join(',') }} \
+                            -p universe_size={{ universe_size|join(',') }} \
+                            -p addE_addNE_dropE_dropNE={{ addE_addNE_dropE_dropNE|join(',') }} \
+                            -p encoderConfig={{ encoderConfig|join(',') }}
+                            
+User=ubuntu
+StandardOutput=file:{{ log_dir }}/{{ stdout_log_file }}_{{ run_id }}.log
+StandardError=file:{{ log_dir }}/{{ stderr_log_file }}_{{ run_id }}.log
+
+[Install]
+WantedBy=multi-user.target

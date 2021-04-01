@@ -1,0 +1,33 @@
+- name: Find all shared keys file in data folder
+  find:
+    paths: /home/ubuntu/data
+    patterns: 'shared-keys*.avro'
+  register: find_out
+
+- debug:
+    msg="find_out = {{ find_out.files|length }}"
+
+- name: Delete data folder (since it is incomplete) 
+  file:
+    path: /home/ubuntu/data/
+    state: absent
+  when: find_out.files|length < 10000
+
+
+- name: Download Shared Keys data.zip
+  get_url:
+    url="{{ s3_data_url }}"
+    dest=/home/ubuntu
+  when: find_out.files|length < 10000
+
+- name: unarchive data
+  unarchive:
+    src=/home/ubuntu/data.zip
+    dest=/home/ubuntu
+    remote_src=yes
+  when: find_out.files|length < 10000
+
+- name: Remove data.zip
+  file:
+    path: /home/ubuntu/data.zip
+    state: absent

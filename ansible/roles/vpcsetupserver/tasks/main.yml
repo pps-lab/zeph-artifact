@@ -1,0 +1,182 @@
+---
+
+- name: Create VPC
+  ec2_vpc_net:
+    name: "{{ server_region.vpc_name }}"
+    cidr_block: "{{ server_region.vpc_cidr_block }}"
+    region: "{{ server_region.aws_region }}"
+    state: "present"
+  register: vpc_server
+
+- name: Set VPC ID
+  set_fact:
+    server_region: "{{ server_region | combine({'vpc_id': vpc_server.vpc.id}) }}"
+
+- name: Create Public Subnet [AZ-1]
+  ec2_vpc_subnet:
+    state: "present"
+    vpc_id: "{{ server_region.vpc_id }}"
+    cidr: "{{ server_region.vpc_subnet_cidr }}"
+    az: "{{ server_region.aws_region }}a"
+    region: "{{ server_region.aws_region }}"
+    resource_tags:
+      Name: "{{ server_region.vpc_subnet_name }}"
+  register: server_subnet_az1
+
+
+- name: Create Public Subnet [AZ-2]
+  ec2_vpc_subnet:
+    state: "present"
+    vpc_id: "{{ server_region.vpc_id }}"
+    cidr: "{{ server_region.vpc_subnet2_cidr }}"
+    az: "{{ server_region.aws_region }}b"
+    region: "{{ server_region.aws_region }}"
+    resource_tags:
+      Name: "{{ server_region.vpc_subnet2_name }}"
+  register: server_subnet_az2
+
+
+- name: Set Public Subnet ID in variables
+  set_fact:
+    server_region: "{{ server_region | combine({'vpc_subnet_id': server_subnet_az1.subnet.id, 'vpc_subnet2_id': server_subnet_az2.subnet.id}) }}"
+
+- name: Create Internet Gateway for VPC
+  ec2_vpc_igw:
+    vpc_id: "{{ server_region.vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    state: "present"
+  register: server_vpc_igw
+
+- name: Set Internet Gateway ID in variable
+  set_fact:
+    server_region: "{{ server_region | combine({'igw_id': server_vpc_igw.gateway_id}) }}"
+
+
+- name: Gather information about VPC route table
+  community.aws.ec2_vpc_route_table_info:
+    region: "{{ server_region.aws_region }}"
+    filters:
+      vpc-id: '{{ server_region.vpc_id }}'
+  register: route_table_info
+  environment:
+    BOTO_USE_ENDPOINT_HEURISTICS: True
+
+
+- name: Set Route Table id
+  set_fact:
+    server_region: "{{ server_region | combine({'route_table_id': route_table_info.route_tables[0].id}) }}"
+
+
+- name: Set up public subnet route table
+  community.aws.ec2_vpc_route_table:
+    vpc_id: "{{ server_region.vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    purge_routes: True
+    purge_subnets: True
+    purge_tags: True
+    lookup: id
+    route_table_id: '{{ server_region.route_table_id }}'
+    tags:
+      Name: "Public"
+    subnets:
+      - "{{ server_region.vpc_subnet_id }}"
+      - "{{ server_region.vpc_subnet2_id  }}"
+    routes:
+      - dest: "0.0.0.0/0"
+        gateway_id: "{{ server_region.igw_id }}"
+
+# Create Security Groups on the Server
+- name: Create Transformer Security Group
+  ec2_group:
+    name: "{{ server_transformer.sg_name }}"
+    description: "{{ server_transformer.sg_desc }}"
+    vpc_id: "{{ server_region.vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+  register: transformer_sg
+
+- name: Create Cluster Security Group
+  ec2_group:
+    name: "{{ server_cluster.sg_name }}"
+    description: "{{ server_cluster.sg_desc }}"
+    vpc_id: "{{ server_region.vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+  register: cluster_sg
+
+- name: Create Monitoring Security Group
+  ec2_group:
+    name: "{{ server_monitoring.sg_name }}"
+    description: "{{ server_monitoring.sg_desc }}"
+    vpc_id: "{{ server_region.vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+  register: monitoring_sg
+
+- name: Set basic and cluster security group id
+  set_fact:
+    #server_region: "{{ server_region | combine({'route_table_id': route_table.route_table.id}) }}"
+    server_transformer: "{{ server_transformer | combine({'sg_id': transformer_sg.group_id, 
+                                                          'sg_ownerid': transformer_sg.owner_id}) }}"
+    server_cluster: "{{ server_cluster | combine({'sg_id': cluster_sg.group_id, 
+                                                          'sg_ownerid': cluster_sg.owner_id}) }}"
+    server_monitoring: "{{ server_monitoring | combine({'sg_id': monitoring_sg.group_id, 
+                                                          'sg_ownerid': monitoring_sg.owner_id}) }}"
+
+- name: Add rules to Transformer Security Group
+  ec2_group:
+    name: "{{ server_transformer.sg_name }}"
+    description: "{{ server_transformer.sg_desc }}"
+    vpc_id: "{{ server_region.vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    rules:
+      - proto: all
+        group_id: "{{ server_cluster.sg_ownerid }}/{{ server_cluster.sg_id }}/{{ server_cluster.sg_name }}"
+      - proto: all
+        group_id: "{{ server_monitoring.sg_ownerid }}/{{ server_monitoring.sg_id }}/{{ server_monitoring.sg_name }}"
+      - proto: tcp
+        ports: 22
+        cidr_ip: 0.0.0.0/0
+
+- name: Add Rules to Cluster Security Group
+  ec2_group:
+    name: "{{ server_cluster.sg_name }}"
+    description: "{{ server_cluster.sg_desc }}"
+    vpc_id: "{{ server_region.vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    rules:
+      - proto: all
+        group_id: "{{ server_cluster.sg_ownerid }}/{{ server_cluster.sg_id }}/{{ server_cluster.sg_name }}"
+      - proto: all
+        group_id: "{{ server_transformer.sg_ownerid }}/{{ server_transformer.sg_id }}/{{ server_transformer.sg_name }}"
+      - proto: all
+        group_id: "{{ server_monitoring.sg_ownerid }}/{{ server_monitoring.sg_id }}/{{ server_monitoring.sg_name }}"
+      # Allow Connections to cluster from the different client groups in other VPCs (after peering)
+      - proto: all
+        cidr_ip: "{{ client_group1.vpc_subnet_cidr }}"
+      - proto: all
+        cidr_ip: "{{ client_group2.vpc_subnet_cidr }}"
+      - proto: all
+        cidr_ip: "{{ client_group3.vpc_subnet_cidr }}"
+
+
+- name: Add Rules to Monitoring Security Group
+  ec2_group:
+    name: "{{ server_monitoring.sg_name }}"
+    description: "{{ server_monitoring.sg_desc }}"
+    vpc_id: "{{ server_region.vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    rules:
+      - proto: all
+        group_id: "{{ server_cluster.sg_ownerid }}/{{ server_cluster.sg_id }}/{{ server_cluster.sg_name }}"
+      - proto: all
+        group_id: "{{ server_transformer.sg_ownerid }}/{{ server_transformer.sg_id }}/{{ server_transformer.sg_name }}"
+      - proto: all
+        group_id: "{{ server_monitoring.sg_ownerid }}/{{ server_monitoring.sg_id }}/{{ server_monitoring.sg_name }}"
+      - proto: tcp
+        ports: 22
+        cidr_ip: 0.0.0.0/0
+      # allow connections to monitoring instance from the different client groups in other VPCs (after peering)
+      - proto: all
+        cidr_ip: "{{ client_group1.vpc_subnet_cidr }}"
+      - proto: all
+        cidr_ip: "{{ client_group2.vpc_subnet_cidr }}"
+      - proto: all
+        cidr_ip: "{{ client_group3.vpc_subnet_cidr }}"

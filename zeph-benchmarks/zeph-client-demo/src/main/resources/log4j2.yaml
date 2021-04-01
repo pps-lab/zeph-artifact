@@ -1,0 +1,57 @@
+Configuration:
+   status: info
+   Appenders:
+           
+      Console:
+      - name: STDOUT_APPENDER
+        target: SYSTEM_OUT
+        Filters:
+          - LevelRangeFilter:
+              maxLevel: TRACE
+              minLevel: INFO
+              onMatch: ACCEPT
+              onMismatch: DENY
+        PatternLayout:
+           pattern: "%d{HH:mm:ss.SSS} %marker\t [%t] %-5level %logger{1} \t%enc{%m}{CRLF}%n"
+      - name: STDERR_APPENDER
+        target: SYSTEM_ERR
+        Filters:
+          - LevelRangeFilter:
+              maxLevel: WARN
+              minLevel: ERROR
+              onMatch: ACCEPT
+              onMismatch: DENY
+        PatternLayout:
+           pattern: "%d{HH:mm:ss.SSS} %marker\t [%t] %-5level %logger{1} \t%enc{%m}{CRLF}%n"
+      
+         
+      Routing:
+         name: ROUTING_APPENDER
+         Routes:
+            pattern: $${marker:}
+            Route:
+            -  RandomAccessFile:
+                  name: RAF-${marker:name:-general}
+                  fileName: logs/${marker:name:-general}.log
+                  append: false
+                  PatternLayout:
+                     Pattern: "%d{HH:mm:ss.SSS} %-5level %logger{1} \t%enc{%m}{CRLF}%n"
+            
+   Loggers:
+
+      Root:
+         level: trace
+         additivity: true
+         AppenderRef:
+         -  ref: ROUTING_APPENDER
+            level: debug
+         -  ref: STDERR_APPENDER
+            level: warn
+         -  ref: STDOUT_APPENDER
+            level: info
+            
+           
+         
+      
+      
+      

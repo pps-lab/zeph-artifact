@@ -1,0 +1,97 @@
+---
+
+- name: Download Prometheus
+  get_url:
+    url: https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
+    dest: /home/ubuntu/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
+
+- name: Extract tar
+  unarchive:
+    src: /home/ubuntu/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
+    dest: /home/ubuntu/
+    remote_src: yes
+
+- name: Set prometheus directory variable
+  set_fact:
+    prometheus_dir: /home/ubuntu/prometheus-{{ prometheus_version }}.linux-amd64
+
+- name: Look for Kafka cluster using the AWS CLI
+  delegate_to: localhost
+  command: >
+    aws kafka list-clusters
+      --cluster-name-filter {{ kafka_cluster_name }}
+      --region {{ server_region.aws_region }}
+  changed_when: false
+  register: kafka_cluster_query
+
+- name: Extract cluster arn
+  set_fact:
+    kafka_arn: "{{ kafka_cluster_query.stdout | from_json | json_query('ClusterInfoList[0].ClusterArn') }}"
+
+- name: Get list of broker dns names
+  delegate_to: localhost
+  command: >
+    aws kafka list-nodes
+      --cluster-arn {{ kafka_arn }}
+      --region {{ server_region.aws_region }}
+  register: kafka_node_query
+  
+- name:  Extract node dns
+  set_fact:
+    kafka_broker_nodes_dns: "{{ kafka_node_query.stdout | from_json | json_query('NodeInfoList[*].BrokerNodeInfo.Endpoints[*]') | list | flatten }}"
+    client_nodes_dns: []
+    server_nodes_dns: []
+    jmx_port_suffix: :11001
+    node_port_suffix: :11002
+
+- name: Groups 1
+  set_fact:
+    client_nodes_dns: "{{ groups[client_all.host_group] }}"
+  when: groups[client_all.host_group] is defined
+
+- name: Groups 2
+  set_fact:
+    server_nodes_dns: "{{ groups[server_transformer.host_group] }}"
+  when: groups[server_transformer.host_group] is defined
+
+- debug:
+    msg="kafka_broker_nodes_dns= {{ kafka_broker_nodes_dns }}"
+
+
+- name: Set variables
+  set_fact:
+    jmx_targets: "{{ (kafka_broker_nodes_dns + client_nodes_dns + server_nodes_dns) | product([jmx_port_suffix]) | map('join') | list }}"
+    node_targets: "{{ kafka_broker_nodes_dns | product([node_port_suffix]) | map('join') | list }}"
+
+#- name:  jmx_targets
+#  debug: 
+#    msg="jmx_targets= {{ jmx_targets | to_json }}"
+#
+#- name:  node_targets
+#  debug: 
+#    msg="node_targets= {{ node_targets | to_json }}"
+
+- name: Create prometheus config file
+  template:
+    src=prometheus.yml.j2
+    dest="{{ prometheus_dir }}/prometheus.yml"
+    mode=preserve
+
+- name: Create prometheus targets file
+  template:
+    src=targets.json.j2
+    dest="{{ prometheus_dir }}/targets.json"
+    mode=preserve
+
+- name: Create Unit File
+  become: yes
+  template:
+    src=prometheus.service.j2
+    dest=/lib/systemd/system/prometheus.service
+    mode=644
+  notify:
+  - reload systemctl
+
+- name: Start prometheus
+  become: yes
+  service: name=prometheus.service state=started enabled=yes

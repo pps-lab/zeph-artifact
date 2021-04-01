@@ -1,0 +1,16 @@
+---
+
+zeph_worker_jar: /home/ubuntu/zeph/zeph-server/zeph-server-worker/target/zeph-server-worker-1.0.jar
+
+
+window_size: 10000 # in milliseconds
+grace_time: 5000 # in milliseconds
+
+retention_time: 24
+partitions: 3
+replications: 1
+
+worker_state_dir: /home/ubuntu/workerstate
+log_dir: /home/ubuntu/logs
+stdout_log_file: plaintextworker_stdout
+stderr_log_file: plaintextworker_stderr

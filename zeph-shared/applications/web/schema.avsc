@@ -1,0 +1,56 @@
+[
+    {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "Digest",
+        "fields": [
+          {"name": "pageExit", "type": {"type": "array", "items": "long"}}, 
+          {"name": "pageView", "type": {"type": "array", "items": "long"}},
+          {"name": "pageNetworkTimeSum", "type": {"type": "array", "items": "long"}},
+          {"name": "pageNetworkTimeSumOfSquares", "type": {"type": "array", "items": "long"}},
+          {"name": "pageNetworkTimeCount", "type": {"type": "array", "items": "long"}}, 
+    
+          {"name": "pageTransferTimeSumOfSquares", "type": {"type": "array", "items": "long"}}, 
+          {"name": "pageTransferTimeSum", "type": {"type": "array", "items": "long"}},
+          {"name": "pageTransferTimeCount", "type": {"type": "array", "items": "long"}},
+    
+          {"name": "pageLoadTimeSum", "type": {"type": "array", "items": "long"}},
+          {"name": "pageLoadTimeSumOfSquares", "type": {"type": "array", "items": "long"}}, 
+          {"name": "pageLoadTimeCount", "type": {"type": "array", "items": "long"}},
+    
+          {"name": "pageServerTimeSum", "type": {"type": "array", "items": "long"}},
+          {"name": "pageServerTimeSumOfSquares", "type": {"type": "array", "items": "long"}},
+          {"name": "pageServerTimeCount", "type": {"type": "array", "items": "long"}},
+    
+          {"name": "page0Userflow", "type": {"type": "array", "items": "long"}}, 
+          {"name": "page1Userflow", "type": {"type": "array", "items": "long"}}, 
+          {"name": "page2Userflow", "type": {"type": "array", "items": "long"}},
+    
+          {"name": "page0ClickGrid", "type": {"type": "array", "items": "long"}}, 
+          {"name": "page1ClickGrid", "type": {"type": "array", "items": "long"}}, 
+          {"name": "page2ClickGrid", "type": {"type": "array", "items": "long"}}, 
+          
+          {"name": "page0HoverGrid", "type": {"type": "array", "items": "long"}}, 
+          {"name": "page1HoverGrid", "type": {"type": "array", "items": "long"}}, 
+          {"name": "page2HoverGrid", "type": {"type": "array", "items": "long"}}, 
+    
+          {"name": "count", "type": {"type": "array", "items": "long"}}, 
+          {"name": "header", "type": ["null", "ch.ethz.infk.pps.shared.avro.HeacHeader"]}
+        ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "Input",
+        "fields": [
+          {"name": "pageUserFlow", "type": {"type": "map", "values": "int"}},      
+          {"name": "pageExit", "type": {"type": "map", "values": "int"}},
+          {"name": "pageView", "type": {"type": "map", "values": "int"}},
+          {"name": "pageNetworkTime", "type": {"type": "map", "values": "int"}},
+          {"name": "pageTransferTime", "type": {"type": "map", "values": "int"}},
+          {"name": "pageLoadTime", "type": {"type": "map", "values": "int"}},
+          {"name": "pageServerTime", "type": {"type": "map", "values": "int"}},
+          {"name": "clickGrid", "type": {"type": "map", "values": "int"}},
+          {"name": "hoverGrid", "type": {"type": "map", "values": "int"}},
+          {"name": "count", "type": ["null", "long"]}
+        ]
+      }
+]

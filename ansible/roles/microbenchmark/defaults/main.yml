@@ -1,0 +1,17 @@
+
+# Benchmark Configuration
+
+size_wins: ['"100_1"']
+
+# testLocalTransformation
+bench_time_ms: 59000
+window_size_ms: [10, 100, 1000, 10000, 30000, 60000] 
+
+# testStrawmanNativeLatency, testDreamNativeLatency, testErdosRenyiNativeLatency, testErdosRenyiBuildNeighbourhoodNativeLatency
+universe_size:  [100, 200, 500, 1000, 10000]
+
+# Other
+microbenchmark_jar: /home/ubuntu/zeph/zeph-benchmarks/zeph-microbenchmarks/target/zeph-microbenchmarks-1.0.jar
+result_file: jmh-microbenchmark-results
+stdout_log_file: stdout
+stderr_log_file: stderr

@@ -1,0 +1,191 @@
+--- 
+# this playbook supports the following two tags:
+# --tags "start"  -> only starts the microbenchmark but does not try to fetch the results
+# --tags "result" -> does not start the microbenchmark but instead waits for a time until the service is finished and fetches all result files
+
+
+- name: Setup AWS
+  import_playbook: awssetup.yml
+  vars:
+    client_group1_instances_num: 1
+    client_group1_instances_max_num: 1
+
+    client_group2_instances_num: 0
+    client_group2_instances_max_num: 0
+
+    client_group3_instances_num: 0
+    client_group3_instances_max_num: 0
+    
+    server_transformer_instances_num: 0
+    server_transformer_instances_max_num: 0
+
+    use_kafka: False
+    use_shared_keys: True
+    use_monitoring: True
+    use_reset: False
+
+  when:
+    - "'start' in ansible_run_tags or 'all' in ansible_run_tags"
+    - "'start' not in ansible_skip_tags"
+  tags: start
+
+
+- name: Run microbenchmark
+  hosts: "{{ hostvars['localhost'].client_all.host_group }}"
+  remote_user: ubuntu
+  gather_facts: True
+
+  vars:
+    benchmarks:
+    - testLocalTransformation
+    - testECDH
+    - testErdosRenyiNative
+    - testStrawmanNative
+    - testDreamNative
+    - testStrawmanNativeLatency
+    - testDreamNativeLatency
+    - testErdosRenyiNativeLatency
+    - testErdosRenyiBuildNeighbourhoodNativeLatency
+    - testErdosRenyiClearNeighbourhoodNativeLatency
+    - testUniverseDelta
+    - testNonMPCTransformationToken
+    - testEncode
+    - testEncodeEncrypt
+    - testEncryptVectorElement
+
+    universe_size:
+    - 100
+    - 200
+    - 500
+    - 1000
+    - 10000
+
+    bench_time_ms: 59000
+
+    window_size_ms:
+    - 10 
+    - 100
+    - 1000  # 1 sec
+    - 10000 # 10 sec 
+    - 30000 # 30 sec 
+    - 60000 # 1 min (no border)
+
+    size_wins:
+    - '"100_1"'
+    - '"200_1"' 
+    - '"500_1"'
+    - '"1000_1"'
+    - '"1000_8"'
+    - '"1000_16"'
+    - '"1000_32"'
+    - '"1000_64"'
+    - '"1000_128"'
+    - '"1000_256"'
+    - '"1000_512"'
+    - '"2000_1"'
+    - '"5000_1"'
+    - '"10000_1"'
+    - '"10000_8"'
+    - '"10000_16"'
+    - '"10000_32"'
+    - '"10000_64"'
+    - '"10000_128"'
+    - '"10000_256"'
+    - '"10000_512"'
+    - '"10000_1024"'
+    - '"10000_2048"'
+    - '"10000_2304"'
+    - '"10000_4096"'
+    - '"100_256"'
+    - '"200_256"'
+    - '"500_336"'
+    - '"2000_800"'
+    - '"5000_1344"'
+
+    addE_addNE_dropE_dropNE:
+    # baseline
+    - '"0_0_0_0"'
+    # no difference if add NE or E
+    - '"10_0_0_0"' 
+    - '"0_10_0_0"' 
+    - '"50_0_0_0"' 
+    - '"0_50_0_0"'
+    # increasing add
+    #- '"0_10_0_0"' 
+    #- '"0_50_0_0"'
+    - '"0_100_0_0"'
+    - '"0_200_0_0"'
+    - '"0_300_0_0"'
+    - '"0_400_0_0"'
+    - '"0_500_0_0"'
+    # difference if drop NE or E
+    - '"0_0_10_0"'
+    - '"0_0_0_10"'
+    - '"0_0_50_0"'
+    - '"0_0_0_50"'
+    # increasing drop
+    #- '"0_0_0_10"' 
+    #- '"0_0_0_50"'
+    - '"0_0_0_100"'
+    - '"0_0_0_200"'
+    - '"0_0_0_300"'
+    - '"0_0_0_400"'
+    - '"0_0_0_500"'
+    # combination drop and add
+    - '"0_10_0_10"' 
+    - '"0_50_0_50"'
+    - '"0_100_0_100"'
+    - '"0_200_0_200"'
+    - '"0_300_0_300"'
+    - '"0_400_0_400"'
+    - '"0_500_0_500"'
+
+    encoderConfig:
+    - "sum"
+    - "count"
+    - "avg"
+    - "var"
+    - "stddev"
+    - "hist_10"
+    - "hist_100"
+    - "hist_1000"
+    - "min_10"
+    - "max_10"
+    - "reg" 
+
+  roles:
+  - role: microbenchmark
+  tags: start
+
+- name: Fetch microbenchmark results
+  hosts: "{{ hostvars['localhost'].client_all.host_group }}"
+  remote_user: ubuntu
+  gather_facts: True
+  tasks:
+    - name: Wait until service stopped
+      service_facts:
+      register: services_state
+      until: services_state.ansible_facts.services['microbenchmark.service'].state == 'stopped'
+      retries: 100
+      delay: 15
+    - name: Use a single pattern that contains a comma formatted as a list
+      find:
+        paths: '{{ result_dir }}'
+        file_type: file
+        use_regex: yes
+        patterns: ['^jmh-microbenchmark-results_[0-9]*.json']
+      register: results
+
+    - name: Fetch result files
+      fetch:
+        src='{{ item }}'
+        dest='{{ local_result_dir }}/'
+        flat=yes
+      loop: "{{ results| json_query('files[*].path') }}"
+    
+  tags: result
+
+
+- name: Cleanup AWS (stop ec2 instance and remove vpc)
+  import_playbook: awscleanup.yml
+  tags: result

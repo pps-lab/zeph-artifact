@@ -1,0 +1,77 @@
+# required variable: client_group_id
+
+- name: 
+  set_fact:
+    client_group: "{{ lookup('vars', 'client_group' + client_group_id) }}"
+
+- name: Create intra-region VPC peering Connection
+  community.aws.ec2_vpc_peer:
+    region: "{{ client_group.aws_region }}"
+    vpc_id: "{{ client_group.vpc_id }}"
+    peer_vpc_id: "{{ server_region.vpc_id }}"
+    peer_region: "{{ server_region.aws_region }}"
+    state: present
+    tags:
+      Name: zeph
+      Desc: Peering connection for {{ client_group.name }} (client) VPC to {{ server_region.name }} (server) VPC
+  register: vpc_peer
+
+- name: Set vpc peering connection id in client group variable
+  set_fact:
+    client_group: "{{ client_group | combine({'vpc_peering_connection_id': vpc_peer.peering_id}) }}"
+
+- name: Wait until VPC Peering is ready to be accepted
+  community.aws.ec2_vpc_peering_info:
+    region: "{{ server_region.aws_region }}"
+    peer_connection_ids:
+      - "{{ client_group.vpc_peering_connection_id }}"
+  vars:
+    query: result[?tags.Name=='zeph'].vpc_peering_connection_id
+  changed_when: false
+  register: vpc_peers
+  until: (vpc_peers.result | default([]))| length > 0
+  retries: 30
+  delay: 2
+
+- name: Accept peering connection from peer region
+  community.aws.ec2_vpc_peer:
+    region: "{{ server_region.aws_region }}"
+    peering_id: "{{ client_group.vpc_peering_connection_id }}"
+    state: accept
+    tags:
+      Name: zeph
+      Desc: Peering connection for {{ client_group.name }} (client) VPC to {{ server_region.name }} (server) VPC
+  register: vpc_peer
+
+# Updating the Route Tables
+
+- name: Add a route in the route table of the server to the client group
+  community.aws.ec2_vpc_route_table:
+    route_table_id: "{{ server_region.route_table_id }}"
+    lookup: id
+    vpc_id: "{{ server_region.vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    purge_routes: False
+    purge_subnets: False
+    purge_tags: False
+    routes:
+      - dest: "{{ client_group.vpc_subnet_cidr }}"
+        vpc_peering_connection_id: "{{ client_group.vpc_peering_connection_id }}"
+
+- name: Add a route in the route table of the client group to the server
+  community.aws.ec2_vpc_route_table:
+    route_table_id: "{{ client_group.route_table_id }}"
+    lookup: id
+    vpc_id: "{{ client_group.vpc_id }}"
+    region: "{{ client_group.aws_region }}"
+    purge_routes: False
+    purge_subnets: False
+    purge_tags: False
+    routes:
+      - dest: "{{ server_region.vpc_subnet_cidr }}"
+        vpc_peering_connection_id: "{{ client_group.vpc_peering_connection_id }}"
+      - dest: "{{ server_region.vpc_subnet2_cidr }}"
+        vpc_peering_connection_id: "{{ client_group.vpc_peering_connection_id }}"
+
+- name: Update the original client group variable
+  set_fact: {"client_group{{ client_group_id }}":"{{ client_group }}"}

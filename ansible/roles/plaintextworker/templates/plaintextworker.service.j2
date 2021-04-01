@@ -1,0 +1,24 @@
+[Unit]
+Description=plaintext worker
+
+[Service]
+ExecStart=/usr/bin/java -Dlog4j.configurationFile={{ log_dir }}/plaintextworker{{ item }}_log4j2.yaml {{ javaagent_jmx_exporter_prometheus }} \
+                        -jar {{ zeph_worker_jar }} plaintext \
+                            --delete-topics \
+                            --bootstrap-server={{ kafka_bootstrap_servers }} \
+                            --universe-id={{ universes[item % universes|length] }} \
+                            --window-size={{ window_size }} \
+                            --grace-size={{ grace_time }} \
+                            --retention-time={{ retention_time }} \
+                            --partitions={{ partitions }} \
+                            --replications={{ replications }} \
+                            --state-dir={{ state_dir }} \
+                            --stream-threads={{ stream_threads }} \
+                            --universe-size={{ universe_size }} 
+
+User=ubuntu
+StandardOutput=file:{{ log_dir }}/{{ stdout_log_file }}_{{ item }}_{{ experiment_id }}.log
+StandardError=file:{{ log_dir }}/{{ stderr_log_file }}_{{ item }}_{{ experiment_id }}.log
+
+[Install]
+WantedBy=multi-user.target

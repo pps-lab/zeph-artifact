@@ -1,0 +1,52 @@
+[
+{"namespace": "ch.ethz.infk.pps.shared.avro",
+    "type": "record",
+    "name": "Digest",
+    "fields": [
+      {"name": "vibrationVelocityHist", "type": {"type": "array", "items": "long"}},
+      {"name": "vibrationDisplacementHist", "type": {"type": "array", "items": "long"}},
+      {"name": "vibrationAccelerationHist", "type": {"type": "array", "items": "long"}},
+      {"name": "soundPressureHist", "type": {"type": "array", "items": "long"}},
+      {"name": "humidityHist", "type": {"type": "array", "items": "long"}},
+      {"name": "speedHist", "type": {"type": "array", "items": "long"}},
+      {"name": "fuelLevelHist", "type": {"type": "array", "items": "long"}},
+      {"name": "tirePressureHist", "type": {"type": "array", "items": "long"}},
+      {"name": "ambientAirTemperatureHist", "type": {"type": "array", "items": "long"}}, 
+      {"name": "oilTemperatureHist", "type": {"type": "array", "items": "long"}},
+      {"name": "engineTemperatureHist", "type": {"type": "array", "items": "long"}},
+      
+      {"name": "vibrationVelocityBase", "type": {"type": "array", "items": "long"}},
+      {"name": "vibrationDisplacementBase", "type": {"type": "array", "items": "long"}},
+      {"name": "vibrationAccelerationBase", "type": {"type": "array", "items": "long"}},
+      {"name": "soundPressureBase", "type": {"type": "array", "items": "long"}},
+      {"name": "humidityBase", "type": {"type": "array", "items": "long"}},
+      {"name": "speedBase", "type": {"type": "array", "items": "long"}},
+      {"name": "fuelLevelBase", "type": {"type": "array", "items": "long"}},
+      {"name": "tirePressureBase", "type": {"type": "array", "items": "long"}},
+      {"name": "ambientAirTemperatureBase", "type": {"type": "array", "items": "long"}},
+      {"name": "oilTemperatureBase", "type": {"type": "array", "items": "long"}},
+      {"name": "engineTemperatureBase", "type": {"type": "array", "items": "long"}},
+      
+      {"name": "count", "type": {"type": "array", "items": "long"}},
+      {"name": "header", "type": ["null", "ch.ethz.infk.pps.shared.avro.HeacHeader"]}
+    ]
+  },
+  {"namespace": "ch.ethz.infk.pps.shared.avro",
+    "type": "record",
+    "name": "Input",
+    "fields": [
+      {"name": "vibrationVelocity", "type": "long"},
+      {"name": "vibrationDisplacement", "type": "long"},
+      {"name": "vibrationAcceleration", "type": "long"},
+      {"name": "soundPressure", "type": "long"},
+      {"name": "humidity", "type": "long"},
+      {"name": "speed", "type": "long"},
+      {"name": "fuelLevel", "type": "long"},
+      {"name": "tirePressure", "type": "long"},
+      {"name": "ambientAirTemperature", "type": "long"},
+      {"name": "oilTemperature", "type": "long"},
+      {"name": "engineTemperature", "type": "long"},      
+      {"name": "count", "type": ["null", "long"]}
+    ]
+  }
+]

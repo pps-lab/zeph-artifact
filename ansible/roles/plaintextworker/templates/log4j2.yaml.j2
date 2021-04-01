@@ -1,0 +1,72 @@
+
+Configuration:
+   status: info
+   Appenders:
+           
+      Console:
+      - name: STDOUT_APPENDER
+        target: SYSTEM_OUT
+        Filters:
+          - LevelRangeFilter:
+              maxLevel: TRACE
+              minLevel: INFO
+              onMatch: ACCEPT
+              onMismatch: DENY
+        PatternLayout:
+           {% raw %}pattern: "%d{HH:mm:ss.SSS} %marker\t %-5level %logger{1} \t\t%enc{%m}{CRLF}%n"{% endraw %}
+           
+      - name: STDERR_APPENDER
+        target: SYSTEM_ERR
+        Filters:
+          - LevelRangeFilter:
+              maxLevel: WARN
+              minLevel: ERROR
+              onMatch: ACCEPT
+              onMismatch: DENY
+        PatternLayout:
+           {% raw %}pattern: "%d{HH:mm:ss.SSS} %marker\t %-5level %logger{1} \t\t%enc{%m}{CRLF}%n"{% endraw %}
+      
+      RandomAccessFile:
+         name: GLOBAL
+         fileName: {{ log_dir }}/global{{ item }}_{{ experiment_id }}.log
+         append: false
+         Filters:
+            - MarkerFilter:
+                  marker: global
+                  onMatch: ACCEPT
+                  onMismatch: DENY
+         PatternLayout:
+           {% raw %}pattern: "%d{HH:mm:ss.SSS} %marker\t %-5level %logger{1} \t\t%enc{%m}{CRLF}%n"{% endraw %}
+         
+      Routing:
+         name: ROUTING_APPENDER
+         Routes:
+            pattern: $${marker:}
+            Route:
+            -  RandomAccessFile:
+                  name: RAF-${marker:name:-general}
+                  fileName: {{ log_dir }}/${marker:name:-general}{{ item }}_{{ experiment_id }}.log
+                  append: false
+                  PatternLayout:
+                     {% raw %}Pattern: "%d{HH:mm:ss.SSS} %-5level %logger{1} \t\t%enc{%m}{CRLF}%n"{% endraw %}
+            
+   Loggers:
+
+      Root:
+         level: warn
+         additivity: true
+         AppenderRef:
+         -  ref: ROUTING_APPENDER
+            level: debug
+         -  ref: STDERR_APPENDER
+            level: warn
+         -  ref: STDOUT_APPENDER
+            level: info
+            
+      Logger:
+         - name: ch.ethz.infk.pps.zeph
+           additivity: true
+           level: {{ log_level }}
+           AppenderRef:
+            - ref: GLOBAL
+              level: info

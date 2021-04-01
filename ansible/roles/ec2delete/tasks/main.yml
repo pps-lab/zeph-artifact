@@ -1,0 +1,61 @@
+---
+
+- name:  Terminating all instances
+  ec2:
+    #instance_type: '{{ ec2config.instance_type }}'
+    key_name: '{{ ec2config.key_name }}'
+    region: '{{ ec2config.aws_region }}'
+    image: '{{ ec2config.ec2_image }}'
+    exact_count: 0
+    count_tag:
+      Name: '{{ ec2config.instance_tag }}'
+  loop:
+  - '{{ server_transformer | combine(server_region) }}'
+  - '{{ server_monitoring | combine(server_region) }}'
+  - '{{ client_group1 }} '
+  - '{{ client_group2 }} '
+  - '{{ client_group3 }} '
+  loop_control:
+    loop_var: ec2config
+  environment:
+    BOTO_USE_ENDPOINT_HEURISTICS: True
+
+#
+#
+#- name: Collect info about ec2 server transformer instances
+#  community.aws.ec2_instance_info:
+#    filters:
+#      "tag:Name": '{{ server_transformer.instance_tag }}'
+#    region: "{{ server_region.aws_region }}"
+#  register: ec2_info_server_transformer
+#
+#- name: Collect info about ec2 server monitoring instances
+#  community.aws.ec2_instance_info:
+#    filters:
+#      "tag:Name": '{{ server_monitoring.instance_tag }}'
+#    region: "{{ server_region.aws_region }}"
+#  register: ec2_info_server_monitoring
+#
+#- name: Collect info about ec2 client group 1 instances
+#  community.aws.ec2_instance_info:
+#    filters:
+#      "tag:Name": '{{ client_group1.instance_tag }}'
+#    region: "{{ client_group1.aws_region }}"
+#  register: ec2_info_client_group1
+#
+#- name: Collect info about ec2 client group 2 instances
+#  community.aws.ec2_instance_info:
+#    filters:
+#      "tag:Name": '{{ client_group2.instance_tag }}'
+#    region: "{{ client_group2.aws_region }}"
+#  register: ec2_info_client_group12
+#
+#
+#
+#- name: Terminating surplus ec2 instances
+#  community.aws.ec2_instance:
+#    key_name: '{{ server_region.key_name }}'
+#    region: "{{ server_region.aws_region }}"
+#    wait: no 
+#    state: absent
+#    instance_ids: '{{ terminate_instance_ids }}'

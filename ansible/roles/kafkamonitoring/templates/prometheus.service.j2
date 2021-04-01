@@ -1,0 +1,16 @@
+[Unit]
+Description=zeph prometheus monitoring
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart={{ prometheus_dir }}/prometheus \
+        --config.file {{ prometheus_dir }}/prometheus.yml \
+        --storage.tsdb.path {{ prometheus_dir }}
+                            
+User=ubuntu
+StandardOutput=file:{{ prometheus_dir }}/stdout.log
+StandardError=file:{{ prometheus_dir }}/stderr.log
+
+[Install]
+WantedBy=multi-user.target

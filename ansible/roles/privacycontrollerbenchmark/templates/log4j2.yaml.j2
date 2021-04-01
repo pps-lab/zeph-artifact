@@ -1,0 +1,50 @@
+Configuration:
+  status: info
+  Appenders:
+    Console:
+      - name: STDOUT_APPENDER
+        target: SYSTEM_OUT
+        Filters:
+          - LevelRangeFilter:
+              maxLevel: TRACE
+              minLevel: INFO
+              onMatch: ACCEPT
+              onMismatch: DENY
+        PatternLayout:
+          {% raw %}pattern: '%d{HH:mm:ss.SSS} [%p] %c{1} – %m%n'{% endraw %}
+
+      - name: STDERR_APPENDER
+        target: SYSTEM_ERR
+        Filters:
+          - LevelRangeFilter:
+              maxLevel: WARN
+              minLevel: ERROR
+              onMatch: ACCEPT
+              onMismatch: DENY
+        PatternLayout:
+          {% raw %}pattern: '%d{HH:mm:ss.SSS} [%p] %c{1} – %m%n'{% endraw %}
+
+    RandomAccessFile:
+      - name: GLOBAL
+        fileName: {{ log_dir }}/log_{{ experiment_id }}.log
+        append: false
+        PatternLayout:
+          {% raw %}pattern: '%d{HH:mm:ss.SSS} [%p] %c{1} – %m%n'{% endraw %}
+          
+  Loggers:
+    Root:
+      level: warn
+      additivity: true
+      AppenderRef:
+        - ref: STDERR_APPENDER
+          level: warn
+        - ref: STDOUT_APPENDER
+          level: info
+    Logger:
+      - name: ch.ethz.infk.pps.zeph
+        additivity: true
+        level: {{ log_level }}
+        includeLocation: false
+        AppenderRef:
+        - ref: GLOBAL
+          level: debug

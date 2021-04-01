@@ -1,0 +1,34 @@
+---
+
+- name: Wait until Kafka cluster is active
+  command: >
+    aws kafka list-clusters
+      --cluster-name-filter {{ kafka_cluster_name }}
+      --region {{ server_region.aws_region }}
+  changed_when: false
+  register: kafka_cluster_query
+  until: kafka_cluster_query.stdout | from_json | json_query('ClusterInfoList[0].State') == 'ACTIVE'
+  retries: 100
+  delay: 15
+
+- name: parse the cluster response and extract cluster arn and zookeeper connection string
+  set_fact:
+    kafka_arn: "{{ kafka_cluster_query.stdout | from_json | json_query('ClusterInfoList[0].ClusterArn') }}"
+    kafka_zookeeper: "{{ kafka_cluster_query.stdout | from_json | json_query('ClusterInfoList[0].ZookeeperConnectString') }}"
+
+- name: create Kafka Cluster with the AWS CLI if it doesn't exist
+  command: >
+    aws kafka get-bootstrap-brokers
+      --cluster-arn {{ kafka_arn }}
+      --region {{ server_region.aws_region }}
+  changed_when: false
+  register: kafka_cluster_bootstrap_servers_query
+
+- name: parse the bootstrap query result 
+  set_fact:
+    kafka_bootstrap_servers: "{{  kafka_cluster_bootstrap_servers_query.stdout | from_json | json_query('BootstrapBrokerString') }}"
+
+
+- debug: msg="kafka_cluster_arn={{ kafka_arn }}"
+- debug: msg="kafka_cluster_zookeeper={{ kafka_zookeeper }}"
+- debug: msg="kafka_cluster_bootstrap_servers={{ kafka_bootstrap_servers }}"

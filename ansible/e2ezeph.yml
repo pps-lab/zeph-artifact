@@ -1,0 +1,40 @@
+---
+# required
+# server_master_hosts
+# server_worker_hosts
+# client_hosts
+
+- name: Stop master and worker servers
+  hosts: "{{ server_master_hosts }}:{{ server_worker_hosts }}"
+  remote_user: ubuntu
+  roles:
+  - role: servicestop
+
+- name: Start Zeph Master
+  hosts: "{{ server_master_hosts }}"
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+  - role: zephmaster
+
+- name: Start Zeph Worker
+  hosts: "{{ server_worker_hosts }}"
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+  - role: zephworker
+
+- name: Run End-to-End Benchmark and fetch results
+  hosts: "{{ client_hosts }}"
+  remote_user: ubuntu
+  gather_facts: True
+  vars:
+    client_type: zeph
+  roles:
+  - role: e2eclient
+
+- name: Stop master and worker servers
+  hosts: "{{ server_master_hosts }}:{{ server_worker_hosts }}"
+  remote_user: ubuntu
+  roles:
+  - role: servicestop

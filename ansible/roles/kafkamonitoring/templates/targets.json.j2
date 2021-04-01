@@ -1,0 +1,14 @@
+[
+  {
+    "labels": {
+      "job": "jmx"
+    },
+    "targets": {{ jmx_targets | to_json }}
+  },
+  {
+    "labels": {
+      "job": "node"
+    },
+    "targets": {{ node_targets  | to_json  }}
+  }
+]

@@ -1,0 +1,5 @@
+
+kafka_url: https://archive.apache.org/dist/kafka/2.4.0/kafka_2.13-2.4.0.tgz
+
+kafka_folder: kafka_2.13-2.4.0
+kafka_tgz: kafka_2.13-2.4.0.tgz

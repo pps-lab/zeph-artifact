@@ -1,0 +1,35 @@
+---
+
+- name: check if kafka folder exists.
+  stat:
+    path=/home/ubuntu/{{ kafka_folder }}
+  register: kafka_folder_res
+
+- name: Download Kafka (cli tools)
+  get_url:
+    url="{{ kafka_url }}"
+    dest=/home/ubuntu
+  when: not kafka_folder_res.stat.exists
+
+- name: unarchive kafka
+  unarchive:
+    src=/home/ubuntu/{{ kafka_tgz }}
+    dest=/home/ubuntu
+    remote_src=yes
+  when: not kafka_folder_res.stat.exists
+
+- name: Delete kafka archive
+  file:
+    path: /home/ubuntu/{{ kafka_tgz }}
+    state: absent
+
+- name: Delete all topics from kafka
+  shell: 
+    cmd: bin/kafka-topics.sh --bootstrap-server {{ kafka_bootstrap_servers }} --delete --topic ".+" 
+    chdir: "{{ kafka_folder }}/"
+  ignore_errors: yes
+  register: delete_topic_res
+
+
+- debug:
+    msg="delete topic result = {{ delete_topic_res }}"

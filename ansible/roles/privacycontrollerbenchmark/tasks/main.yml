@@ -1,0 +1,72 @@
+
+
+- name: Publish Configuration
+  debug:
+    msg="pc_universes={{ pc_universes }}   pc_clients={{ pc_clients }}   pc_universe_size={{ pc_universe_size }}   experiment_id={{ experiment_id }}  iteration={{ iteration }}"
+
+#
+# - name: Copy producer identities
+#   copy: 
+#     src={{ local_data_dir }}/producers.avro
+#     dest={{ data_dir }}/producers.avro
+#     mode='preserve'
+#     force='no'
+#   when: iteration|int == 0
+
+# - name: Copy certificates
+#   copy: 
+#     src={{ local_data_dir }}/certificates.avro
+#     dest={{ data_dir }}/certificates.avro
+#     mode='preserve'
+#     force='no'
+#   when: iteration|int == 0
+
+# - name: Copy shared keys
+#   copy: 
+#     src={{ local_data_dir }}/shared-keys{{ item[0]+item[1] }}.avro
+#     dest={{ data_dir }}/shared-keys{{ item[0]+item[1] }}.avro
+#     mode='preserve'
+#     force=no
+#   loop: "{{ range(1, pc_clients|int + 1)|list|product(range(0, pc_universe_size|int * pc_universes|int , pc_universe_size|int))|list }}"
+#   when: iteration|int == 0
+
+- name: Define result file
+  set_fact:
+    out_file: '{{ experiment_id }}_{{ result_file }}_{{ iteration }}.json'
+    out_file_path: '{{ result_dir }}/{{ experiment_id }}_{{ result_file }}_{{ iteration }}.json'
+
+- name: Create log4j2 configuration file
+  template:
+    src=log4j2.yaml.j2
+    dest={{ log_dir }}/pc_log4j2.yaml
+    mode='preserve'
+
+- name: Run benchmark
+  shell: /usr/bin/java -Dlog4j.configurationFile={{ log_dir }}/pc_log4j2.yaml -jar {{ macrobenchmark_jar }} \
+                              --privacy-controller \
+                              --bootstrap-server={{ kafka_bootstrap_servers }} \
+                              --out-file={{ out_file_path }} \
+                              --partitions={{ pc_partitions }} \
+                              --universes={{ pc_universes }} \
+                              --clients={{ pc_clients }} \
+                              --test-time={{ pc_test_time }} \
+                              --universe-size={{ pc_universe_size }} \
+                              --universe-min-size={{ pc_universe_min_size }} \
+                              --alpha={{ pc_alpha }} \
+                              --delta={{ pc_delta }} \
+                              --client-dropout-prob={{ pc_client_dropout_prob }} \
+                              --client-comeback-prob={{ pc_client_comeback_prob }} \
+                              --max-tp={{ pc_max_tp }} \
+                              --data-dir={{ data_dir }}
+                              #--delete-all-infos-topics \
+  register: task_result
+  until: task_result.rc == 0
+  retries: 5
+  ignore_errors: yes
+
+- name: Fetch result file from remote
+  fetch:
+    src={{ out_file_path }}
+    dest={{ local_result_dir }}/{{ out_file }}
+    flat=yes
+  when:  task_result.rc == 0

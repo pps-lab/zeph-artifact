@@ -1,0 +1,39 @@
+---
+
+- name: Look for Kafka cluster using the AWS CLI
+  command: >
+    aws kafka list-clusters
+      --cluster-name-filter {{ kafka_cluster_name }}
+      --region {{ server_region.aws_region }}
+  changed_when: false
+  register: kafka_cluster_query
+
+- debug:
+    msg="kafka_cluster_query = {{ kafka_cluster_query }}"
+
+- name: Extract cluster arn
+  set_fact:
+    kafka_arn: "{{ kafka_cluster_query.stdout | from_json | json_query('ClusterInfoList[0].ClusterArn') }}"
+    kafka_state: "{{ kafka_cluster_query.stdout | from_json | json_query('ClusterInfoList[0].State') }}"
+
+- debug:
+    msg="kafka arn = {{ kafka_arn }}"
+
+- name: Delete Kafka cluster
+  command: >
+    aws kafka delete-cluster
+      --cluster-arn {{ kafka_arn }}
+      --region {{ server_region.aws_region }}
+  changed_when: false
+  when: kafka_arn != "" and kafka_state != 'Deleting'
+
+- name: Wait until Kafka cluster deleted
+  command: >
+    aws kafka list-clusters
+      --cluster-name-filter {{ kafka_cluster_name }}
+      --region {{ server_region.aws_region }}
+  changed_when: false
+  register: kafka_cluster_query
+  until: not (kafka_cluster_query.stdout | from_json | json_query('ClusterInfoList'))
+  delay: 15
+  retries: 100

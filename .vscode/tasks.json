@@ -1,0 +1,153 @@
+{
+    "version": "2.0.0",
+    "inputs": [
+      {
+          "type": "promptString",
+          "id": "ec2PublicIp",
+          "description": "AWS EC2 Public IPv4 DNS: "
+      },
+    ],
+
+    "tasks": [
+      {
+        "label": "aws: ec2 connect via ssh",
+        "type": "shell",
+        "command": "ssh -i ${config:awsPrivateKeyPath} ubuntu@${input:ec2PublicIp}",
+        "problemMatcher": []
+      },
+      {
+        "label": "zeph: aws microbenchmarks",
+        "type": "shell",
+        "command": "pipenv run ansible-playbook ansible/microbenchmark.yml -i=ansible/ec2.py --private-key=${config:awsPrivateKeyPath} --ssh-common-args='-o StrictHostKeyChecking=no' --tags='result'",
+        "problemMatcher": []
+      },
+      {
+        "label": "zeph: aws microbenchmarks [fetch results only]",
+        "type": "shell",
+        "command": "pipenv run ansible-playbook ansible/microbenchmark.yml -i=ansible/ec2.py --private-key=${config:awsPrivateKeyPath} --ssh-common-args='-o StrictHostKeyChecking=no' --tags='result'",
+        "problemMatcher": []
+      },
+      {
+        "label": "zeph: aws e2e benchmark",
+        "type": "shell",
+        "command": "pipenv run ansible-playbook ansible/e2ebenchmark.yml -i=ansible/ec2.py --private-key=${config:awsPrivateKeyPath} --ssh-common-args='-o StrictHostKeyChecking=no' --forks=12",
+        "problemMatcher": []
+      },
+      {
+        "label": "Kafka: 1 Broker + Clean",
+        "type": "shell",
+        "dependsOrder": "sequence",
+        "problemMatcher": [],
+        "dependsOn": [
+          "kafka.clean",
+          "Kafka: 1 Broker"
+        ]
+      },
+      {
+        "label": "Kafka: 2 Broker + Clean",
+        "type": "shell",
+        "dependsOrder": "sequence",
+        "problemMatcher": [],
+        "dependsOn": [
+          "kafka.clean",
+          "Kafka: 2 Broker"
+        ]
+      },
+      {
+        "label": "Kafka: 3 Broker + Clean",
+        "type": "shell",
+        "dependsOrder": "sequence",
+        "problemMatcher": [],
+        "dependsOn": [
+          "kafka.clean",
+          "Kafka: 3 Broker"
+        ]
+      },
+      {
+        "label": "Kafka: 1 Broker",
+        "type": "shell",
+        "problemMatcher": [],
+        "dependsOn": [
+          "kafka.zookeeper",
+          "kafka.broker0"
+        ]
+      },
+      {
+        "label": "Kafka: 2 Broker",
+        "type": "shell",
+        "problemMatcher": [],
+        "dependsOn": [
+          "kafka.zookeeper",
+          "kafka.broker0",
+          "kafka.broker1"
+        ]
+      },
+      {
+        "label": "Kafka: 3 Broker",
+        "type": "shell",
+        "problemMatcher": [],
+        "dependsOn": [
+          "kafka.zookeeper",
+          "kafka.broker0",
+          "kafka.broker1",
+          "kafka.broker2"
+        ]
+      },
+      {
+        "label": "kafka.clean",
+        "type": "shell",
+        "command": "rm -rf ./broker0 ./broker1 ./broker2 /tmp/zookeeper",
+        "options": {
+          "cwd": "${config:kafkalogspath}"
+        },
+        "presentation": {
+          "group": "kafka"
+        }
+      },
+      {
+        "label": "kafka.zookeeper",
+        "type": "shell",
+        "command": "bin/zookeeper-server-start.sh config/zookeeper.properties",
+        "options": {
+          "cwd": "${config:kafkapath}"
+        },
+        "presentation": {
+          "group": "kafka"
+        }
+      },
+      {
+        "label": "kafka.broker0",
+        "type": "shell",
+        "command": "bin/kafka-server-start.sh config/server-0.properties",
+        "options": {
+          "cwd": "${config:kafkapath}"
+        },
+        "presentation": {
+          "group": "kafka"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "kafka.broker1",
+        "type": "shell",
+        "command": "bin/kafka-server-start.sh config/server-1.properties",
+        "options": {
+          "cwd": "${config:kafkapath}"
+        },
+        "presentation": {
+          "group": "kafka"
+        }
+      },
+      {
+        "label": "kafka.broker2",
+        "type": "shell",
+        "command": "bin/kafka-server-start.sh config/server-2.properties",
+        "options": {
+          "cwd": "${config:kafkapath}"
+        },
+        "presentation": {
+          "group": "kafka"
+        }
+      }
+    ]
+  }

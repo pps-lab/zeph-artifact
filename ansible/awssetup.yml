@@ -1,0 +1,156 @@
+# required variables:
+# client_group1_instances_num
+# client_group2_instances_num
+# client_group3_instances_num
+# client_group1_instances_max_num
+# client_group2_instances_max_num
+# client_group3_instances_max_num
+# server_transformer_instances_num
+# server_transformer_instances_max_num
+# use_kafka
+# use_shared_keys
+# use_monitoring
+# use_reset
+
+- name: Create / Start / Stop EC2 instances and Create Kafka Cluster
+  hosts: localhost
+  connection: local
+  remote_user: ubuntu
+  gather_facts: True
+  tasks:
+  
+  - name: use defined client instance type
+    set_fact:
+      client_all: "{{ client_all | combine({ 'instance_type': client_instance_type } ) }}"
+    when: client_instance_type is defined
+
+
+  - name: Setup Server VPC
+    include_role:
+      name: vpcsetupserver
+
+  - name: Setup Client VPC in 3 regions
+    include_role:
+      name: vpcsetupclient
+    loop: ['1', '2', '3']
+    loop_control:
+      loop_var: client_group_id
+  
+  - name: Setup intra-region VPC peering between server vpc and each client vpc
+    include_role: 
+      name: vpcpeering 
+    loop: ['1', '2', '3']
+    loop_control:
+      loop_var: client_group_id
+  
+  - name: Setup Kafka
+    include_role: 
+      name: kafkasetup
+    when: use_kafka
+
+  - name: Start Clients in Client Group 1
+    include_role: 
+      name: ec2setup
+    vars:
+      ec2config: '{{ client_group1 }}'
+      ec2_instances_num: '{{ client_group1_instances_num }}'
+      ec2_instances_max_num: '{{ client_group1_instances_max_num }}'
+
+  - name: Start Clients in Client Group 2
+    include_role: 
+      name: ec2setup
+    vars:
+      ec2config: '{{ client_group2 }}'
+      ec2_instances_num: '{{ client_group2_instances_num }}'
+      ec2_instances_max_num: '{{ client_group2_instances_max_num }}'
+
+  - name: Start Clients in Client Group 3
+    include_role: 
+      name: ec2setup
+    vars:
+      ec2config: '{{ client_group3 }}'
+      ec2_instances_num: '{{ client_group3_instances_num }}'
+      ec2_instances_max_num: '{{ client_group3_instances_max_num }}'
+
+  - name: Start Server Transformer
+    include_role: 
+      name: ec2setup
+    vars:
+      ec2config: '{{ server_transformer | combine(server_region) }}'
+      ec2_instances_num: '{{ server_transformer_instances_num }}'
+      ec2_instances_max_num: '{{ server_transformer_instances_max_num }}'
+
+  - name: Start Server Monitoring
+    include_role: 
+      name: ec2setup
+    vars:
+      ec2config: '{{ server_monitoring | combine(server_region) }}'
+      ec2_instances_num: 1
+      ec2_instances_max_num: 1
+    when: use_monitoring
+
+  - name:  Stop Server Monitoring
+    include_role: 
+      name: ec2setup
+    vars:
+      ec2config: '{{ server_monitoring | combine(server_region) }}'
+      ec2_instances_num: 0
+      ec2_instances_max_num: 0
+    when: not use_monitoring
+
+
+- name: Setup EC2 instances
+  hosts: "{{ hostvars['localhost'].client_all.host_group }}:{{ hostvars['localhost'].server_transformer.host_group }}"
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+  - role: common
+
+- name: Get Url for Shared Keys from S3
+  hosts: localhost
+  tasks:
+  - command: >
+      aws s3 presign 
+      s3://zeph-data/data.zip --region {{ server_region.aws_region }}
+    register: s3_download_url
+    when: use_shared_keys
+
+  - name: Output S3 shared keys download url
+    debug: "msg=Download Url: {{ s3_download_url.stdout }}"
+    when: use_shared_keys
+
+- name: Download and unzip file from s3
+  hosts: "{{ hostvars['localhost'].client_all.host_group }}"
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+  - role: s3unzip
+    vars:
+      s3_data_url: "{{ hostvars['localhost'].s3_download_url.stdout }}"
+    when: use_shared_keys
+  
+- name: Wait until Kafka cluster is ready
+  hosts: localhost
+  connection: local
+  remote_user: ubuntu
+  gather_facts: False
+  roles:
+  - role: kafkaready
+    when: use_kafka
+
+- name: Setting kafka bootstrap servers variable
+  hosts: "{{ hostvars['localhost'].client_all.host_group }}:{{ hostvars['localhost'].server_transformer.host_group }}"
+  remote_user: ubuntu
+  tasks:
+    - name: move bootstrap server fact
+      set_fact:
+        kafka_bootstrap_servers: "{{ hostvars['localhost']['kafka_bootstrap_servers'] }}"
+      when: use_kafka
+
+- name: Setup EC2 Monitoring Instances
+  hosts: "{{ hostvars['localhost'].server_monitoring.host_group }}"
+  remote_user: ubuntu
+  gather_facts: True
+  roles:
+  - role: kafkamonitoring
+    when: use_kafka

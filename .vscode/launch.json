@@ -1,0 +1,221 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "E2E Client - 3 Producer + 3 Controller",
+            "configurations": ["E2E Controller Partition", "E2E Producer Partition"]
+        }
+    ],
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "experimentId",
+            "description": "Experiment ID?",
+            "default": "exp1"
+        },
+        {
+            "type": "promptString",
+            "id": "universeId",
+            "description": "Universe ID?"
+        },
+
+    ],
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch DigestOp",
+            "request": "launch",
+            "mainClass": "ch.ethz.infk.pps.zeph.shared.DigestOp",
+            "projectName": "zeph-shared"
+        },
+        {
+            "type": "java",
+            "name": "Launch DataLoader",
+            "request": "launch",
+            "mainClass": "ch.ethz.infk.pps.zeph.crypto.util.DataLoader",
+            "projectName": "zeph-crypto"
+        },
+        {
+            "type": "java",
+            "name": "Zeph Server: Master",
+            "request": "launch",
+            "mainClass": "ch.ethz.infk.pps.zeph.server.master.MasterApp",
+            "projectName": "zeph-server-master",
+            "args": [
+                "--bootstrap-server=${config:zeph.kafkaBootstrapServers}",
+                "--interactive-queries-server=127.0.0.1:1234",
+                "--state-dir=${config:zeph.stateDir}",
+                "--stream-threads=4",
+                "--time-to-commit=6000",
+                "--universe-partitions=3",
+                "--universe-replications=1"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Zeph Server: Worker",
+            "request": "launch",
+            "mainClass": "ch.ethz.infk.pps.zeph.server.worker.WorkerApp",
+            "projectName": "zeph-server-worker",
+            "args": [
+                "--bootstrap-server=${config:zeph.kafkaBootstrapServers}",
+                "--state-dir=${config:zeph.stateDir}",
+                "--stream-threads=4",
+                "--grace-size=5000",
+                "--partitions=3",
+                "--replications=1",
+                "--retention-time=24",
+                "--universe-id=${input:universeId}",
+                "--universe-size=${config:zeph.minUniverseSize}",
+                "--window-size=${config:zeph.e2e.windowSize}"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "E2E Producer Partition",
+            "request": "launch",
+            "mainClass": "ch.ethz.infk.pps.zeph.benchmark.macro.Main",
+            "projectName": "zeph-macrobenchmarks",
+            "args": [
+                "--end-to-end",
+                "--zeph",
+                "--zeph",
+                "--zeph",
+                "--e2e-producer",
+                "--e2e-producer",
+                "--e2e-producer",
+                "--experiment-id=${input:experimentId}",
+                "--experiment-id=${input:experimentId}",
+                "--experiment-id=${input:experimentId}",
+                "--test-time=${config:zeph.e2e.testTime}",
+                "--test-time=${config:zeph.e2e.testTime}",
+                "--test-time=${config:zeph.e2e.testTime}",
+                "--out-file=${input:experimentId}_out.json",
+                "--kafka-bootstrap-server=${config:zeph.kafkaBootstrapServers}",
+                "--universes=${input:universeId}",
+                "--universe-size=3",
+                "--window-size=${config:zeph.e2e.windowSize}",
+                "--producer-partition=0",
+                "--producer-partition-size=3",
+                "--producer-partition-count=1",
+                "--expo-delay-mean=${config:zeph.e2e.expoDelayMean}",
+                "--data-dir=${config:zeph.dataDir}",
+                "--controller-partition=0",
+                "--controller-partition-size=3",
+                "--controller-partition-count=1",
+                "--universe-min-size=${config:zeph.minUniverseSize}",
+                "--alpha=0.5",
+                "--delta=0.00005",
+                "--producers-in-controller=1",
+                "--universes-in-controller=1"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "E2E Controller Partition",
+            "request": "launch",
+            "mainClass": "ch.ethz.infk.pps.zeph.benchmark.macro.Main",
+            "projectName": "zeph-macrobenchmarks",
+            "args": [
+                "--end-to-end",
+                "--zeph",
+                "--zeph",
+                "--zeph",
+                "--e2e-controller",
+                "--e2e-controller",
+                "--e2e-controller",
+                "--experiment-id=${input:experimentId}",
+                "--experiment-id=${input:experimentId}",
+                "--experiment-id=${input:experimentId}",
+                "--test-time=${config:zeph.e2e.testTime}",
+                "--test-time=${config:zeph.e2e.testTime}",
+                "--test-time=${config:zeph.e2e.testTime}",
+                "--out-file=${input:experimentId}_out.json",
+                "--kafka-bootstrap-server=${config:zeph.kafkaBootstrapServers}",
+                "--universes=${input:universeId}",
+                "--universe-size=3",
+                "--window-size=${config:zeph.e2e.windowSize}",
+                "--producer-partition=0",
+                "--producer-partition-size=3",
+                "--producer-partition-count=1",
+                "--expo-delay-mean=${config:zeph.e2e.expoDelayMean}",
+                "--data-dir=${config:zeph.dataDir}",
+                "--controller-partition=0",
+                "--controller-partition-size=3",
+                "--controller-partition-count=1",
+                "--universe-min-size=3",
+                "--alpha=0.5",
+                "--delta=0.00005",
+                "--producers-in-controller=1",
+                "--universes-in-controller=1"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Plaintext Server",
+            "request": "launch",
+            "mainClass": "ch.ethz.infk.pps.zeph.server.worker.WorkerApp",
+            "projectName": "zeph-server-worker",
+            "args": [
+                "plaintext",
+                "--bootstrap-server=${config:zeph.kafkaBootstrapServers}",
+                "--state-dir=${config:zeph.stateDir}",
+                "--stream-threads=4",
+                "--grace-size=5000",
+                "--partitions=3",
+                "--replications=1",
+                "--retention-time=24",
+                "--universe-id=${input:universeId}",
+                "--universe-size=${config:zeph.minUniverseSize}",
+                "--window-size=${config:zeph.e2e.windowSize}"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "E2E Plaintext Partition",
+            "request": "launch",
+            "mainClass": "ch.ethz.infk.pps.zeph.benchmark.macro.Main",
+            "projectName": "zeph-macrobenchmarks",
+            "args": [
+                "--end-to-end",
+                "--plaintext",
+                "--e2e-producer",
+                "--experiment-id=${input:experimentId}",
+                "--test-time=${config:zeph.e2e.testTime}",
+                "--out-file=${input:experimentId}_out.json",
+                "--kafka-bootstrap-server=${config:zeph.kafkaBootstrapServers}",
+                "--universes=${input:universeId}",
+                "--universe-size=3",
+                "--window-size=${config:zeph.e2e.windowSize}",
+                "--producer-partition=0",
+                "--producer-partition-size=3",
+                "--producer-partition-count=1",
+                "--expo-delay-mean=${config:zeph.e2e.expoDelayMean}",
+                "--data-dir=${config:zeph.dataDir}"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-ClientDemo<zeph-client-demo>",
+            "request": "launch",
+            "mainClass": "ch.ethz.infk.pps.zeph.clientdemo.ClientDemo",
+            "projectName": "zeph-client-demo"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-PlaintextApp<zeph-server-worker>",
+            "request": "launch",
+            "mainClass": "ch.ethz.infk.pps.zeph.server.worker.PlaintextApp",
+            "projectName": "zeph-server-worker"
+        }
+    ]
+}

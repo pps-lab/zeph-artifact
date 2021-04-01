@@ -1,0 +1,18 @@
+---
+
+run_id: '{{ (ansible_date_time.epoch |int / 10000) | int }}'
+workers_per_universe: 2
+
+window_size: 10000
+
+producer_partition_size: 100
+controller_partition_size: 100
+
+producers_in_controller: 1
+universes_in_controller: 1
+
+test_time: 180
+expo_delay_mean: 0.5
+
+partitions: 16
+stream_threads: 8

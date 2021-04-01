@@ -1,0 +1,266 @@
+- name: List all vpc peers
+  community.aws.ec2_vpc_peering_info:
+    region: "{{ server_region.aws_region }}"
+  register: all_vpc_peers
+
+- name: extract peering ids
+  set_fact:
+    peering_ids: '{{all_vpc_peers |  json_query(query)}}'
+  vars:
+    query: result[?tags.Name=='zeph'].vpc_peering_connection_id
+
+- debug: msg="delete existing peering ids {{ peering_ids }}"
+
+- name: Delete the Peering Groups
+  community.aws.ec2_vpc_peer:
+    region: "{{ server_region.aws_region }}"
+    peering_id: "{{ item }}"
+    state: absent
+  loop: "{{ peering_ids }}"
+
+
+- name: Get VPC ID Server
+  amazon.aws.ec2_vpc_net_info:
+    filters:
+      "tag:Name": "{{ server_region.vpc_name }}"
+    region: "{{ server_region.aws_region }}"
+  register: vpc_result_server
+
+- name: Get VPC ID Client 1
+  amazon.aws.ec2_vpc_net_info:
+    filters:
+      "tag:Name": "{{ client_group1.vpc_name }}"
+    region: "{{ client_group1.aws_region }}"
+  register: vpc_result_group1
+
+- name: Get VPC ID Client 2
+  amazon.aws.ec2_vpc_net_info:
+    filters:
+      "tag:Name": "{{ client_group2.vpc_name }}"
+    region: "{{ client_group2.aws_region }}"
+  register: vpc_result_group2
+
+- name: Get VPC ID Client 3
+  amazon.aws.ec2_vpc_net_info:
+    filters:
+      "tag:Name": "{{ client_group3.vpc_name }}"
+    region: "{{ client_group3.aws_region }}"
+  register: vpc_result_group3
+
+- name: Extract Vpc id
+  set_fact:
+    server_vpc_id: "{{ vpc_result_server.vpcs[0].vpc_id | default('undefined') }}"
+    client1_vpc_id: "{{ vpc_result_group1.vpcs[0].vpc_id | default('undefined') }}"
+    client2_vpc_id: "{{ vpc_result_group2.vpcs[0].vpc_id | default('undefined')}}"
+    client3_vpc_id: "{{ vpc_result_group3.vpcs[0].vpc_id | default('undefined') }}"
+
+#- debug: msg="{{ server_vpc_id }}  {{ client1_vpc_id }}  {{ client2_vpc_id }}  {{ client3_vpc_id }}"
+
+# remove dependencies between security groups
+- name: Remove All Routes from Server Security Groups
+  ec2_group:
+    name: "{{ item.sg_name }}"
+    description: "{{ item.sg_desc }}"
+    vpc_id: "{{ server_vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    purge_rules: true
+  loop:
+  - "{{ server_transformer}}"
+  - "{{ server_monitoring }}"
+  - "{{ server_cluster }}"
+  when: server_vpc_id != 'undefined'
+
+- name: Remove All Routes from Client1  Security Group
+  ec2_group:
+    name: "{{ client_group1.sg_name }}"
+    description: "{{ client_group1.sg_desc }}"
+    vpc_id: "{{ client1_vpc_id }}"
+    region: "{{ client_group1.aws_region }}"
+    purge_rules: true
+  when: client1_vpc_id != 'undefined'
+
+- name: Remove All Routes from Client2  Security Group
+  ec2_group:
+    name: "{{ client_group2.sg_name }}"
+    description: "{{ client_group2.sg_desc }}"
+    vpc_id: "{{ client2_vpc_id }}"
+    region: "{{ client_group2.aws_region }}"
+    purge_rules: true
+  when: client2_vpc_id != 'undefined'
+
+- name: Remove All Routes from Client3  Security Group
+  ec2_group:
+    name: "{{ client_group3.sg_name }}"
+    description: "{{ client_group3.sg_desc }}"
+    vpc_id: "{{ client3_vpc_id }}"
+    region: "{{ client_group3.aws_region }}"
+    purge_rules: true
+  when: client3_vpc_id != 'undefined'
+
+
+
+#####################################################
+# Delete the Server Region                          #
+#####################################################
+
+
+
+# Delete Security Groups
+- name: Delete Monitoring Security Group
+  ec2_group:
+    name: "{{ server_monitoring.sg_name }}"
+    vpc_id: "{{ server_vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    state: absent
+  when: server_vpc_id != 'undefined'
+  register: result
+  retries: 4
+  delay: 5
+  until: result is not failed
+
+- name: Delete Cluster Security Group
+  ec2_group:
+    name: "{{ server_cluster.sg_name }}"
+    vpc_id: "{{ server_vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    state: absent
+  when: server_vpc_id != 'undefined'
+  register: result
+  retries: 4
+  delay: 5
+  until: result is not failed
+
+- name: Delete Transformer Security Group
+  ec2_group:
+    name: "{{ server_transformer.sg_name }}"
+    vpc_id: "{{ server_vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    state: absent
+  when: server_vpc_id != 'undefined'
+  register: result
+  retries: 4
+  delay: 5
+  until: result is not failed
+
+# Delete Subnets
+- name: Delete Server Subnet AZ1
+  ec2_vpc_subnet:
+    state: absent
+    vpc_id: "{{ server_vpc_id }}"
+    cidr: "{{ server_region.vpc_subnet_cidr }}"
+    region: "{{ server_region.aws_region }}"
+  when: server_vpc_id != 'undefined'
+
+- name: Delete Server Subnet AZ2
+  ec2_vpc_subnet:
+    state: absent
+    vpc_id: "{{ server_vpc_id }}"
+    cidr: "{{ server_region.vpc_subnet2_cidr }}"
+    region: "{{ server_region.aws_region }}"
+  when: server_vpc_id != 'undefined'
+
+
+# Delete Internet Gateway
+- name: Delete Server Internet Gateway
+  ec2_vpc_igw:
+    vpc_id: "{{ server_vpc_id }}"
+    region: "{{ server_region.aws_region }}"
+    state: absent
+  when: server_vpc_id != 'undefined'
+
+# Delete Route Table
+#- name: Delete Server Route Table
+#  community.aws.ec2_vpc_route_table:
+#    vpc_id: "{{ server_vpc_id }}"
+#    region: "{{ server_region.aws_region }}"
+#    tags:
+#      Name: "Public"
+#    routes: []
+#    state: absent
+#  when: server_vpc_id != 'undefined'
+
+
+
+# Delete VPC
+- name: Delete the Server VPC
+  ec2_vpc_net:   
+    name: "{{ server_region.vpc_name }}"
+    cidr_block: "{{ server_region.vpc_cidr_block }}"
+    region: "{{ server_region.aws_region }}"  
+    state: absent  
+    purge_cidrs: yes
+  register: server_vpc_delete
+
+- debug: msg="Server VPC Delete {{ server_vpc_delete }}"
+
+#####################################################
+# Delete the Client Regions                         #
+#####################################################
+
+- name: Set VPC ID in Client Groups
+  set_fact:
+    client_group1: "{{ client_group1 | combine({'vpc_id': client1_vpc_id}) }}"
+    client_group2: "{{ client_group2 | combine({'vpc_id': client2_vpc_id}) }}"
+    client_group3: "{{ client_group3 | combine({'vpc_id': client3_vpc_id}) }}"
+
+- name: Set Client Groups
+  set_fact:
+    client_groups:
+    - "{{ client_group1 }}"
+    - "{{ client_group2 }}"
+    - "{{ client_group3 }}"
+
+- name: Delete Security Group - Clients
+  ec2_group:
+    name: "{{ item.sg_name }}"
+    vpc_id: "{{ item.vpc_id }}"
+    region: "{{ item.aws_region }}"
+    state: absent
+  when: item.vpc_id != 'undefined'
+  loop: "{{ client_groups }}"
+  register: result
+  retries: 10
+  delay: 5
+  until: result is not failed
+
+# Delete Route Table
+#- name: Delete Route Table - Clients
+#  community.aws.ec2_vpc_route_table:
+#    vpc_id: "{{ item.vpc_id }}"
+#    region: "{{ item.aws_region }}"
+#    tags:
+#      Name: "Public"
+#    state: absent
+#  when: item.vpc_id != 'undefined'
+#  loop: "{{ client_groups }}"
+
+
+# Delete Internet Gateway
+- name: Delete  Internet Gateway - Clients
+  ec2_vpc_igw:
+    vpc_id: "{{ item.vpc_id }}"
+    region: "{{ item.aws_region }}"
+    state: absent
+  when: item.vpc_id != 'undefined'
+  loop: "{{ client_groups }}"
+
+
+# Delete Subnets
+- name: Delete Subnet - Clients 
+  ec2_vpc_subnet:
+    state: absent
+    vpc_id: "{{ item.vpc_id }}"
+    cidr: "{{ item.vpc_subnet_cidr }}"
+    region: "{{ item.aws_region }}"
+  when: item.vpc_id != 'undefined'
+  loop: "{{ client_groups }}"
+
+  # Delete VPC
+- name: Delete VPC - Clients
+  ec2_vpc_net:   
+    name: "{{ item.vpc_name }}"
+    cidr_block: "{{ item.vpc_cidr_block }}"
+    region: "{{ item.aws_region }}"  
+    state: absent  
+    purge_cidrs: yes
+  loop: "{{ client_groups }}"

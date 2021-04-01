@@ -1,0 +1,30 @@
+---
+
+client_type: zeph # zeph or plaintext
+
+# required for both zeph and plaintext
+experiment_id: exp
+test_time: 120
+universes:
+- 1
+- 2
+universe_size: 10500
+window_size: 10000
+producer_threads: 6
+expo_delay_mean: 0.05
+producers: 6
+
+producers_per_connection: 1
+
+# only required for zeph
+universe_min_size: 10000
+alpha: 0.5
+delta: 1.0E-5
+producers_per_controller: 3
+universes_per_controller: 1
+
+controllers_per_connection: 1
+
+# paths required for both
+macrobenchmark_jar: /home/ubuntu/zeph/zeph-benchmarks/zeph-macrobenchmarks/target/zeph-macrobenchmarks-1.0.jar
+

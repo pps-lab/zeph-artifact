@@ -1,0 +1,29 @@
+---
+
+- name: populate service facts
+  service_facts:
+  
+- name: Stop Zeph Services
+  become: yes
+  service: name={{ item }} state=stopped enabled=no
+  register: command_result
+  failed_when:  "command_result is failed and ('find' not in command_result.msg and 'found' not in command_result.msg)"
+  loop: "{{ ansible_facts.services.keys()| list | to_json | from_json | json_query(query) }}"
+  vars:
+    query: "[?contains(@, 'zeph')]"
+
+- name: Stop Plaintext Services
+  become: yes
+  service: name={{ item }} state=stopped enabled=no
+  register: command_result
+  failed_when:  "command_result is failed and ('find' not in command_result.msg and 'found' not in command_result.msg)"
+  loop: "{{ ansible_facts.services.keys()| list | to_json | from_json | json_query(query) }}"
+  vars:
+    query: "[?contains(@, 'plaintext')]"
+
+
+# - debug: msg="xy = {{ ansible_facts.services.keys()|list }}"
+
+# - debug: msg="xy = {{ ansible_facts.services.keys()|list | json_query(query) }}"
+#   vars:
+#     query: "[?contains(@, 'zeph')]"

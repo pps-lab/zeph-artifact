@@ -1,0 +1,188 @@
+{
+  "data": [
+    {
+      "result": {
+        "count": 14341,
+        "sum": 1143118
+      },
+      "uid": 121,
+      "latency": 8982,
+      "window": 1607436890000
+    },
+    {
+      "result": {
+        "count": 24080,
+        "sum": 1912095
+      },
+      "uid": 121,
+      "latency": 6360,
+      "window": 1607436900000
+    },
+    {
+      "result": {
+        "count": 24028,
+        "sum": 1908518
+      },
+      "uid": 121,
+      "latency": 6196,
+      "window": 1607436910000
+    },
+    {
+      "result": {
+        "count": 24038,
+        "sum": 1904484
+      },
+      "uid": 121,
+      "latency": 7126,
+      "window": 1607436920000
+    },
+    {
+      "result": {
+        "count": 23655,
+        "sum": 1870916
+      },
+      "uid": 121,
+      "latency": 6222,
+      "window": 1607436930000
+    },
+    {
+      "result": {
+        "count": 23866,
+        "sum": 1904716
+      },
+      "uid": 121,
+      "latency": 5912,
+      "window": 1607436940000
+    },
+    {
+      "result": {
+        "count": 23934,
+        "sum": 1902541
+      },
+      "uid": 121,
+      "latency": 5757,
+      "window": 1607436950000
+    },
+    {
+      "result": {
+        "count": 23988,
+        "sum": 1903677
+      },
+      "uid": 121,
+      "latency": 5758,
+      "window": 1607436960000
+    },
+    {
+      "result": {
+        "count": 24258,
+        "sum": 1917316
+      },
+      "uid": 121,
+      "latency": 5692,
+      "window": 1607436970000
+    },
+    {
+      "result": {
+        "count": 23852,
+        "sum": 1882248
+      },
+      "uid": 121,
+      "latency": 5806,
+      "window": 1607436980000
+    },
+    {
+      "result": {
+        "count": 23958,
+        "sum": 1902709
+      },
+      "uid": 121,
+      "latency": 5743,
+      "window": 1607436990000
+    },
+    {
+      "result": {
+        "count": 23849,
+        "sum": 1894851
+      },
+      "uid": 121,
+      "latency": 5496,
+      "window": 1607437000000
+    },
+    {
+      "result": {
+        "count": 24111,
+        "sum": 1919998
+      },
+      "uid": 121,
+      "latency": 5469,
+      "window": 1607437010000
+    },
+    {
+      "result": {
+        "count": 24290,
+        "sum": 1930665
+      },
+      "uid": 121,
+      "latency": 5531,
+      "window": 1607437020000
+    },
+    {
+      "result": {
+        "count": 24180,
+        "sum": 1925107
+      },
+      "uid": 121,
+      "latency": 5433,
+      "window": 1607437030000
+    },
+    {
+      "result": {
+        "count": 24364,
+        "sum": 1933031
+      },
+      "uid": 121,
+      "latency": 5498,
+      "window": 1607437040000
+    },
+    {
+      "result": {
+        "count": 23902,
+        "sum": 1909434
+      },
+      "uid": 121,
+      "latency": 5442,
+      "window": 1607437050000
+    }
+  ],
+  "config": {
+    "expoDelayMean": 0.5,
+    "leader": true,
+    "numUniverses": 1,
+    "producerPartition": 0,
+    "controllerPartition": 0,
+    "delta": 1.0E-5,
+    "consumerPollTimeout": "PT5S",
+    "deleteTopics": true,
+    "outputFile": "/home/ubuntu/results/policycrypt-results_e2e_car_policycrypt_1200.json",
+    "e2eProducer": true,
+    "universeSize": 1200,
+    "alpha": 0.5,
+    "producerPartitionSize": 100,
+    "experimentId": "e2e_car_policycrypt_1200",
+    "testTimeSec": 180,
+    "totalNumberOfControllers": 100,
+    "dataFolder": "/home/ubuntu/data",
+    "totalNumberOfProducers": 100,
+    "universeIds": [121],
+    "producerPartitionCount": 12,
+    "controllerPartitionCount": 12,
+    "controllerPartitionSize": 100,
+    "producersInController": 1,
+    "windowSizeMillis": 10000,
+    "universeMinSize": 1200,
+    "universesInController": 1,
+    "e2eController": false,
+    "timestampSync": 1607436888524,
+    "benchmarkType": "policycrypt"
+  }
+}

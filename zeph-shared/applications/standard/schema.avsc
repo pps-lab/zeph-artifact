@@ -1,0 +1,19 @@
+[
+    {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "Digest",
+        "fields": [
+          {"name": "valueBase", "type": {"type": "array", "items": "long"}},
+          {"name": "count", "type": {"type": "array", "items": "long"}},
+          {"name": "header", "type": ["null", "ch.ethz.infk.pps.shared.avro.HeacHeader"]}
+        ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "Input",
+        "fields": [
+          {"name": "value", "type": "long"},
+          {"name": "count", "type": ["null", "long"]}
+        ]
+      }
+    ]

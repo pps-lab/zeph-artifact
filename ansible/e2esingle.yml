@@ -1,0 +1,73 @@
+---
+
+- name: Run Id
+  hosts: localhost
+  tasks:
+  - debug:
+      var: run_id
+  - assert:
+      that:
+        - application is defined
+        - num_parties is defined
+        - num_parties | int % 300 == 0 # n_parties must be divisible by 300 because we have 3 client regions and partitions of 100 clients each
+  - set_fact:
+      client_group1_instances_num: "{{ 2*(num_parties|int / 300)|int }}"
+      client_group1_instances_max_num: "{{ 2*(num_parties|int / 300)|int }}"
+      client_group2_instances_num: "{{ 2*(num_parties|int / 300)|int }}"
+      client_group2_instances_max_num: "{{ 2*(num_parties|int / 300)|int }}"
+      client_group3_instances_num: "{{ 2*(num_parties|int / 300)|int }}"
+      client_group3_instances_max_num: "{{ 2*(num_parties|int / 300)|int }}"
+
+
+- name: Start & Setup Client and Server Instances
+  import_playbook: awssetup.yml
+  vars:
+    server_transformer_instances_num: 2
+    server_transformer_instances_max_num: 2
+
+    use_kafka: True
+    use_shared_keys: True
+    use_monitoring: False
+
+
+- name: Reset Kafka
+  hosts: "tag_Name_ZephClient[0]"
+  remote_user: ubuntu
+  roles:
+  - role: kafkaclear
+
+
+- name: Run plaintext 300 end-to-end benchmark - polar
+  import_playbook: e2eplaintext.yml
+  vars:
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2[0:{{ (num_parties|int / 300 -1) |int | string }}]:aws_region_eu_west_3[0:{{ (num_parties|int / 300 -1) |int | string }}]:aws_region_eu_north_1[0:{{ (num_parties|int / 300 -1) |int | string }}]:&tag_Name_ZephClient
+    experiment_id: "e2e_plaintext_{{ application }}_{{ num_parties }}_{{ run_id }}"
+    universes: [10]
+    universe_size: "{{ num_parties }}"
+    universe_min_size: "{{ num_parties }}"
+    producer_partition_size: 100
+    controller_partition_size: 0
+    use_monitoring: False
+
+
+- name: Run zeph 300 end-to-end benchmark - polar
+  import_playbook: e2ezeph.yml
+  vars:
+    server_master_hosts: tag_Name_ZephServer[0]
+    server_worker_hosts: tag_Name_ZephServer
+    client_hosts: aws_region_eu_west_2:aws_region_eu_west_3:aws_region_eu_north_1:&tag_Name_ZephClient
+    experiment_id: "e2e_zeph_{{ application }}_{{ num_parties }}_{{ run_id }}"
+    universes: [11]
+    universe_size: "{{ num_parties }}"
+    universe_min_size: "{{ num_parties }}"
+    producer_partition_size: 100
+    controller_partition_size: 100
+    use_monitoring: False
+
+###################################################################################################################################
+###################################################################################################################################
+###################################################################################################################################
+
+- name: Cleanup AWS (terminate ec2 instances, delete vpc)
+  import_playbook: awscleanup.yml

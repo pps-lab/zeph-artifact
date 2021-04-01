@@ -1,0 +1,13 @@
+---
+
+zeph_master_jar: /home/ubuntu/zeph/zeph-server/zeph-server-master/target/zeph-server-master-1.0.jar
+
+time_to_commit: 6000 # in milliseconds
+
+universe_partitions: 3
+universe_replications: 1
+
+master_state_dir: /home/ubuntu/masterstate
+log_dir: /home/ubuntu/logs
+stdout_log_file: zephmaster_stdout
+stderr_log_file: zephmaster_stderr

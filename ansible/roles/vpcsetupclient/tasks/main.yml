@@ -1,0 +1,121 @@
+---
+
+# Required Variables: client_group_id: 1, 2, 3
+
+- name: 
+  set_fact:
+    client_group: "{{ lookup('vars', 'client_group' + client_group_id) }}"
+
+- name: Create VPC
+  ec2_vpc_net:
+    name: "{{ client_group.vpc_name }}"
+    cidr_block: "{{ client_group.vpc_cidr_block }}"
+    region: "{{ client_group.aws_region }}"
+    state: "present"
+  register: vpc_client
+
+
+- name: Set VPC ID in variable
+  set_fact:
+    client_group: "{{ client_group | combine({'vpc_id': vpc_client.vpc.id}) }}"
+
+- name: Gather information about VPC route table
+  community.aws.ec2_vpc_route_table_info:
+    region: "{{ client_group.aws_region }}"
+    filters:
+      vpc-id: '{{ client_group.vpc_id }}'
+  register: route_table_info
+  environment:
+    BOTO_USE_ENDPOINT_HEURISTICS: True
+- debug: msg="route_table_info={{ route_table_info }}"
+
+
+- name: Set Route Table id
+  set_fact:
+    client_group: "{{ client_group | combine({'route_table_id': route_table_info.route_tables[0].id}) }}"
+
+
+- name: Create Public Subnet [AZ-1]
+  ec2_vpc_subnet:
+    state: "present"
+    vpc_id: "{{ client_group.vpc_id }}"
+    cidr: "{{ client_group.vpc_subnet_cidr }}"
+    az: "{{ client_group.aws_region }}a"
+    region: "{{ client_group.aws_region }}"
+    resource_tags:
+      Name: "{{ client_group.vpc_subnet_name }}"
+  register: public_subnet_client
+
+
+- name: Set Public Subnet ID in variables
+  set_fact:
+    client_group: "{{ client_group | combine({'vpc_subnet_id': public_subnet_client.subnet.id}) }}"
+
+- name: Create Internet Gateway for VPC
+  ec2_vpc_igw:
+    vpc_id: "{{ client_group.vpc_id }}"
+    region: "{{ client_group.aws_region }}"
+    state: present
+  register: vpc_igw
+
+- name: Set Internet Gateway ID in variable
+  set_fact:
+    client_group: "{{ client_group | combine({'igw_id': vpc_igw.gateway_id}) }}"
+
+- name: Set up public route table
+  community.aws.ec2_vpc_route_table:
+    vpc_id: "{{ client_group.vpc_id }}"
+    region: "{{ client_group.aws_region }}"
+    purge_routes: True
+    purge_subnets: True
+    purge_tags: True
+    lookup: id
+    route_table_id: '{{ client_group.route_table_id }}'
+    tags:
+      Name: "Public"
+    subnets:
+      - "{{ client_group.vpc_subnet_id }}"
+    routes:
+      - dest: "0.0.0.0/0"
+        gateway_id: "{{ client_group.igw_id }}"
+  #register: route_table
+
+- name: Create Security Group
+  ec2_group:
+    name: "{{ client_group.sg_name }}"
+    description: "{{ client_group.sg_desc }}"
+    vpc_id: "{{ client_group.vpc_id }}"
+    region: "{{ client_group.aws_region }}"
+  register: client_sg
+
+- name: Set client group id + route table id
+  set_fact:
+    client_group: "{{ client_group | combine({'sg_id': client_sg.group_id, 
+                                              'sg_ownerid': client_sg.owner_id
+                                              }) }}"
+
+                                              #,'route_table_id': route_table.route_table.id
+
+
+- name: Add rules to Client Security Group
+  ec2_group:
+    name: "{{ client_group.sg_name }}"
+    description: "{{ client_group.sg_desc }}"
+    vpc_id: "{{ client_group.vpc_id }}"
+    region: "{{ client_group.aws_region }}"
+    rules:
+      - proto: tcp
+        ports: 22
+        cidr_ip: 0.0.0.0/0
+      # allow connection to server region
+      - proto: all
+        cidr_ip: "{{ server_region.vpc_subnet_cidr }}"
+      - proto: all
+        cidr_ip: "{{ server_region.vpc_subnet2_cidr }}"
+
+- debug: msg="Before= {{ vars['client_group' + client_group_id] }}"
+
+- name: Update the original client group variable
+  set_fact: {"client_group{{ client_group_id }}":"{{ client_group }}"}
+
+- debug: msg="After= {{ vars['client_group' + client_group_id] }}"

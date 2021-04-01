@@ -1,0 +1,17 @@
+- name: Cleanup
+  hosts: localhost
+  connection: local
+  remote_user: ubuntu
+  gather_facts: True
+  tasks:
+  - name: Terminate all EC2 Machines
+    include_role:
+      name: ec2delete
+
+  - name: Delete Kafka
+    include_role:
+      name: kafkadelete
+
+  - name: Delete Server VPC + Client VPCs in all regions 
+    include_role:
+      name: vpcdelete

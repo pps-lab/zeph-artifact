@@ -1,0 +1,113 @@
+---
+
+local_result_dir: ./../results/review-results/aws
+
+kafka_cluster_name: zeph-cluster
+
+result_dir: /home/ubuntu/results
+data_dir: /home/ubuntu/data
+log_dir: /home/ubuntu/logs
+state_dir: /home/ubuntu/state
+monitoring_dir: /home/ubuntu/monitoring
+
+repository: https://github.com/pps-lab/zeph-artifact.git
+branch: main
+
+log_level: warn
+
+prometheus_version: "2.22.2"
+
+server_region:
+  aws_region: eu-central-1
+  name: frankfurt
+  key_name: id_rsa_zeph
+  ec2_image: ami-0502e817a62226e03
+  ec2_volume_snapshot: snap-06c551c41e4bc2f56
+  vpc_name: zeph_vpc_server
+  vpc_cidr_block: 10.100.0.0/16
+  # subnet 1
+  vpc_subnet_name: zeph_subnet_server_az1
+  vpc_subnet_cidr: 10.100.0.0/24
+  # subnet 2
+  vpc_subnet2_name: zeph_subnet_server_az2
+  vpc_subnet2_cidr: 10.100.1.0/24
+
+
+server_transformer: # combine with server_region (before ec2setup)
+  sg_name: zeph_sg_server_transformer
+  sg_desc: Data Transformer Security Group
+  instance_tag: ZephServer
+  host_group: tag_Name_ZephServer # instance_tag
+  instance_type: m5.2xlarge
+
+
+server_monitoring: # combine with server_region (before ec2setup)
+  sg_name: zeph_sg_server_monitoring
+  sg_desc: Monitoring Security Group
+  instance_tag: ZephMonitoring
+  host_group: tag_Name_ZephMonitoring # instance_tag
+  instance_type: m5.xlarge
+
+
+server_cluster:
+  sg_name: zeph_sg_server_cluster
+  sg_desc: Cluster Security Group
+  instance_tag: ZephCluster
+  host_group: tag_Name_ZephCluster # instance_tag
+  instance_type: kafka.m5.xlarge
+
+
+# general prefixes and configs used for all client groups (i.e. in all 3 regions)
+client_all:
+  vpc_name_prefix: zeph_vpc_client
+  vpc_subnet_name_prefix: zeph_subnet_client
+  sg_name_prefix: zeph_sg_client
+  instance_tag: ZephClient
+  host_group: tag_Name_ZephClient # instance_tag
+  instance_type: m5.large
+
+client_group1:
+  aws_region: eu-west-2
+  name: london
+  key_name: id_rsa_zeph
+  ec2_image: ami-0ff4c8fb495a5a50d
+  ec2_volume_snapshot: snap-087023d5eeb418d5b
+  vpc_name: "{{ client_all.vpc_name_prefix }}_london"
+  vpc_cidr_block: 10.201.0.0/16
+  vpc_subnet_name: "{{ client_all.vpc_subnet_name_prefix }}_london"
+  vpc_subnet_cidr: 10.201.0.0/24 
+  sg_name: "{{ client_all.sg_name_prefix }}_london"
+  sg_desc: Client Security Group
+  instance_tag: "{{ client_all.instance_tag }}"
+  instance_type: "{{ client_all.instance_type }}"
+
+client_group2:
+  region:
+  aws_region: eu-west-3
+  name: paris
+  key_name: id_rsa_zeph
+  ec2_image:  ami-0d3f551818b21ed81
+  ec2_volume_snapshot: snap-0b881bf502ed91412
+  vpc_name: "{{ client_all.vpc_name_prefix }}_paris"
+  vpc_cidr_block: 10.202.0.0/16
+  vpc_subnet_name: "{{ client_all.vpc_subnet_name_prefix }}_paris"
+  vpc_subnet_cidr: 10.202.0.0/24
+  sg_name: "{{ client_all.sg_name_prefix }}_paris"
+  sg_desc: Client Security Group
+  instance_tag: "{{ client_all.instance_tag }}"
+  instance_type: "{{ client_all.instance_type }}"
+
+client_group3:
+  aws_region: eu-north-1
+  name: stockholm
+  key_name: id_rsa_zeph
+  ec2_image: ami-0a3a4169ad7cb0d77
+  ec2_volume_snapshot: snap-0a408858040b21ffd
+  vpc_name: "{{ client_all.vpc_name_prefix }}_stockholm"
+  vpc_cidr_block: 10.203.0.0/16
+  vpc_subnet_name: "{{ client_all.vpc_subnet_name_prefix }}_stockholm"
+  vpc_subnet_cidr: 10.203.0.0/24
+  sg_name: "{{ client_all.sg_name_prefix }}_stockholm"
+  sg_desc: Client Security Group
+  instance_tag: "{{ client_all.instance_tag }}"
+  instance_type: "{{ client_all.instance_type }}"

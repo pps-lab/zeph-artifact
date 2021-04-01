@@ -1,0 +1,178 @@
+{
+  "data": [
+    {
+      "result": {
+        "count": 0,
+        "sum": 16193
+      },
+      "uid": 30,
+      "latency": 5185,
+      "window": 1607424330000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 17226
+      },
+      "uid": 30,
+      "latency": 5162,
+      "window": 1607424340000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 20030
+      },
+      "uid": 30,
+      "latency": 5084,
+      "window": 1607424350000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 18184
+      },
+      "uid": 30,
+      "latency": 5113,
+      "window": 1607424360000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 23446
+      },
+      "uid": 30,
+      "latency": 5122,
+      "window": 1607424370000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 14940
+      },
+      "uid": 30,
+      "latency": 5105,
+      "window": 1607424380000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 23542
+      },
+      "uid": 30,
+      "latency": 5115,
+      "window": 1607424390000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 23833
+      },
+      "uid": 30,
+      "latency": 5115,
+      "window": 1607424400000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 15822
+      },
+      "uid": 30,
+      "latency": 5087,
+      "window": 1607424410000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 21602
+      },
+      "uid": 30,
+      "latency": 5142,
+      "window": 1607424420000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 20808
+      },
+      "uid": 30,
+      "latency": 5093,
+      "window": 1607424430000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 25770
+      },
+      "uid": 30,
+      "latency": 5221,
+      "window": 1607424440000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 21164
+      },
+      "uid": 30,
+      "latency": 5075,
+      "window": 1607424450000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 19984
+      },
+      "uid": 30,
+      "latency": 5095,
+      "window": 1607424460000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 21366
+      },
+      "uid": 30,
+      "latency": 5132,
+      "window": 1607424470000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 21980
+      },
+      "uid": 30,
+      "latency": 5141,
+      "window": 1607424480000
+    },
+    {
+      "result": {
+        "count": 0,
+        "sum": 22617
+      },
+      "uid": 30,
+      "latency": 5099,
+      "window": 1607424490000
+    }
+  ],
+  "config": {
+    "totalNumberOfProducers": 100,
+    "expoDelayMean": 0.5,
+    "leader": true,
+    "numUniverses": 1,
+    "universeIds": [30],
+    "producerPartition": 0,
+    "producerPartitionCount": 3,
+    "deleteTopics": true,
+    "outputFile": "/home/ubuntu/results/plaintext-results_e2e_webanalytics_plaintext_300_0.json",
+    "e2eProducer": true,
+    "windowSizeMillis": 10000,
+    "universeSize": 300,
+    "producerPartitionSize": 100,
+    "experimentId": "e2e_webanalytics_plaintext_300_0",
+    "testTimeSec": 180,
+    "e2eController": false,
+    "timestampSync": 1607424323015,
+    "dataFolder": "/home/ubuntu/data",
+    "benchmarkType": "plaintext"
+  }
+}

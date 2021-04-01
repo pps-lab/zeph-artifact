@@ -1,0 +1,22 @@
+---
+
+- name: look for an existing Kafka cluster using the AWS CLI
+  command: >
+    aws kafka list-clusters
+      --cluster-name-filter {{ kafka_cluster_name }} 
+      --region {{ server_region.aws_region }}
+  changed_when: false
+  register: kafka_cluster_query
+    
+- name: parse the response and check if our Kafka cluster is there
+  set_fact:
+    kafka_cluster: "{{ kafka_cluster_query.stdout | from_json | json_query('ClusterInfoList[0]')}}"
+
+#- debug: msg="kafka_cluster={{ kafka_cluster }}"
+
+- name: create Kafka Cluster with the AWS CLI if it doesn't exist
+  command: >
+    aws kafka create-cluster
+      --cli-input-json '{{ lookup('template', 'clusterinfo.json.j2') | to_json }}' 
+      --region {{ server_region.aws_region }}
+  when: kafka_cluster == '' # json_query returns an empty string if it doesn't resolve

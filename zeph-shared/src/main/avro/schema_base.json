@@ -1,0 +1,129 @@
+[
+    {"namespace": "ch.ethz.infk.pps.shared.avro",
+      "type": "record",
+      "name": "HeacHeader",
+      "fields": [
+        {"name": "start", "type": "long"},
+        {"name": "end", "type": "long"}
+      ]
+    },
+    {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "Window",
+        "fields": [
+          {"name": "start", "type": "long"},
+          {"name": "end", "type": "long"}
+        ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "TransformationResult",
+        "fields": [
+          {"name": "window", "type": "Window"},
+          {"name": "sum", "type": "long"},
+          {"name": "count", "type": ["null", "long"]}
+        ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "DeltaUniverseState",
+        "fields": [
+          {"name": "status", "type": "int"},
+          {"name": "memberDiff", "type": ["null", {"type": "map", "values": "int"}]},
+          {"name": "result", "type": ["null", "ch.ethz.infk.pps.shared.avro.Digest"]}
+        ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "Token",
+        "fields": [
+          {"name": "window", "type": "Window"},
+          {"name": "mac", "type": "string"},
+          {"name": "transformation", "type": ["null", "ch.ethz.infk.pps.shared.avro.Digest"]},
+          {"name": "commit", "type": ["null", "ch.ethz.infk.pps.shared.avro.HeacHeader"]},
+          {"name": "status", "type": ["null", "int"]}
+        ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "Membership",
+        "fields": [
+          {"name": "diff", "type": {"type": "map", "values": "int"}}
+        ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "UniversePartitionUpdate",
+        "fields": [
+          {"name": "taskId", "type": "string"},
+          {"name": "window", "type": "Window"},
+          {"name": "status", "type": "int"},
+          {"name": "memberDiff", "type": ["null", {"type": "map", "values": "int"}]},
+          {"name": "result", "type": ["null", "ch.ethz.infk.pps.shared.avro.Digest"]}
+        ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro",
+        "type": "record",
+        "name": "UniversePartitionStatus",
+        "fields": [
+          {"name": "taskStatus", "type": {"type": "map", "values": "int"}}
+        ]
+      },
+      {
+        "namespace": "ch.ethz.infk.pps.shared.avro",
+          "type": "record",
+          "name": "Universe",
+          "fields": [
+            {"name": "universeId", "type": "long"},
+            {"name": "firstWindow", "type": "ch.ethz.infk.pps.shared.avro.Window"},
+            {"name": "members", "type": {"type": "array", "items": "long"}},
+            {"name": "minimalSize", "type": "int"},
+            {"name": "alpha", "type": "double"},
+            {"name": "delta", "type": "double"}
+          ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro.tuple",
+        "type": "record",
+        "name": "CertificateTuple",
+        "fields": [
+          {"name": "producerId", "type": "long"},
+          {"name": "certificate", "type": "bytes"}
+        ]
+      },
+       {
+         "namespace": "ch.ethz.infk.pps.shared.avro.tuple",
+         "type": "fixed",
+         "size": 32,
+         "name": "AESKey"
+       },
+      {"namespace": "ch.ethz.infk.pps.shared.avro.tuple",
+        "type": "record",
+        "name": "SharedKeyTuple",
+        "fields": [
+          {"name": "producerId", "type": "long"},
+          {"name":"sharedKey", "type": "ch.ethz.infk.pps.shared.avro.tuple.AESKey"}
+        ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro.tuple",
+        "type": "record",
+        "name": "DummyKeySumTuple",
+        "fields": [
+          {"name": "universeId", "type": "long"},
+          {"name": "universeWindow", "type": "ch.ethz.infk.pps.shared.avro.Window"},
+          {"name": "dummyKeyWindow", "type": "ch.ethz.infk.pps.shared.avro.Window"},
+          {"name": "dummyKeySum", "type":"ch.ethz.infk.pps.shared.avro.Digest"}
+        ]
+      },
+      {"namespace": "ch.ethz.infk.pps.shared.avro.tuple",
+        "type": "record",
+        "name": "ProducerKeyTuple",
+        "fields": [
+          {"name": "producerId", "type": "long"},
+          {"name": "certificate", "type": "bytes"},
+          {"name": "privateKey", "type": "bytes"},
+          {"name":"sharedFileKey", "type": "ch.ethz.infk.pps.shared.avro.tuple.AESKey"},
+          {"name":"dummyFileKey", "type": "ch.ethz.infk.pps.shared.avro.tuple.AESKey"},
+          {"name":"heacKey", "type": "ch.ethz.infk.pps.shared.avro.tuple.AESKey"}
+        ]
+      }
+]

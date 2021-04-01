@@ -1,0 +1,40 @@
+--- 
+
+- name: 
+  hosts: localhost
+  connection: local
+  remote_user: ubuntu
+  gather_facts: True
+  tasks:
+  - name: Setup Client VPC 
+    include_role:
+      name: vpcsetupclient
+    vars:
+      client_group_id: "1"
+  
+  - name: Start Clients in Client Group 1
+    include_role: 
+      name: ec2setup
+    vars:
+      ec2config: '{{ client_group1 }}'
+      ec2_instances_num: 1
+      ec2_instances_max_num: 1
+
+- name: Check Connection to EC2 instance (using the private key) 
+  hosts: "{{ hostvars['localhost'].client_all.host_group }}"
+  remote_user: ubuntu
+  gather_facts: True
+  tasks:
+  - name: Git Clone Zeph Repository
+    git:
+      repo={{repository}}
+      dest=/home/ubuntu/zeph
+      accept_hostkey=yes
+      force=yes
+      version={{ branch }}
+    register: git_result
+    changed_when: git_result.after != git_result.before
+  
+- name: Cleanup AWS (terminate all ec2 instances, remove vpc)
+  import_playbook: awscleanup.yml
+
