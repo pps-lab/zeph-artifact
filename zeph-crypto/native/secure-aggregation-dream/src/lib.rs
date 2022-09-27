@@ -1,7 +1,9 @@
-use aes::block_cipher_trait::generic_array::GenericArray;
-use aes::block_cipher_trait::generic_array::typenum::U32;
-use aes::block_cipher_trait::BlockCipher;
 use aes::Aes256;
+use aes::Block;
+use aes::cipher::BlockEncrypt;
+use aes::cipher::KeyInit;
+use aes::cipher::Key;
+
 use std::collections::HashMap;
 use byteorder::{ByteOrder, LittleEndian};
 
@@ -65,7 +67,7 @@ pub unsafe extern "system" fn Java_ch_ethz_infk_pps_zeph_crypto_SecureAggregatio
 }
 
 struct SecureAggregationDream {
-    shared_keys:  HashMap<(i64, i64), GenericArray<u8, U32>>,
+    shared_keys:  HashMap<(i64, i64), Key<Aes256>>,
     n_fields: u64,
 }
 
@@ -75,7 +77,7 @@ impl SecureAggregationDream {
             shared_keys: HashMap::new(),
             n_fields: n_fields,
         };
-        
+
         return secure_aggregation;
     }
 
@@ -88,8 +90,8 @@ impl SecureAggregationDream {
                 let edge: Vec<i64> = edge_str.split("_").map(|s| s.parse().unwrap()).collect();
 
                 let value = env.convert_byte_array(e.1.into_inner()).unwrap();
-                let shared_key = GenericArray::clone_from_slice(&value);
-                
+                let shared_key = Key::<Aes256>::clone_from_slice(&value);
+
                 if edge[0] < edge[1]{
                     self.shared_keys.insert((edge[0], edge[1]), shared_key);
                 }else if edge[0] > edge[1]{
@@ -125,7 +127,7 @@ impl SecureAggregationDream {
     }
 }
 
-fn update_aggregators(shared_key: &GenericArray<u8, U32>, r1: i64, r2: i64, threshold: u128, aggregators: &mut [i64], add: bool) -> bool{
+fn update_aggregators(shared_key: &Key<Aes256>, r1: i64, r2: i64, threshold: u128, aggregators: &mut [i64], add: bool) -> bool{
 
     // Initialize cipher
     let cipher = Aes256::new(shared_key);
@@ -135,7 +137,7 @@ fn update_aggregators(shared_key: &GenericArray<u8, U32>, r1: i64, r2: i64, thre
     LittleEndian::write_i64_into(&input, &mut r1_bytes);
 
 
-    let mut block = GenericArray::clone_from_slice(&r1_bytes);
+    let mut block = Block::clone_from_slice(&r1_bytes);
     cipher.encrypt_block(&mut block);
 
 
@@ -146,14 +148,14 @@ fn update_aggregators(shared_key: &GenericArray<u8, U32>, r1: i64, r2: i64, thre
 
     if value < threshold {
         for (i, aggregator) in aggregators.iter_mut().enumerate(){
-            
+
             // Construct AES input block
             let mut bytes = [0; 16];
 
             let c = (i + 1) as i64;
             let input = [r2, c];
             LittleEndian::write_i64_into(&input, &mut bytes);
-            let mut block = GenericArray::clone_from_slice(&bytes);
+            let mut block = Block::clone_from_slice(&bytes);
 
             // Encrypt block in-place
             cipher.encrypt_block(&mut block);
@@ -174,6 +176,3 @@ fn update_aggregators(shared_key: &GenericArray<u8, U32>, r1: i64, r2: i64, thre
     }
     return false;
 }
-
-
-

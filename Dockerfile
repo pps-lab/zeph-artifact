@@ -13,17 +13,18 @@ RUN $CONDA_DIR/envs/${conda_env}/bin/python -m ipykernel install --user --name=$
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
-# any additional pip installs can be added by uncommenting the following line
-RUN $CONDA_DIR/envs/${conda_env}/bin/pip install pandas
-RUN $CONDA_DIR/envs/${conda_env}/bin/pip install numpy
-RUN $CONDA_DIR/envs/${conda_env}/bin/pip install matplotlib
-RUN $CONDA_DIR/envs/${conda_env}/bin/pip install tqdm
-RUN $CONDA_DIR/envs/${conda_env}/bin/pip install ansible
-RUN $CONDA_DIR/envs/${conda_env}/bin/pip install boto
-RUN $CONDA_DIR/envs/${conda_env}/bin/pip install boto3
-RUN $CONDA_DIR/envs/${conda_env}/bin/pip install botocore
-RUN $CONDA_DIR/envs/${conda_env}/bin/pip install pipenv
 
+USER $NB_USER
+
+ADD . .
+
+
+RUN $CONDA_DIR/envs/${conda_env}/bin/pip install pipenv
+RUN $CONDA_DIR/envs/${conda_env}/bin/pip install pipfile-requirements
+
+RUN $CONDA_DIR/envs/${conda_env}/bin/pipfile2req > requirements.txt
+
+RUN $CONDA_DIR/envs/${conda_env}/bin/pip install -r requirements.txt
 
 # prepend conda environment to path
 ENV PATH $CONDA_DIR/envs/${conda_env}/bin:$PATH
@@ -42,15 +43,13 @@ RUN apt-get update && apt-get install -y \
   awscli
 
 # Get Rust
-RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
 ENV PATH="/home/$NB_USER/.cargo/bin:${PATH}"
 
-RUN ansible-galaxy collection install amazon.aws
-RUN ansible-galaxy collection install community.aws
+RUN ansible-galaxy collection install amazon.aws:2.0.0
+RUN ansible-galaxy collection install community.aws:2.0.0
 
 USER $NB_USER
-
-ADD . .
 
 USER root
 # Windows compability
@@ -87,4 +86,3 @@ RUN apt-get --purge remove -y dos2unix
 USER $NB_USER
 
 CMD ["start.sh", "jupyter", "lab"]
-
