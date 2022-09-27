@@ -1,7 +1,9 @@
-use aes::block_cipher_trait::generic_array::GenericArray;
-use aes::block_cipher_trait::generic_array::typenum::U32;
-use aes::block_cipher_trait::BlockCipher;
 use aes::Aes256;
+use aes::Block;
+use aes::cipher::BlockEncrypt;
+use aes::cipher::KeyInit;
+use aes::cipher::Key;
+
 use std::collections::HashMap;
 use std::collections::HashSet;
 use multimap::MultiMap;
@@ -119,7 +121,7 @@ pub unsafe extern "system" fn Java_ch_ethz_infk_pps_zeph_crypto_SecureAggregatio
 }
 
 struct SecureAggregation {
-    shared_keys:  HashMap<(i64, i64), GenericArray<u8, U32>>,
+    shared_keys:  HashMap<(i64, i64), Key<Aes256>>,
     neighbourhoods: HashMap<(i64, i64), MultiMap<u16, i64>>,
     n_fields: u64,
 }
@@ -131,7 +133,7 @@ impl SecureAggregation {
             neighbourhoods: HashMap::new(),
             n_fields: n_fields,
         };
-        
+
         return secure_aggregation;
     }
 
@@ -144,8 +146,8 @@ impl SecureAggregation {
                 let edge: Vec<i64> = edge_str.split("_").map(|s| s.parse().unwrap()).collect();
 
                 let value = env.convert_byte_array(e.1.into_inner()).unwrap();
-                let shared_key = GenericArray::clone_from_slice(&value);
-                
+                let shared_key = Key::<Aes256>::clone_from_slice(&value);
+
                 if edge[0] < edge[1]{
                     self.shared_keys.insert((edge[0], edge[1]), shared_key);
                 }else if edge[0] > edge[1]{
@@ -158,7 +160,7 @@ impl SecureAggregation {
 
     pub fn build_epoch_neighbourhoods(&mut self, epoch: i64, node_id: i64, node_ids: &[i64], k: u32, env: JNIEnv){
 
-        
+
         let mut multi_map = self.neighbourhoods.entry((epoch, node_id)).or_insert(MultiMap::new());
 
         let mut epoch_bytes = [0; 16];
@@ -185,7 +187,7 @@ impl SecureAggregation {
                         return;
                     }
                 };
-                
+
                 apply_and_parse(shared_key, &epoch_bytes, other_node_id, &mut multi_map, k);
             }
         }
@@ -226,20 +228,20 @@ impl SecureAggregation {
 
 }
 
-fn update_aggregators(shared_key: &GenericArray<u8, U32>, w: i64, aggregators: &mut [i64], add: bool) {
+fn update_aggregators(shared_key: &Key<Aes256>, w: i64, aggregators: &mut [i64], add: bool) {
 
     // Initialize cipher
     let cipher = Aes256::new(shared_key);
 
     for (i, aggregator) in aggregators.iter_mut().enumerate(){
-        
+
         // Construct AES input block
         let mut bytes = [0; 16];
 
         let c = (i + 1) as i64;
         let input = [w, c];
         LittleEndian::write_i64_into(&input, &mut bytes);
-        let mut block = GenericArray::clone_from_slice(&bytes);
+        let mut block = Block::clone_from_slice(&bytes);
 
         // Encrypt block in-place
         cipher.encrypt_block(&mut block);
@@ -258,7 +260,7 @@ fn update_aggregators(shared_key: &GenericArray<u8, U32>, w: i64, aggregators: &
 }
 
 
-fn get_dummy_key_sum(shared_keys: &HashMap<(i64, i64), GenericArray<u8, U32>>, timestamp: i64, node_id: i64, neighbour_ids: &[i64], dropped_node_ids: &[i64], n_fields: u64, env: JNIEnv, callback: JObject){
+fn get_dummy_key_sum(shared_keys: &HashMap<(i64, i64), Key<Aes256>>, timestamp: i64, node_id: i64, neighbour_ids: &[i64], dropped_node_ids: &[i64], n_fields: u64, env: JNIEnv, callback: JObject){
     //pub fn get_dummy_key_sum(&mut self, timestamp: i64, node_id: i64, neighbour_ids: &[i64], dropped_node_ids: &[i64], env: JNIEnv, callback: JObject){
 
         let dropped_nodes: HashSet<i64> = dropped_node_ids.into_iter().map(|v| *v).collect();
@@ -269,7 +271,7 @@ fn get_dummy_key_sum(shared_keys: &HashMap<(i64, i64), GenericArray<u8, U32>>, t
 
             let neighbour_id = *neighbour_id;
             let dropped = dropped_nodes.contains(&neighbour_id);
-            
+
             if !dropped {
                 if node_id < neighbour_id {
                     let shared_key = shared_keys.get(&(node_id, neighbour_id)).unwrap();
@@ -287,18 +289,18 @@ fn get_dummy_key_sum(shared_keys: &HashMap<(i64, i64), GenericArray<u8, U32>>, t
         env.call_method(callback, "dummyKeySumCallback", "([J)V", &[result_array.into()]).unwrap();
     }
 
-fn apply_and_parse(shared_key: &GenericArray<u8, U32>, epoch_bytes: &[u8], neighbour_id: i64, multi_map: &mut MultiMap<u16, i64>, k: u32){
+fn apply_and_parse(shared_key: &Key<Aes256>, epoch_bytes: &[u8], neighbour_id: i64, multi_map: &mut MultiMap<u16, i64>, k: u32){
 
     let cipher = Aes256::new(shared_key);
-    let mut block = GenericArray::clone_from_slice(&epoch_bytes);
+    let mut block = Block::clone_from_slice(&epoch_bytes);
     cipher.encrypt_block(&mut block);
 
     let mut parts = [0; 2];
     LittleEndian::read_u64_into(&block, &mut parts);
 
-    let long_size = 64; 
+    let long_size = 64;
 
-    let shift_count = long_size / k; 
+    let shift_count = long_size / k;
 
     let mask = u64::max_value().wrapping_shr(long_size - k);
 
@@ -324,7 +326,7 @@ fn apply_and_parse(shared_key: &GenericArray<u8, U32>, epoch_bytes: &[u8], neigh
         parts[1] = parts[1].wrapping_shr(k);
         shift += shift_update;
     }
-    
+
     let remaining = long_size % k;
     if 2 * remaining >= k {
         parts[0] = parts[0].wrapping_shl(remaining);
@@ -335,5 +337,3 @@ fn apply_and_parse(shared_key: &GenericArray<u8, U32>, epoch_bytes: &[u8], neigh
     }
 
 }
-
-

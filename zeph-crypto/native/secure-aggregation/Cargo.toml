@@ -2,11 +2,11 @@
 name = "secure-aggregation"
 version = "0.1.0"
 authors = ["nicok"]
-edition = "2018"
+edition = "2021"
 
 
 [dependencies]
-aes = "0.3.2"
+aes = "0.8.1"
 byteorder = "1.3.1"
 jni = "0.16.0"
 multimap = "0.8.1"
